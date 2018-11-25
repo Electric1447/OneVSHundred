@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/cl"
     android:layout_width="match_parent"
@@ -122,10 +123,12 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab1"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginLeft="12dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="15dp"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            app:fabCustomSize="32dp"
             android:clickable="true"
             android:onClick="helpWheel"
             android:scaleType="center"
@@ -141,6 +144,7 @@
                 android:layout_height="50dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginLeft="12dp"
+                android:layout_marginTop="6dp"
                 android:clickable="true"
                 android:onClick="help50"/>
 
@@ -152,6 +156,7 @@
                 android:elevation="16dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginLeft="12dp"
+                android:layout_marginTop="3dp"
                 android:textColor="#000"
                 android:textStyle="bold"
                 android:textSize="25sp" />
@@ -159,10 +164,12 @@
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fab3"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginLeft="12dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="15dp"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            app:fabCustomSize="32dp"
             android:clickable="true"
             android:onClick="helpPhone"
             android:scaleType="center"

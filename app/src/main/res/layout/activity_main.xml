@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -47,11 +48,13 @@
             android:textSize="25sp"/>
 
         <android.support.design.widget.FloatingActionButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginLeft="15dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_margin="15dp"
             android:clickable="false"
-            android:scaleType="center"
+            android:scaleX="1.5"
+            android:scaleY="1.5"
+            app:fabCustomSize="32dp"
             android:src="@drawable/ic_custom_wheel_48dp"/>
 
     </LinearLayout>
@@ -79,14 +82,14 @@
                 <android.support.design.widget.FloatingActionButton
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:layout_marginLeft="15dp"
+                    android:layout_marginLeft="6dp"
+                    android:layout_marginRight="6dp"
                     android:clickable="false"/>
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:layout_marginLeft="7.5dp"
                     android:text="50"
                     android:elevation="16dp"
                     android:textColor="#000"
@@ -114,12 +117,14 @@
                 android:textSize="25sp"/>
 
             <android.support.design.widget.FloatingActionButton
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginLeft="15dp"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_margin="15dp"
                 android:clickable="false"
-                android:scaleType="center"
-                android:src="@drawable/ic_custom_phone_48dp"/>
+                android:scaleX="1.5"
+                android:scaleY="1.5"
+                app:fabCustomSize="32dp"
+                android:src="@drawable/ic_custom_phone_48dp" />
 
         </LinearLayout>
 
