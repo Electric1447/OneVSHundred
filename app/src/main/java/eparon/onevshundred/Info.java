@@ -1,8 +1,6 @@
 package eparon.onevshundred;
 
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +11,10 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 public class Info extends AppCompatActivity {
+
+
+    int COLOR_YELLOW = 0xFFFFFF00;
+    int COLOR_DGREY = 0xFF666666;
 
     TextView Info;
     CheckBox Agree;
@@ -34,18 +36,18 @@ public class Info extends AppCompatActivity {
         Info.setMovementMethod(new ScrollingMovementMethod());
 
         Next.setClickable(false);
-        Next.setBackgroundTintList(ColorStateList.valueOf(0xFF666666));
+        Next.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
     }
 
     public void DoAgree(View view) {
 
         if (!Agree.isChecked()) {
             Next.setClickable(false);
-            Next.setBackgroundTintList(ColorStateList.valueOf(0xFF666666));
+            Next.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
         }
         if (Agree.isChecked()) {
             Next.setClickable(true);
-            Next.setBackgroundTintList(ColorStateList.valueOf(0xFFFFFF00));
+            Next.setBackgroundTintList(ColorStateList.valueOf(COLOR_YELLOW));
         }
     }
 

@@ -27,6 +27,7 @@ import java.util.concurrent.TimeUnit;
 public class EndActivity extends AppCompatActivity {
 
     public String PREFS_OVH = "OVHPrefsFile";
+    SharedPreferences prefs;
 
     TextView EndM;
     TextView ScoreM;
@@ -49,15 +50,12 @@ public class EndActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end);
 
-        SharedPreferences scorei = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences timei = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences questions = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences questionn = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
+        prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
 
-        scoreInt = scorei.getInt("scoreInt", scoreInt);
-        timeInt = timei.getInt("timeInt", timeInt);
-        questionsString = questions.getString("questionsString", questionsString);
-        questionnInt = questionn.getInt("questionnInt", questionnInt);
+        scoreInt = prefs.getInt("scoreInt", scoreInt);
+        timeInt = prefs.getInt("timeInt", timeInt);
+        questionsString = prefs.getString("questionsString", questionsString);
+        questionnInt = prefs.getInt("questionnInt", questionnInt);
 
         EndM = findViewById(R.id.endMessage);
         ScoreM = findViewById(R.id.scoreMessage);

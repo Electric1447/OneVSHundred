@@ -6,7 +6,6 @@ import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
@@ -21,7 +20,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import android.os.CountDownTimer;
-import android.widget.Toast;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -29,9 +27,15 @@ import java.util.concurrent.TimeUnit;
 public class Question extends AppCompatActivity {
 
     public String PREFS_OVH = "OVHPrefsFile";
+    SharedPreferences prefs;
 
     private TextView countdownTimerText;
     private static CountDownTimer countDownTimer;
+
+    int COLOR_GREEN = 0xFF00FF00;
+    int COLOR_RED = 0xFFFF0000;
+    int COLOR_WHITE = 0xFFFFFFFF;
+    int COLOR_DGREY = 0xFF666666;
 
     Drawable colorLGreen;
     Drawable colorGrey;
@@ -90,19 +94,15 @@ public class Question extends AppCompatActivity {
         String[] qC = res.getStringArray(R.array.qc);
         String[] qD = res.getStringArray(R.array.qd);
 
-        SharedPreferences help = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences scorei = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences timei = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences questions = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences questionn = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
+        prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
 
-        scoreInt = scorei.getInt("scoreInt", scoreInt);
-        timeInt = timei.getInt("timeInt", timeInt);
-        questionsString = questions.getString("questionsString", questionsString);
-        questionnInt = questionn.getInt("questionnInt", questionnInt);
-        helpw = help.getInt("helpw", helpw);
-        helpp = help.getInt("helpp", helpp);
-        help50 = help.getInt("help50", help50);
+        scoreInt = prefs.getInt("scoreInt", scoreInt);
+        timeInt = prefs.getInt("timeInt", timeInt);
+        questionsString = prefs.getString("questionsString", questionsString);
+        questionnInt = prefs.getInt("questionnInt", questionnInt);
+        helpw = prefs.getInt("helpw", helpw);
+        helpp = prefs.getInt("helpp", helpp);
+        help50 = prefs.getInt("help50", help50);
 
         colorLGreen = getResources().getDrawable(R.drawable.custombutton_lgreen);
         colorGrey = getResources().getDrawable(R.drawable.custombutton_grey);
@@ -202,15 +202,15 @@ public class Question extends AppCompatActivity {
         score.setText(scoreInt + " נקודות");
 
         if(helpw == 1){
-            btnhw.setBackgroundTintList(ColorStateList.valueOf(0xFF666666));
+            btnhw.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
             btnhw.setClickable(false);
         }
         if(help50 == 1){
-            btnh50.setBackgroundTintList(ColorStateList.valueOf(0xFF666666));
+            btnh50.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
             btnh50.setClickable(false);
         }
         if(helpp == 1){
-            btnhp.setBackgroundTintList(ColorStateList.valueOf(0xFF666666));
+            btnhp.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
             btnhp.setClickable(false);
         }
 
@@ -222,25 +222,17 @@ public class Question extends AppCompatActivity {
         String answerString = String.valueOf(type);
         timeString = countdownTimerText.getText().toString();
         timeInt += (31 - Integer.parseInt(timeString));
-        SharedPreferences timei = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor1 = timei.edit();
-        editor1.putInt("timeInt", timeInt);
-        editor1.apply();
         questionnInt += 1;
-        SharedPreferences questionn = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor2 = questionn.edit();
-        editor2.putInt("questionnInt", questionnInt);
-        editor2.apply();
         questionsString += answerString;
-        SharedPreferences questions = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor3 = questions.edit();
-        editor3.putString("questionsString", questionsString);
-        editor3.apply();
         scoreInt += currentScore * (1 - type / 2);
-        SharedPreferences scorei = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor4 = scorei.edit();
-        editor4.putInt("scoreInt", scoreInt);
-        editor4.apply();
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("timeInt", timeInt);
+        editor.putInt("questionnInt", questionnInt);
+        editor.putString("questionsString", questionsString);
+        editor.putInt("scoreInt", scoreInt);
+        editor.apply();
+
         countDownTimer.cancel();
         PopUp();
     }
@@ -266,14 +258,14 @@ public class Question extends AppCompatActivity {
 
             helpInt = 1;
 
-            btnhw.setBackgroundTintList(ColorStateList.valueOf(0xFF666666));
+            btnhw.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
             btnhw.setClickable(false);
 
             helpw = 1;
-            SharedPreferences help = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor1 = help.edit();
-            editor1.putInt("helpw", helpw);
-            editor1.apply();
+
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("helpw", helpw);
+            editor.apply();
 
             answer(1);
         }
@@ -286,14 +278,14 @@ public class Question extends AppCompatActivity {
 
             helpInt = 1;
 
-            btnh50.setBackgroundTintList(ColorStateList.valueOf(0xFF666666));
+            btnh50.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
             btnh50.setClickable(false);
 
             help50 = 1;
-            SharedPreferences help = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor1 = help.edit();
-            editor1.putInt("help50", help50);
-            editor1.apply();
+
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("help50", help50);
+            editor.apply();
         }
     }
 
@@ -315,14 +307,14 @@ public class Question extends AppCompatActivity {
 
             helpInt = 1;
 
-            btnhp.setBackgroundTintList(ColorStateList.valueOf(0xFF666666));
+            btnhp.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
             btnhp.setClickable(false);
 
             helpp = 1;
-            SharedPreferences help = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-            SharedPreferences.Editor editor1 = help.edit();
-            editor1.putInt("helpp", helpp);
-            editor1.apply();
+
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("helpp", helpp);
+            editor.apply();
         }
     }
 
@@ -333,6 +325,11 @@ public class Question extends AppCompatActivity {
                 //Convert milliseconds into hour,minute and seconds
                 String hms = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
                 countdownTimerText.setText(hms);
+                int hmsInt = Integer.parseInt(hms);
+                if (hmsInt <= 10 && hmsInt % 2 == 0)
+                    countdownTimerText.setTextColor(COLOR_RED);
+                else
+                    countdownTimerText.setTextColor(COLOR_WHITE);
             }
 
             public void onFinish() {
@@ -398,15 +395,15 @@ public class Question extends AppCompatActivity {
         switch (answersArray[questionnInt - 2]) {
             case 1:
                 Message.setText("נכון!");
-                Message.setTextColor(0xFF00FF00);
+                Message.setTextColor(COLOR_GREEN);
                 break;
             case 2:
                 Message.setText("לא נכון!");
-                Message.setTextColor(0xFFFF0000);
+                Message.setTextColor(COLOR_RED);
                 break;
             case 3:
                 Message.setText("עבר הזמן!");
-                Message.setTextColor(0xFFFF0000);
+                Message.setTextColor(COLOR_RED);
                 break;
         }
         new Handler().postDelayed(new Runnable() {

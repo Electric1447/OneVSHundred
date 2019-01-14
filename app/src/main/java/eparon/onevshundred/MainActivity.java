@@ -11,6 +11,7 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity {
 
     public String PREFS_OVH = "OVHPrefsFile";
+    SharedPreferences prefs;
 
     int scoreInt;
     int timeInt;
@@ -30,19 +31,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SharedPreferences scorei = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences timei = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences questions = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences questionn = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences help = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
+        prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
 
-        scoreInt = scorei.getInt("scoreInt", scoreInt);
-        timeInt = timei.getInt("timeInt", timeInt);
-        questionsString = questions.getString("questionsString", questionsString);
-        questionnInt = questionn.getInt("questionnInt", questionnInt);
-        helpw = help.getInt("helpw", helpw);
-        helpp = help.getInt("helpp", helpp);
-        help50 = help.getInt("help50", help50);
+        scoreInt = prefs.getInt("scoreInt", scoreInt);
+        timeInt = prefs.getInt("timeInt", timeInt);
+        questionsString = prefs.getString("questionsString", questionsString);
+        questionnInt = prefs.getInt("questionnInt", questionnInt);
+        helpw = prefs.getInt("helpw", helpw);
+        helpp = prefs.getInt("helpp", helpp);
+        help50 = prefs.getInt("help50", help50);
 
         TextView Welcome = findViewById(R.id.welcome);
         String appname = getResources().getString(R.string.app_name);
@@ -52,35 +49,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void StartGame (View view){
         scoreInt = 0;
-        SharedPreferences scorei = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor1 = scorei.edit();
-        editor1.putInt("scoreInt", scoreInt);
-        editor1.apply();
         timeInt = 0;
-        SharedPreferences timei = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor2 = timei.edit();
-        editor2.putInt("timeInt", timeInt);
-        editor2.apply();
         questionnInt = 1;
-        SharedPreferences questionn = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor3 = questionn.edit();
-        editor3.putInt("questionnInt", questionnInt);
-        editor3.apply();
         questionsString = "";
-        SharedPreferences questions = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor4 = questions.edit();
-        editor4.putString("questionsString", questionsString);
-        editor4.apply();
-
         helpw = 0;
         helpp = 0;
         help50 = 0;
-        SharedPreferences help = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor5 = help.edit();
-        editor5.putInt("helpw", helpw);
-        editor5.putInt("helpp", helpp);
-        editor5.putInt("help50", help50);
-        editor5.apply();
+
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("scoreInt", scoreInt);
+        editor.putInt("timeInt", timeInt);
+        editor.putInt("questionnInt", questionnInt);
+        editor.putString("questionsString", questionsString);
+        editor.putInt("helpw", helpw);
+        editor.putInt("helpp", helpp);
+        editor.putInt("help50", help50);
+        editor.apply();
+
 
         Intent q = new Intent(MainActivity.this, Info.class);
         startActivity(q);
