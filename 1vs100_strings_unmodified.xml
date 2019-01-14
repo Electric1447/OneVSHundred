@@ -1,0 +1,127 @@
+<resources>
+    <string name="app_name">אחד נגד מאה</string>
+
+    <string name="timer">00</string>
+
+    <string name="numberOfQuestions">20</string>
+
+    <string name="score"><u>ניקוד</u>:</string>
+
+    <string name="info">Empty</string>
+
+    <string-array name="qmain">
+        1     <item>Question 1</item>
+        2     <item>Question 2</item>
+        3     <item>Question 3</item>
+        4     <item>Question 4</item>
+        5     <item>Question 5</item>
+        6     <item>Question 6</item>
+        7     <item>Question 7</item>
+        8     <item>Question 8</item>
+        9     <item>Question 9</item>
+        10    <item>Question 10</item>
+        11    <item>Question 11</item>
+        12    <item>Question 12</item>
+        13    <item>Question 13</item>
+        14    <item>Question 14</item>
+        15    <item>Question 15</item>
+        16    <item>Question 16</item>
+        17    <item>Question 17</item>
+        18    <item>Question 18</item>
+        19    <item>Question 19</item>
+        20    <item>Question 20</item>
+    </string-array>
+
+    <string-array name="qa">
+        1     <item>Answer A1</item>
+        2     <item>Answer A2</item>
+        3     <item>Answer A3</item>
+        4     <item>Answer A4</item>
+        5     <item>Answer A5</item>
+        6     <item>Answer A6</item>
+        7     <item>Answer A7</item>
+        8     <item>Answer A8</item>
+        9     <item>Answer A9</item>
+        10    <item>Answer A10</item>
+        11    <item>Answer A11</item>
+        12    <item>Answer A12</item>
+        13    <item>Answer A13</item>
+        14    <item>Answer A14</item>
+        15    <item>Answer A15</item>
+        16    <item>Answer A16</item>
+        17    <item>Answer A17</item>
+        18    <item>Answer A18</item>
+        19    <item>Answer A19</item>
+        20    <item>Answer A20</item>
+    </string-array>
+
+    <string-array name="qb">
+        1     <item>Answer B1</item>
+        2     <item>Answer B2</item>
+        3     <item>Answer B3</item>
+        4     <item>Answer B4</item>
+        5     <item>Answer B5</item>
+        6     <item>Answer B6</item>
+        7     <item>Answer B7</item>
+        8     <item>Answer B8</item>
+        9     <item>Answer B9</item>
+        10    <item>Answer B10</item>
+        11    <item>Answer B11</item>
+        12    <item>Answer B12</item>
+        13    <item>Answer B13</item>
+        14    <item>Answer B14</item>
+        15    <item>Answer B15</item>
+        16    <item>Answer B16</item>
+        17    <item>Answer B17</item>
+        18    <item>Answer B18</item>
+        19    <item>Answer B19</item>
+        20    <item>Answer B20</item>
+    </string-array>
+
+    <string-array name="qc">
+        1     <item>Answer C1</item>
+        2     <item>Answer C2</item>
+        3     <item>Answer C3</item>
+        4     <item>Answer C4</item>
+        5     <item>Answer C5</item>
+        6     <item>Answer C6</item>
+        7     <item>Answer C7</item>
+        8     <item>Answer C8</item>
+        9     <item>Answer C9</item>
+        10    <item>Answer C10</item>
+        11    <item>Answer C11</item>
+        12    <item>Answer C12</item>
+        13    <item>Answer C13</item>
+        14    <item>Answer C14</item>
+        15    <item>Answer C15</item>
+        16    <item>Answer C16</item>
+        17    <item>Answer C17</item>
+        18    <item>Answer C18</item>
+        19    <item>Answer C19</item>
+        20    <item>Answer C20</item>
+    </string-array>
+
+    <string-array name="qd">
+        1     <item>Answer D1</item>
+        2     <item>Answer D2</item>
+        3     <item>Answer D3</item>
+        4     <item>Answer D4</item>
+        5     <item>Answer D5</item>
+        6     <item>Answer D6</item>
+        7     <item>Answer D7</item>
+        8     <item>Answer D8</item>
+        9     <item>Answer D9</item>
+        10    <item>Answer D10</item>
+        11    <item>Answer D11</item>
+        12    <item>Answer D12</item>
+        13    <item>Answer D13</item>
+        14    <item>Answer D14</item>
+        15    <item>Answer D15</item>
+        16    <item>Answer D16</item>
+        17    <item>Answer D17</item>
+        18    <item>Answer D18</item>
+        19    <item>Answer D19</item>
+        20    <item>Answer D20</item>
+    </string-array>
+
+</resources>
