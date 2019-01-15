@@ -13,6 +13,8 @@ public class MainActivity extends AppCompatActivity {
     public String PREFS_OVH = "OVHPrefsFile";
     SharedPreferences prefs;
 
+    private static boolean skipInfo = false; // Skips the Info Screen
+
     int scoreInt;
     int timeInt;
     int questionnInt;
@@ -63,9 +65,13 @@ public class MainActivity extends AppCompatActivity {
         editor.putBoolean("help50", help50);
         editor.apply();
 
-
-        Intent q = new Intent(MainActivity.this, Info.class);
-        startActivity(q);
+        if(!skipInfo) {
+            Intent q = new Intent(MainActivity.this, Info.class);
+            startActivity(q);
+        } else {
+            Intent q = new Intent(MainActivity.this, Question.class);
+            startActivity(q);
+        }
     }
 
 }
