@@ -15,16 +15,13 @@ public class MainActivity extends AppCompatActivity {
 
     int scoreInt;
     int timeInt;
-    String questionsString;
     int questionnInt;
+    String questionsString;
 
-    int helpw;
-    int help50;
-    int helpp;
+    boolean helpWH, help50, helpPH;
 
     @Override
-    public void onBackPressed() {
-    }
+    public void onBackPressed() { }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +32,11 @@ public class MainActivity extends AppCompatActivity {
 
         scoreInt = prefs.getInt("scoreInt", scoreInt);
         timeInt = prefs.getInt("timeInt", timeInt);
-        questionsString = prefs.getString("questionsString", questionsString);
         questionnInt = prefs.getInt("questionnInt", questionnInt);
-        helpw = prefs.getInt("helpw", helpw);
-        helpp = prefs.getInt("helpp", helpp);
-        help50 = prefs.getInt("help50", help50);
+        questionsString = prefs.getString("questionsString", questionsString);
+        helpWH = prefs.getBoolean("helpWH", helpWH);
+        helpPH = prefs.getBoolean("helpPH", helpPH);
+        help50 = prefs.getBoolean("help50", help50);
 
         TextView Welcome = findViewById(R.id.welcome);
         String appname = getResources().getString(R.string.app_name);
@@ -52,18 +49,18 @@ public class MainActivity extends AppCompatActivity {
         timeInt = 0;
         questionnInt = 1;
         questionsString = "";
-        helpw = 0;
-        helpp = 0;
-        help50 = 0;
+        helpWH = true;
+        helpPH = true;
+        help50 = true;
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("scoreInt", scoreInt);
         editor.putInt("timeInt", timeInt);
         editor.putInt("questionnInt", questionnInt);
         editor.putString("questionsString", questionsString);
-        editor.putInt("helpw", helpw);
-        editor.putInt("helpp", helpp);
-        editor.putInt("help50", help50);
+        editor.putBoolean("helpWH", helpWH);
+        editor.putBoolean("helpPH", helpPH);
+        editor.putBoolean("help50", help50);
         editor.apply();
 
 

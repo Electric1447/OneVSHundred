@@ -29,6 +29,9 @@ public class Question extends AppCompatActivity {
     public String PREFS_OVH = "OVHPrefsFile";
     SharedPreferences prefs;
 
+    private static int SPLASH_TIME_OUT = 1000;
+    private static int noOfMinutes = 31000;
+
     private TextView countdownTimerText;
     private static CountDownTimer countDownTimer;
 
@@ -37,73 +40,53 @@ public class Question extends AppCompatActivity {
     int COLOR_WHITE = 0xFFFFFFFF;
     int COLOR_DGREY = 0xFF666666;
 
-    Drawable colorLGreen;
-    Drawable colorGrey;
+    Resources res;
+    String[] qMain;
+    String[] qA, qB, qC, qD;
 
-    TextView score;
-
-    TextView Title;
-    TextView Question;
-
-    Button btn1;
-    Button btn2;
-    Button btn3;
-    Button btn4;
-
-    FloatingActionButton btnhw;
-    FloatingActionButton btnh50;
-    FloatingActionButton btnhp;
+    Drawable colorLGreen, colorGrey;
+    TextView score, Title, Question;
+    Button btn1, btn2, btn3, btn4;
+    FloatingActionButton btnhw, btnh50, btnhp;
 
     int scoreInt;
     int timeInt;
-    String questionsString;
     int questionnInt;
-
-    int helpw;
-    int help50;
-    int helpp;
-
-    int helpInt;
-
+    String questionsString;
     String timeString;
 
-    int btnMain;
-    int btnA;
-    int btnB;
-    int btnC;
-    int btnD;
+    boolean helpWH, help50, helpPH;
+    boolean helpAlreadyUsed = false;
+
+    int[] btnMain = new int[4];
 
     int currentScore;
-
     int lastQuestion;
 
-    private static int SPLASH_TIME_OUT = 1000;
-
     @Override
-    public void onBackPressed() {
-    }
+    public void onBackPressed() { }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
-        Resources res = getResources();
-        String[] qMain = res.getStringArray(R.array.qmain);
-        String[] qA = res.getStringArray(R.array.qa);
-        String[] qB = res.getStringArray(R.array.qb);
-        String[] qC = res.getStringArray(R.array.qc);
-        String[] qD = res.getStringArray(R.array.qd);
+        res = getResources();
+        qMain = res.getStringArray(R.array.qmain);
+        qA = res.getStringArray(R.array.qa);
+        qB = res.getStringArray(R.array.qb);
+        qC = res.getStringArray(R.array.qc);
+        qD = res.getStringArray(R.array.qd);
 
         prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
 
         scoreInt = prefs.getInt("scoreInt", scoreInt);
         timeInt = prefs.getInt("timeInt", timeInt);
-        questionsString = prefs.getString("questionsString", questionsString);
         questionnInt = prefs.getInt("questionnInt", questionnInt);
-        helpw = prefs.getInt("helpw", helpw);
-        helpp = prefs.getInt("helpp", helpp);
-        help50 = prefs.getInt("help50", help50);
+        questionsString = prefs.getString("questionsString", questionsString);
+        helpWH = prefs.getBoolean("helpWH", helpWH);
+        helpPH = prefs.getBoolean("helpPH", helpPH);
+        help50 = prefs.getBoolean("help50", help50);
 
         colorLGreen = getResources().getDrawable(R.drawable.custombutton_lgreen);
         colorGrey = getResources().getDrawable(R.drawable.custombutton_grey);
@@ -125,104 +108,44 @@ public class Question extends AppCompatActivity {
         countdownTimerText = findViewById(R.id.countdownText);
         score = findViewById(R.id.score);
 
-        switch(questionnInt){
-            case 1:
-                btnMain = 1234;
-                break;
-            case 2:
-                btnMain = 4213;
-                break;
-            case 3:
-                btnMain = 2143;
-                break;
-            case 4:
-                btnMain = 1234;
-                break;
-            case 5:
-                btnMain = 4231;
-                break;
-            case 6:
-                btnMain = 1234;
-                break;
-            case 7:
-                btnMain = 2341;
-                break;
-            case 8:
-                btnMain = 4321;
-                break;
-            case 9:
-                btnMain = 1234;
-                break;
-            case 10:
-                btnMain = 1432;
-                break;
-            case 11:
-                btnMain = 1243;
-                break;
-            case 12:
-                btnMain = 3214;
-                break;
-            case 13:
-                btnMain = 2413;
-                break;
-            case 14:
-                btnMain = 2431;
-                break;
-            case 15:
-                btnMain = 2143;
-                break;
-            case 16:
-                btnMain = 1234;
-                break;
-            case 17:
-                btnMain = 1234;
-                break;
-            case 18:
-                btnMain = 1234;
-                break;
-            case 19:
-                btnMain = 1234;
-                break;
-            case 20:
-                btnMain = 1234;
-                break;
+        for (int i = 0; i < 4; i++){
+            Random r = new Random();
+            double dr = r.nextDouble() * 4;
+            int ir = (int)dr + 1;
+            while (ir == btnMain[0] || ir == btnMain[1] || ir == btnMain[2] || ir == btnMain[3]) {
+                dr = r.nextDouble() * 4;
+                ir = (int) dr + 1;
+            }
+            btnMain[i] = ir;
         }
 
         Title.setText("שאלה " + questionnInt + " - " + currentScore + " נקודות");
         Question.setText(qMain[questionnInt - 1]);
-        btn1.setText(qA[questionnInt - 1]);
-        btn2.setText(qB[questionnInt - 1]);
-        btn3.setText(qC[questionnInt - 1]);
-        btn4.setText(qD[questionnInt - 1]);
-
-        btnA = btnMain / 1000;
-        btnB = (btnMain / 100) - (btnA * 10);
-        btnC = (btnMain / 10) - (btnA * 100 + btnB * 10);
-        btnD = btnMain - (btnA * 1000 + btnB * 100 + btnC * 10);
+        btn1.setText(ButtonText(btnMain[0]));
+        btn2.setText(ButtonText(btnMain[1]));
+        btn3.setText(ButtonText(btnMain[2]));
+        btn4.setText(ButtonText(btnMain[3]));
 
         score.setText(scoreInt + " נקודות");
 
-        if(helpw == 1){
+        btnhw.setClickable(helpWH);
+        btnh50.setClickable(help50);
+        btnhp.setClickable(helpPH);
+        if(!helpWH)
             btnhw.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
-            btnhw.setClickable(false);
-        }
-        if(help50 == 1){
+        if(!help50)
             btnh50.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
-            btnh50.setClickable(false);
-        }
-        if(helpp == 1){
+        if(!helpPH)
             btnhp.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
-            btnhp.setClickable(false);
-        }
 
-        int noOfMinutes = 31000;
-        startTimer(noOfMinutes);
+
+        startTimer();
     }
 
     public void answer(int type){
         String answerString = String.valueOf(type);
         timeString = countdownTimerText.getText().toString();
-        timeInt += (31 - Integer.parseInt(timeString));
+        timeInt += (noOfMinutes / 1000 - 1 - Integer.parseInt(timeString));
         questionnInt += 1;
         questionsString += answerString;
         scoreInt += currentScore * (1 - type / 2);
@@ -238,34 +161,23 @@ public class Question extends AppCompatActivity {
         PopUp();
     }
 
-    public void answerButton1 (View view){
-        answer((btnA + 1) / 3 + 1);
-    }
+    public void answerButton1 (View view){ answer((btnMain[0] + 1) / 3 + 1); }
 
-    public void answerButton2 (View view){
-        answer((btnB + 1) / 3 + 1);
-    }
+    public void answerButton2 (View view){ answer((btnMain[1] + 1) / 3 + 1); }
 
-    public void answerButton3 (View view){
-        answer((btnC + 1) / 3 + 1);
-    }
+    public void answerButton3 (View view){ answer((btnMain[2] + 1) / 3 + 1); }
 
-    public void answerButton4 (View view){
-        answer((btnD + 1) / 3 + 1);
-    }
+    public void answerButton4 (View view){ answer((btnMain[3] + 1) / 3 + 1); }
 
     public void helpWheel (View view){
-        if(helpInt != 1) {
+        if(!helpAlreadyUsed) {
 
-            helpInt = 1;
+            useHelp();
 
-            btnhw.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
-            btnhw.setClickable(false);
-
-            helpw = 1;
+            helpWH = false;
 
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("helpw", helpw);
+            editor.putBoolean("helpWH", helpWH);
             editor.apply();
 
             answer(1);
@@ -273,58 +185,61 @@ public class Question extends AppCompatActivity {
     }
 
     public void help50 (View view){
-        if(helpInt != 1) {
-            setButtonValue(3, colorGrey, 1);
-            setButtonValue(4, colorGrey, 1);
+        if(!helpAlreadyUsed) {
+            setButtonValue(3, colorGrey, false);
+            setButtonValue(4, colorGrey, false);
 
-            helpInt = 1;
+            useHelp();
 
-            btnh50.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
-            btnh50.setClickable(false);
-
-            help50 = 1;
+            help50 = false;
 
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("help50", help50);
+            editor.putBoolean("help50", help50);
             editor.apply();
         }
     }
 
     public void helpPhone (View view){
-        if(helpInt != 1) {
+        if(!helpAlreadyUsed) {
             Random d = new Random();
             double phoneHelpDouble = d.nextDouble();
             phoneHelpDouble *= 100;
             int phoneHelpInt = (int) phoneHelpDouble;
             phoneHelpInt /= 15;
-            if(phoneHelpInt > 2){
+
+            if(phoneHelpInt > 2)
                 phoneHelpInt = 2;
-            }
+
             phoneHelpInt = 3 - phoneHelpInt;
 
-            setButtonValue(phoneHelpInt, colorLGreen, 0);
+            setButtonValue(phoneHelpInt, colorLGreen, true);
+            setButtonValue(4, colorGrey, false);
 
-            setButtonValue(4, colorGrey, 1);
+            useHelp();
 
-            helpInt = 1;
-
-            btnhp.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
-            btnhp.setClickable(false);
-
-            helpp = 1;
+            helpPH = false;
 
             SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("helpp", helpp);
+            editor.putBoolean("helpPH", helpPH);
             editor.apply();
         }
     }
 
-    private void startTimer(int noOfMinutes) {
+    public void useHelp (){
+        helpAlreadyUsed = true;
+        btnhw.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
+        btnhw.setClickable(false);
+        btnh50.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
+        btnh50.setClickable(false);
+        btnhp.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
+        btnhp.setClickable(false);
+    }
+
+    private void startTimer() {
         countDownTimer = new CountDownTimer(noOfMinutes, 1000) {
             public void onTick(long millisUntilFinished) {
-                long millis = millisUntilFinished;
                 //Convert milliseconds into hour,minute and seconds
-                String hms = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
+                String hms = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
                 countdownTimerText.setText(hms);
                 int hmsInt = Integer.parseInt(hms);
 
@@ -340,20 +255,43 @@ public class Question extends AppCompatActivity {
         }.start();
     }
 
-    public void setButtonValue (int buttonType, Drawable color, int setClickable){
-
-        if (btnA == buttonType){btn1.setBackground(color);}
-        if (btnB == buttonType){btn2.setBackground(color);}
-        if (btnC == buttonType){btn3.setBackground(color);}
-        if (btnD == buttonType){btn4.setBackground(color);}
-
-        if (setClickable == 1){
-            if (btnA == buttonType){btn1.setClickable(false);}
-            if (btnB == buttonType){btn2.setClickable(false);}
-            if (btnC == buttonType){btn3.setClickable(false);}
-            if (btnD == buttonType){btn4.setClickable(false);}
+    private String ButtonText (int btnInt){
+        String returnStr = "";
+        switch (btnInt){
+            case 1:
+                returnStr = qA[questionnInt - 1];
+                break;
+            case 2:
+                returnStr = qB[questionnInt - 1];
+                break;
+            case 3:
+                returnStr = qC[questionnInt - 1];
+                break;
+            case 4:
+                returnStr = qD[questionnInt - 1];
+                break;
         }
 
+        return returnStr;
+    }
+
+    public void setButtonValue (int buttonType, Drawable color, boolean setClickable){
+        if (btnMain[0] == buttonType){
+            btn1.setBackground(color);
+            btn1.setClickable(setClickable);
+        }
+        if (btnMain[1] == buttonType){
+            btn2.setBackground(color);
+            btn2.setClickable(setClickable);
+        }
+        if (btnMain[2] == buttonType){
+            btn3.setBackground(color);
+            btn3.setClickable(setClickable);
+        }
+        if (btnMain[3] == buttonType){
+            btn4.setBackground(color);
+            btn4.setClickable(setClickable);
+        }
     }
 
     public void PopUp (){
@@ -390,7 +328,6 @@ public class Question extends AppCompatActivity {
             answersArray[i] = questionsString.charAt(i) - '0';
         }
 
-        Resources res = getResources();
         String noq = res.getString(R.string.numberOfQuestions);
         lastQuestion = Integer.parseInt(noq) + 1;
 

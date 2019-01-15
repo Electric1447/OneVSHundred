@@ -13,21 +13,18 @@ public class EndActivity extends AppCompatActivity {
     public String PREFS_OVH = "OVHPrefsFile";
     SharedPreferences prefs;
 
-    TextView EndM;
-    TextView ScoreM;
-    TextView TimeM;
+    TextView EndM, ScoreM, TimeM;
 
     int scoreInt;
     int timeInt;
-    String questionsString;
     int questionnInt;
+    String questionsString;
 
     int cAnswersI = 0;
     double cAnswersD;
 
     @Override
-    public void onBackPressed() {
-    }
+    public void onBackPressed() { }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +35,8 @@ public class EndActivity extends AppCompatActivity {
 
         scoreInt = prefs.getInt("scoreInt", scoreInt);
         timeInt = prefs.getInt("timeInt", timeInt);
-        questionsString = prefs.getString("questionsString", questionsString);
         questionnInt = prefs.getInt("questionnInt", questionnInt);
+        questionsString = prefs.getString("questionsString", questionsString);
 
         EndM = findViewById(R.id.endMessage);
         ScoreM = findViewById(R.id.scoreMessage);

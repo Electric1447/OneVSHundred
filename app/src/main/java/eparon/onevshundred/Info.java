@@ -21,8 +21,7 @@ public class Info extends AppCompatActivity {
     FloatingActionButton Next;
 
     @Override
-    public void onBackPressed() {
-    }
+    public void onBackPressed() { }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
