@@ -76,6 +76,7 @@ public class Question extends AppCompatActivity {
     int currentScore;
 
     int lastQuestion;
+
     private static int SPLASH_TIME_OUT = 1000;
 
     @Override
@@ -214,7 +215,7 @@ public class Question extends AppCompatActivity {
             btnhp.setClickable(false);
         }
 
-        int noOfMinutes = 30000;
+        int noOfMinutes = 31000;
         startTimer(noOfMinutes);
     }
 
@@ -326,6 +327,7 @@ public class Question extends AppCompatActivity {
                 String hms = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
                 countdownTimerText.setText(hms);
                 int hmsInt = Integer.parseInt(hms);
+
                 if (hmsInt <= 10 && hmsInt % 2 == 0)
                     countdownTimerText.setTextColor(COLOR_RED);
                 else
