@@ -108,7 +108,7 @@ public class Question extends AppCompatActivity {
         countdownTimerText = findViewById(R.id.countdownText);
         score = findViewById(R.id.score);
 
-        for (int i = 0; i < 4; i++){
+        for (int i = 0; i < btnMain.length; i++){
             Random r = new Random();
             double dr = r.nextDouble() * 4;
             int ir = (int)dr + 1;
