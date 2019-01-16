@@ -7,7 +7,8 @@
 
     <string name="score"><u>ניקוד</u>:</string>
 
-    <string name="info">Empty</string>
+    <string name="infoTitle">קטע מידע</string>
+    <string name="infoText">Empty</string>
 
     <string-array name="qmain">
         1     <item>Question 1</item>
@@ -31,6 +32,13 @@
         19    <item>Question 19</item>
         20    <item>Question 20</item>
     </string-array>
+
+    <array name="qarr">
+        <item>@array/qa</item>
+        <item>@array/qb</item>
+        <item>@array/qc</item>
+        <item>@array/qd</item>
+    </array>
 
     <string-array name="qa">
         1     <item>Answer A1</item>
