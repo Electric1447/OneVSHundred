@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -19,7 +21,7 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import android.os.CountDownTimer;
+import org.apache.commons.lang3.ArrayUtils;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -31,6 +33,7 @@ public class Question extends AppCompatActivity {
 
     private static int SPLASH_TIME_OUT = 1000;
     private static int noOfMinutes = 31000;
+    private static int buttons = 4;
 
     private TextView countdownTimerText;
     private static CountDownTimer countDownTimer;
@@ -42,23 +45,24 @@ public class Question extends AppCompatActivity {
 
     Resources res;
     String[] qMain;
-    String[] qA, qB, qC, qD;
+    TypedArray ta;
+    String[][] qArr;
 
     Drawable colorLGreen, colorGrey;
     TextView score, Title, Question;
-    Button btn1, btn2, btn3, btn4;
+    Button[] btn = new Button[buttons];
     FloatingActionButton btnhw, btnh50, btnhp;
 
     int scoreInt;
     int timeInt;
-    int questionnInt;
-    String questionsString;
+    int questionInt;
+    String answers;
     String timeString;
 
     boolean helpWH, help50, helpPH;
     boolean helpAlreadyUsed = false;
 
-    int[] btnMain = new int[4];
+    int[] btnMain = new int[buttons];
 
     int currentScore;
     int lastQuestion;
@@ -73,17 +77,21 @@ public class Question extends AppCompatActivity {
 
         res = getResources();
         qMain = res.getStringArray(R.array.qmain);
-        qA = res.getStringArray(R.array.qa);
-        qB = res.getStringArray(R.array.qb);
-        qC = res.getStringArray(R.array.qc);
-        qD = res.getStringArray(R.array.qd);
+        ta = res.obtainTypedArray(R.array.qarr);
+        qArr = new String[ta.length()][];
+        for (int i = 0; i < ta.length(); ++i) {
+            int id = ta.getResourceId(i, 0);
+            if (id > 0)
+                qArr[i] = res.getStringArray(id);
+        }
+        ta.recycle();
 
         prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
 
         scoreInt = prefs.getInt("scoreInt", scoreInt);
         timeInt = prefs.getInt("timeInt", timeInt);
-        questionnInt = prefs.getInt("questionnInt", questionnInt);
-        questionsString = prefs.getString("questionsString", questionsString);
+        questionInt = prefs.getInt("questionInt", questionInt);
+        answers = prefs.getString("answers", answers);
         helpWH = prefs.getBoolean("helpWH", helpWH);
         helpPH = prefs.getBoolean("helpPH", helpPH);
         help50 = prefs.getBoolean("help50", help50);
@@ -94,38 +102,33 @@ public class Question extends AppCompatActivity {
         Title = findViewById(R.id.top);
         Question = findViewById(R.id.question);
 
-        btn1 = findViewById(R.id.button1);
-        btn2 = findViewById(R.id.button2);
-        btn3 = findViewById(R.id.button3);
-        btn4 = findViewById(R.id.button4);
+        btn[0] = findViewById(R.id.button1);
+        btn[1] = findViewById(R.id.button2);
+        btn[2] = findViewById(R.id.button3);
+        btn[3] = findViewById(R.id.button4);
 
         btnhw = findViewById(R.id.fab1);
         btnh50 = findViewById(R.id.fab2);
         btnhp = findViewById(R.id.fab3);
 
-        currentScore = ((questionnInt - 1) / 4 + 1) * 20;
+        currentScore = ((questionInt - 1) / 4 + 1) * 20;
 
         countdownTimerText = findViewById(R.id.countdownText);
         score = findViewById(R.id.score);
 
-        for (int i = 0; i < btnMain.length; i++){
-            Random r = new Random();
-            double dr = r.nextDouble() * 4;
-            int ir = (int)dr + 1;
-            while (ir == btnMain[0] || ir == btnMain[1] || ir == btnMain[2] || ir == btnMain[3]) {
-                dr = r.nextDouble() * 4;
+        for (int i = 0; i < buttons; i++){
+            int ir;
+            do {
+                Random r = new Random();
+                double dr = r.nextDouble() * buttons;
                 ir = (int) dr + 1;
-            }
+            } while (ArrayUtils.contains(btnMain, ir));
             btnMain[i] = ir;
         }
 
-        Title.setText("שאלה " + questionnInt + " - " + currentScore + " נקודות");
-        Question.setText(qMain[questionnInt - 1]);
-        btn1.setText(ButtonText(btnMain[0]));
-        btn2.setText(ButtonText(btnMain[1]));
-        btn3.setText(ButtonText(btnMain[2]));
-        btn4.setText(ButtonText(btnMain[3]));
-
+        Title.setText("שאלה " + questionInt + " - " + currentScore + " נקודות");
+        Question.setText(qMain[questionInt - 1]);
+        setButtonsText();
         score.setText(scoreInt + " נקודות");
 
         btnhw.setClickable(helpWH);
@@ -146,14 +149,14 @@ public class Question extends AppCompatActivity {
         String answerString = String.valueOf(type);
         timeString = countdownTimerText.getText().toString();
         timeInt += (noOfMinutes / 1000 - 1 - Integer.parseInt(timeString));
-        questionnInt += 1;
-        questionsString += answerString;
+        questionInt++;
+        answers += answerString;
         scoreInt += currentScore * (1 - type / 2);
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("timeInt", timeInt);
-        editor.putInt("questionnInt", questionnInt);
-        editor.putString("questionsString", questionsString);
+        editor.putInt("questionInt", questionInt);
+        editor.putString("answers", answers);
         editor.putInt("scoreInt", scoreInt);
         editor.apply();
 
@@ -186,8 +189,8 @@ public class Question extends AppCompatActivity {
 
     public void help50 (View view){
         if(!helpAlreadyUsed) {
-            setButtonValue(3, colorGrey, false);
-            setButtonValue(4, colorGrey, false);
+            setButtonProps(3, colorGrey, false);
+            setButtonProps(4, colorGrey, false);
 
             useHelp();
 
@@ -212,8 +215,8 @@ public class Question extends AppCompatActivity {
 
             phoneHelpInt = 3 - phoneHelpInt;
 
-            setButtonValue(phoneHelpInt, colorLGreen, true);
-            setButtonValue(4, colorGrey, false);
+            setButtonProps(phoneHelpInt, colorLGreen, true);
+            setButtonProps(4, colorGrey, false);
 
             useHelp();
 
@@ -255,51 +258,27 @@ public class Question extends AppCompatActivity {
         }.start();
     }
 
-    private String ButtonText (int btnInt){
-        String returnStr = "";
-        switch (btnInt){
-            case 1:
-                returnStr = qA[questionnInt - 1];
-                break;
-            case 2:
-                returnStr = qB[questionnInt - 1];
-                break;
-            case 3:
-                returnStr = qC[questionnInt - 1];
-                break;
-            case 4:
-                returnStr = qD[questionnInt - 1];
-                break;
+    private void setButtonsText() {
+        for (int i = 0; i < buttons; i++){
+            btn[i].setText(qArr[btnMain[i] - 1][questionInt - 1]);
         }
-
-        return returnStr;
     }
 
-    public void setButtonValue (int buttonType, Drawable color, boolean setClickable){
-        if (btnMain[0] == buttonType){
-            btn1.setBackground(color);
-            btn1.setClickable(setClickable);
-        }
-        if (btnMain[1] == buttonType){
-            btn2.setBackground(color);
-            btn2.setClickable(setClickable);
-        }
-        if (btnMain[2] == buttonType){
-            btn3.setBackground(color);
-            btn3.setClickable(setClickable);
-        }
-        if (btnMain[3] == buttonType){
-            btn4.setBackground(color);
-            btn4.setClickable(setClickable);
+    public void setButtonProps(int buttonType, Drawable color, boolean setClickable){
+        for (int i = 0; i < buttons; i++){
+            if (btnMain[i] == buttonType){
+                btn[i].setBackground(color);
+                btn[i].setClickable(setClickable);
+            }
         }
     }
 
     public void PopUp (){
 
-        btn1.setClickable(false);
-        btn2.setClickable(false);
-        btn3.setClickable(false);
-        btn4.setClickable(false);
+        btn[0].setClickable(false);
+        btn[1].setClickable(false);
+        btn[2].setClickable(false);
+        btn[3].setClickable(false);
         btnhw.setClickable(false);
         btnh50.setClickable(false);
         btnhp.setClickable(false);
@@ -323,15 +302,9 @@ public class Question extends AppCompatActivity {
 
         TextView Message = customView.findViewById(R.id.message);
 
-        int[] answersArray = new int[questionsString.length()];
-        for (int i = 0; i < questionsString.length(); i++) {
-            answersArray[i] = questionsString.charAt(i) - '0';
-        }
+        lastQuestion = Integer.parseInt(res.getString(R.string.numberOfQuestions)) + 1;
 
-        String noq = res.getString(R.string.numberOfQuestions);
-        lastQuestion = Integer.parseInt(noq) + 1;
-
-        switch (answersArray[questionnInt - 2]) {
+        switch (answers.charAt(questionInt - 2) - '0') {
             case 1:
                 Message.setText("נכון!");
                 Message.setTextColor(COLOR_GREEN);
@@ -348,13 +321,10 @@ public class Question extends AppCompatActivity {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(questionnInt == lastQuestion){
-                    Intent a = new Intent(Question.this, EndActivity.class);
-                    startActivity(a);
-                } else {
-                    Intent a = new Intent(Question.this, Question.class);
-                    startActivity(a);
-                }
+                Intent a = new Intent(Question.this, Question.class);
+                if(questionInt == lastQuestion)
+                    a = new Intent(Question.this, EndActivity.class);
+                startActivity(a);
                 finish();
             }
         }, SPLASH_TIME_OUT);

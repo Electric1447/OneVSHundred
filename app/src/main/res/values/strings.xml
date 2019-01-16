@@ -33,6 +33,13 @@
         20    <item>Question 20</item>
     </string-array>
 
+    <array name="qarr">
+        <item>@array/qa</item>
+        <item>@array/qb</item>
+        <item>@array/qc</item>
+        <item>@array/qd</item>
+    </array>
+
     <string-array name="qa">
         1     <item>Answer A1</item>
         2     <item>Answer A2</item>

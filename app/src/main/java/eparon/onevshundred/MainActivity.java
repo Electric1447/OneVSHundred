@@ -17,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
 
     int scoreInt;
     int timeInt;
-    int questionnInt;
-    String questionsString;
+    int questionInt;
+    String answers;
 
     boolean helpWH, help50, helpPH;
 
@@ -34,8 +34,8 @@ public class MainActivity extends AppCompatActivity {
 
         scoreInt = prefs.getInt("scoreInt", scoreInt);
         timeInt = prefs.getInt("timeInt", timeInt);
-        questionnInt = prefs.getInt("questionnInt", questionnInt);
-        questionsString = prefs.getString("questionsString", questionsString);
+        questionInt = prefs.getInt("questionInt", questionInt);
+        answers = prefs.getString("answers", answers);
         helpWH = prefs.getBoolean("helpWH", helpWH);
         helpPH = prefs.getBoolean("helpPH", helpPH);
         help50 = prefs.getBoolean("help50", help50);
@@ -49,8 +49,8 @@ public class MainActivity extends AppCompatActivity {
     public void StartGame (View view){
         scoreInt = 0;
         timeInt = 0;
-        questionnInt = 1;
-        questionsString = "";
+        questionInt = 1;
+        answers = "";
         helpWH = true;
         helpPH = true;
         help50 = true;
@@ -58,8 +58,8 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("scoreInt", scoreInt);
         editor.putInt("timeInt", timeInt);
-        editor.putInt("questionnInt", questionnInt);
-        editor.putString("questionsString", questionsString);
+        editor.putInt("questionInt", questionInt);
+        editor.putString("answers", answers);
         editor.putBoolean("helpWH", helpWH);
         editor.putBoolean("helpPH", helpPH);
         editor.putBoolean("help50", help50);
