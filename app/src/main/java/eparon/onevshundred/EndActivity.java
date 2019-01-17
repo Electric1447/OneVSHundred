@@ -13,14 +13,19 @@ public class EndActivity extends AppCompatActivity {
     public String PREFS_OVH = "OVHPrefsFile";
     SharedPreferences prefs;
 
+    private static int NO_HELPS_BONUS_PERCENTAGE = 10;
+
     TextView EndM, TimeM, totalScore, qScore, timeScore, helpScore;
 
     int scoreInt;
     int timeInt;
     String answers;
+    boolean helpUsed;
 
     int cAnswersI = 0;
     double cAnswersD;
+
+    int tScore = 0, timebonus = 0, hScore = 0;
 
     @Override
     public void onBackPressed() { }
@@ -35,6 +40,7 @@ public class EndActivity extends AppCompatActivity {
         scoreInt = prefs.getInt("scoreInt", scoreInt);
         timeInt = prefs.getInt("timeInt", timeInt);
         answers = prefs.getString("answers", answers);
+        helpUsed = prefs.getBoolean("helpUsed", helpUsed);
 
         EndM = findViewById(R.id.endMessage);
         TimeM = findViewById(R.id.timeMessage);
@@ -51,9 +57,7 @@ public class EndActivity extends AppCompatActivity {
         }
 
         cAnswersI = answers.length() - cAnswersI;
-
-        cAnswersD = (cAnswersI / (double)answers.length()) * 100;
-        cAnswersD = (double)Math.round(cAnswersD * 10d) / 10d;
+        cAnswersD = (double)Math.round(((cAnswersI / (double)answers.length()) * 100) * 10d) / 10d;
 
         EndM.setText("עניתם נכון על " + cAnswersI + " מתוך " + answers.length() + " שאלות (" + cAnswersD + "%)");
 
@@ -61,11 +65,19 @@ public class EndActivity extends AppCompatActivity {
         String hms = String.format("%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(ti1000) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(ti1000)), TimeUnit.MILLISECONDS.toSeconds(ti1000) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(ti1000)));
         TimeM.setText("זמן: " + hms);
 
-        int timebonus = (answers.length() * 30 - timeInt) / 3 ;
-        int tScore = scoreInt + timebonus;
+        if (scoreInt != 0) {
+            timebonus = (answers.length() * 30 - timeInt) / 3;
+            hScore = 0;
+
+            if (!helpUsed)
+                hScore = (scoreInt + timebonus) / NO_HELPS_BONUS_PERCENTAGE;
+
+            tScore = scoreInt + timebonus + hScore;
+        }
+
         qScore.setText("שאלות: " + scoreInt);
         timeScore.setText("בונוס זמן: " + timebonus);
-        helpScore.setText("בונוס עזרות: " + 0);
+        helpScore.setText("בונוס עזרות: " + hScore);
         totalScore.setText("סכ\"ה: " + tScore);
 
     }

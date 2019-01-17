@@ -19,6 +19,7 @@ public class MainActivity extends AppCompatActivity {
     int timeInt;
     int questionInt;
     String answers;
+    boolean helpUsed;
 
     boolean helpWH, help50, helpPH;
 
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
         timeInt = prefs.getInt("timeInt", timeInt);
         questionInt = prefs.getInt("questionInt", questionInt);
         answers = prefs.getString("answers", answers);
+        helpUsed = prefs.getBoolean("helpUsed", helpUsed);
         helpWH = prefs.getBoolean("helpWH", helpWH);
         helpPH = prefs.getBoolean("helpPH", helpPH);
         help50 = prefs.getBoolean("help50", help50);
@@ -51,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
         timeInt = 0;
         questionInt = 1;
         answers = "";
+        helpUsed = false;
         helpWH = true;
         helpPH = true;
         help50 = true;
@@ -60,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("timeInt", timeInt);
         editor.putInt("questionInt", questionInt);
         editor.putString("answers", answers);
+        editor.putBoolean("helpUsed", helpUsed);
         editor.putBoolean("helpWH", helpWH);
         editor.putBoolean("helpPH", helpPH);
         editor.putBoolean("help50", help50);

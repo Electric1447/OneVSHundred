@@ -60,6 +60,7 @@ public class Question extends AppCompatActivity {
     String timeString;
 
     boolean helpWH, help50, helpPH;
+    boolean helpUsed;
     boolean helpAlreadyUsed = false;
 
     int[] btnMain = new int[buttons];
@@ -92,6 +93,7 @@ public class Question extends AppCompatActivity {
         timeInt = prefs.getInt("timeInt", timeInt);
         questionInt = prefs.getInt("questionInt", questionInt);
         answers = prefs.getString("answers", answers);
+        helpUsed = prefs.getBoolean("helpUsed", helpUsed);
         helpWH = prefs.getBoolean("helpWH", helpWH);
         helpPH = prefs.getBoolean("helpPH", helpPH);
         help50 = prefs.getBoolean("help50", help50);
@@ -236,6 +238,11 @@ public class Question extends AppCompatActivity {
         btnh50.setClickable(false);
         btnhp.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
         btnhp.setClickable(false);
+
+        helpUsed = true;
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("helpUsed", helpUsed);
+        editor.apply();
     }
 
     private void startTimer() {
