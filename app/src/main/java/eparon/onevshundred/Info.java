@@ -40,14 +40,12 @@ public class Info extends AppCompatActivity {
 
     public void DoAgree(View view) {
 
-        if (!Agree.isChecked()) {
-            Next.setClickable(false);
+        Next.setClickable(Agree.isChecked());
+
+        if (!Agree.isChecked())
             Next.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
-        }
-        if (Agree.isChecked()) {
-            Next.setClickable(true);
+        if (Agree.isChecked())
             Next.setBackgroundTintList(ColorStateList.valueOf(COLOR_YELLOW));
-        }
     }
 
     public void GoNext(View view) {
