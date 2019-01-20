@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 public class Info extends AppCompatActivity {
 
-
     int COLOR_YELLOW = 0xFFFFFF00;
     int COLOR_DGREY = 0xFF666666;
 

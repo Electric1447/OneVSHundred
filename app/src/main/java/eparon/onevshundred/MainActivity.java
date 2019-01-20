@@ -39,13 +39,12 @@ public class MainActivity extends AppCompatActivity {
         answers = prefs.getString("answers", answers);
         helpUsed = prefs.getBoolean("helpUsed", helpUsed);
         helpWH = prefs.getBoolean("helpWH", helpWH);
-        helpPH = prefs.getBoolean("helpPH", helpPH);
         help50 = prefs.getBoolean("help50", help50);
+        helpPH = prefs.getBoolean("helpPH", helpPH);
 
         TextView Welcome = findViewById(R.id.welcome);
         String appname = getResources().getString(R.string.app_name);
         Welcome.setText("ברוכים הבאים ל: " + appname + "!");
-
     }
 
     public void StartGame (View view){
@@ -55,8 +54,8 @@ public class MainActivity extends AppCompatActivity {
         answers = "";
         helpUsed = false;
         helpWH = true;
-        helpPH = true;
         help50 = true;
+        helpPH = true;
 
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("scoreInt", scoreInt);
@@ -65,15 +64,13 @@ public class MainActivity extends AppCompatActivity {
         editor.putString("answers", answers);
         editor.putBoolean("helpUsed", helpUsed);
         editor.putBoolean("helpWH", helpWH);
-        editor.putBoolean("helpPH", helpPH);
         editor.putBoolean("help50", help50);
+        editor.putBoolean("helpPH", helpPH);
         editor.apply();
 
         Intent a = new Intent(MainActivity.this, Info.class);
-
         if(skipInfo)
             a = new Intent(MainActivity.this, Question.class);
-
         startActivity(a);
     }
 
