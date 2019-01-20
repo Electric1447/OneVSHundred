@@ -33,7 +33,7 @@ public class Question extends AppCompatActivity {
 
     private static int SPLASH_TIME_OUT = 1000;
     private static int noOfMinutes = 31000;
-    private static int buttons = 4;
+    private int buttons = 4;
 
     private TextView countdownTimerText;
     private static CountDownTimer countDownTimer;
@@ -53,15 +53,13 @@ public class Question extends AppCompatActivity {
     Button[] btn = new Button[buttons];
     FloatingActionButton[] btnh = new FloatingActionButton[3];
 
-    int scoreInt;
-    int timeInt;
+    int scoreInt, timeInt;
     int questionInt;
     String answers;
     String timeString;
 
     boolean helpWH, help50, helpPH;
     boolean helpUsed;
-    boolean helpAlreadyUsed = false;
 
     int[] btnMain = new int[buttons];
 
@@ -118,6 +116,16 @@ public class Question extends AppCompatActivity {
         countdownTimerText = findViewById(R.id.countdownText);
         score = findViewById(R.id.score);
 
+        if (qArr[2][questionInt - 1].equals("EMPTY") && qArr[3][questionInt - 1].equals("EMPTY")) {
+            buttons = 2;
+            btn[2].setVisibility(View.GONE);
+            btn[3].setVisibility(View.GONE);
+        }
+        if (!qArr[2][questionInt - 1].equals("EMPTY") && qArr[3][questionInt - 1].equals("EMPTY")) {
+            buttons = 3;
+            btn[3].setVisibility(View.GONE);
+        }
+
         for (int i = 0; i < buttons; i++){
             int ir;
             do {
@@ -128,24 +136,28 @@ public class Question extends AppCompatActivity {
             btnMain[i] = ir;
         }
 
-        Title.setText("שאלה " + questionInt + " - " + currentScore + " נקודות");
-        Question.setText(qMain[questionInt - 1]);
-        setButtonsText();
-        score.setText(scoreInt + " נקודות");
-
         setHelpButtonProps(0, helpWH);
         setHelpButtonProps(1, help50);
         setHelpButtonProps(2, helpPH);
 
+        if (buttons != 4) {
+            setHelpButtonProps(1, false);
+            setHelpButtonProps(2, false);
+        }
+
+        Title.setText("שאלה " + questionInt + " - " + currentScore + " נקודות");
+        Question.setText(qMain[questionInt - 1]);
+        score.setText(scoreInt + " נקודות");
+        setButtonsText();
+
         startTimer();
     }
 
-    public void answer(int type){
-        String answerString = String.valueOf(type);
+    public void answer (int type) {
         timeString = countdownTimerText.getText().toString();
         timeInt += (noOfMinutes / 1000 - 1 - Integer.parseInt(timeString));
         questionInt++;
-        answers += answerString;
+        answers += String.valueOf(type);
         scoreInt += currentScore * (1 - type / 2);
 
         SharedPreferences.Editor editor = prefs.edit();
@@ -159,72 +171,62 @@ public class Question extends AppCompatActivity {
         PopUp();
     }
 
-    public void answerButton1 (View view){ answer((btnMain[0] + 1) / 3 + 1); }
+    public void answerButton1 (View view) { answer((btnMain[0] + 1) / 3 + 1); }
 
-    public void answerButton2 (View view){ answer((btnMain[1] + 1) / 3 + 1); }
+    public void answerButton2 (View view) { answer((btnMain[1] + 1) / 3 + 1); }
 
-    public void answerButton3 (View view){ answer((btnMain[2] + 1) / 3 + 1); }
+    public void answerButton3 (View view) { answer((btnMain[2] + 1) / 3 + 1); }
 
-    public void answerButton4 (View view){ answer((btnMain[3] + 1) / 3 + 1); }
+    public void answerButton4 (View view) { answer((btnMain[3] + 1) / 3 + 1); }
 
     public void helpWheel (View view){
-        if(!helpAlreadyUsed) {
+        useHelp();
 
-            useHelp();
+        helpWH = false;
 
-            helpWH = false;
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("helpWH", helpWH);
+        editor.apply();
 
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("helpWH", helpWH);
-            editor.apply();
-
-            answer(1);
-        }
+        answer(1);
     }
 
     public void help50 (View view){
-        if(!helpAlreadyUsed) {
-            setButtonProps(3, colorGrey, false);
-            setButtonProps(4, colorGrey, false);
+        setButtonProps(3, colorGrey, false);
+        setButtonProps(4, colorGrey, false);
 
-            useHelp();
+        useHelp();
 
-            help50 = false;
+        help50 = false;
 
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("help50", help50);
-            editor.apply();
-        }
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("help50", help50);
+        editor.apply();
     }
 
     public void helpPhone (View view){
-        if(!helpAlreadyUsed) {
-            Random d = new Random();
-            double phoneHelpDouble = d.nextDouble();
-            phoneHelpDouble *= 100;
-            int phoneHelpInt = (int) phoneHelpDouble;
-            phoneHelpInt /= 15;
+        Random d = new Random();
+        double phoneHelpDouble = d.nextDouble() * 100;
+        int phoneHelpInt = (int)phoneHelpDouble / 15;
 
-            if(phoneHelpInt > 2)
-                phoneHelpInt = 2;
+        if(phoneHelpInt > 2)
+            phoneHelpInt = 2;
 
-            phoneHelpInt = 3 - phoneHelpInt;
+        phoneHelpInt = 3 - phoneHelpInt;
 
-            setButtonProps(phoneHelpInt, colorLGreen, true);
-            setButtonProps(4, colorGrey, false);
+        setButtonProps(phoneHelpInt, colorLGreen, true);
+        setButtonProps(4, colorGrey, false);
 
-            useHelp();
+        useHelp();
 
-            helpPH = false;
+        helpPH = false;
 
-            SharedPreferences.Editor editor = prefs.edit();
-            editor.putBoolean("helpPH", helpPH);
-            editor.apply();
-        }
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putBoolean("helpPH", helpPH);
+        editor.apply();
     }
 
     public void useHelp (){
-        helpAlreadyUsed = true;
         for (int i = 0; i < 3; i++) {
             setHelpButtonProps(i, false);
         }
@@ -241,17 +243,14 @@ public class Question extends AppCompatActivity {
                 //Convert milliseconds into hour,minute and seconds
                 String hms = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
                 countdownTimerText.setText(hms);
-                int hmsInt = Integer.parseInt(hms);
 
-                if (hmsInt <= 10 && hmsInt % 2 == 0)
+                if (Integer.parseInt(hms) <= 10 && Integer.parseInt(hms) % 2 == 0)
                     countdownTimerText.setTextColor(COLOR_RED);
                 else
                     countdownTimerText.setTextColor(COLOR_WHITE);
             }
 
-            public void onFinish() {
-                answer(3);
-            }
+            public void onFinish() { answer(3); }
         }.start();
     }
 

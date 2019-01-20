@@ -15,8 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static boolean skipInfo = false; // Skips the Info Screen
 
-    int scoreInt;
-    int timeInt;
+    int scoreInt, timeInt;
     int questionInt;
     String answers;
     boolean helpUsed;
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView Welcome = findViewById(R.id.welcome);
         String appname = getResources().getString(R.string.app_name);
-        Welcome.setText("ברוכים הבאים ל: " + appname + "!");
+        Welcome.setText(String.format("ברוכים הבאים ל: %s!", appname));
     }
 
     public void StartGame (View view){

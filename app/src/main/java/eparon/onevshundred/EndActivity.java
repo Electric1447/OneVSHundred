@@ -17,8 +17,7 @@ public class EndActivity extends AppCompatActivity {
 
     TextView EndM, TimeM, totalScore, qScore, timeScore, helpScore;
 
-    int scoreInt;
-    int timeInt;
+    int scoreInt, timeInt;
     String answers;
     boolean helpUsed;
 

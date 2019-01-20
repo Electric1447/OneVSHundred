@@ -141,9 +141,9 @@
 
     <Button
         android:textStyle="bold"
-        android:textSize="20sp"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
+        android:textSize="24sp"
+        android:paddingTop="12dp"
+        android:paddingBottom="12dp"
         android:layout_marginLeft="45dp"
         android:layout_marginRight="45dp"
         android:layout_marginBottom="30dp"
