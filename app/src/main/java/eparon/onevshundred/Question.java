@@ -51,7 +51,7 @@ public class Question extends AppCompatActivity {
     Drawable colorLGreen, colorGrey;
     TextView score, Title, Question;
     Button[] btn = new Button[buttons];
-    FloatingActionButton btnhw, btnh50, btnhp;
+    FloatingActionButton[] btnh = new FloatingActionButton[3];
 
     int scoreInt;
     int timeInt;
@@ -95,8 +95,8 @@ public class Question extends AppCompatActivity {
         answers = prefs.getString("answers", answers);
         helpUsed = prefs.getBoolean("helpUsed", helpUsed);
         helpWH = prefs.getBoolean("helpWH", helpWH);
-        helpPH = prefs.getBoolean("helpPH", helpPH);
         help50 = prefs.getBoolean("help50", help50);
+        helpPH = prefs.getBoolean("helpPH", helpPH);
 
         colorLGreen = getResources().getDrawable(R.drawable.custombutton_lgreen);
         colorGrey = getResources().getDrawable(R.drawable.custombutton_grey);
@@ -109,9 +109,9 @@ public class Question extends AppCompatActivity {
         btn[2] = findViewById(R.id.button3);
         btn[3] = findViewById(R.id.button4);
 
-        btnhw = findViewById(R.id.fab1);
-        btnh50 = findViewById(R.id.fab2);
-        btnhp = findViewById(R.id.fab3);
+        btnh[0] = findViewById(R.id.fab1); // Help Wheel
+        btnh[1] = findViewById(R.id.fab2); // Help 50
+        btnh[2] = findViewById(R.id.fab3); // Help Phone
 
         currentScore = ((questionInt - 1) / 4 + 1) * 20;
 
@@ -133,16 +133,9 @@ public class Question extends AppCompatActivity {
         setButtonsText();
         score.setText(scoreInt + " נקודות");
 
-        btnhw.setClickable(helpWH);
-        btnh50.setClickable(help50);
-        btnhp.setClickable(helpPH);
-        if(!helpWH)
-            btnhw.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
-        if(!help50)
-            btnh50.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
-        if(!helpPH)
-            btnhp.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
-
+        setHelpButtonProps(0, helpWH);
+        setHelpButtonProps(1, help50);
+        setHelpButtonProps(2, helpPH);
 
         startTimer();
     }
@@ -232,12 +225,9 @@ public class Question extends AppCompatActivity {
 
     public void useHelp (){
         helpAlreadyUsed = true;
-        btnhw.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
-        btnhw.setClickable(false);
-        btnh50.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
-        btnh50.setClickable(false);
-        btnhp.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
-        btnhp.setClickable(false);
+        for (int i = 0; i < 3; i++) {
+            setHelpButtonProps(i, false);
+        }
 
         helpUsed = true;
         SharedPreferences.Editor editor = prefs.edit();
@@ -280,15 +270,20 @@ public class Question extends AppCompatActivity {
         }
     }
 
+    public void setHelpButtonProps(int buttonType, boolean setValue){
+        btnh[buttonType].setClickable(setValue);
+        if (!setValue)
+            btnh[buttonType].setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
+    }
+
     public void PopUp (){
 
-        btn[0].setClickable(false);
-        btn[1].setClickable(false);
-        btn[2].setClickable(false);
-        btn[3].setClickable(false);
-        btnhw.setClickable(false);
-        btnh50.setClickable(false);
-        btnhp.setClickable(false);
+        for (int i = 0; i < buttons; i++) {
+            btn[i].setClickable(false);
+        }
+        for (int i = 0; i < 3; i++) {
+            setHelpButtonProps(i, false);
+        }
 
         CoordinatorLayout mCoordinatorLayout = findViewById(R.id.cl);
         Context mContext = getApplicationContext();
@@ -335,8 +330,6 @@ public class Question extends AppCompatActivity {
                 finish();
             }
         }, SPLASH_TIME_OUT);
-
     }
-
 
 }

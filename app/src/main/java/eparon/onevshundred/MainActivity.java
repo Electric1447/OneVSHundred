@@ -69,13 +69,12 @@ public class MainActivity extends AppCompatActivity {
         editor.putBoolean("help50", help50);
         editor.apply();
 
-        if(!skipInfo) {
-            Intent q = new Intent(MainActivity.this, Info.class);
-            startActivity(q);
-        } else {
-            Intent q = new Intent(MainActivity.this, Question.class);
-            startActivity(q);
-        }
+        Intent a = new Intent(MainActivity.this, Info.class);
+
+        if(skipInfo)
+            a = new Intent(MainActivity.this, Question.class);
+
+        startActivity(a);
     }
 
 }
