@@ -32,7 +32,7 @@ public class Question extends AppCompatActivity {
     SharedPreferences prefs;
 
     private static int SPLASH_TIME_OUT = 1000;
-    private static int noOfMinutes = 31000;
+    private static int noOfSeconds = (MainActivity.NUMBER_OF_SECONDS + 1) * 1000;
     private int buttons = 4;
 
     private TextView countdownTimerText;
@@ -64,7 +64,6 @@ public class Question extends AppCompatActivity {
     int[] btnMain = new int[buttons];
 
     int currentScore;
-    int lastQuestion;
 
     @Override
     public void onBackPressed() { }
@@ -112,6 +111,8 @@ public class Question extends AppCompatActivity {
         btnh[2] = findViewById(R.id.fab3); // Help Phone
 
         currentScore = ((questionInt - 1) / 4 + 1) * 20;
+        if (MainActivity.QR_ENABLED)
+            currentScore = 50;
 
         countdownTimerText = findViewById(R.id.countdownText);
         score = findViewById(R.id.score);
@@ -155,7 +156,7 @@ public class Question extends AppCompatActivity {
 
     public void answer (int type) {
         timeString = countdownTimerText.getText().toString();
-        timeInt += (noOfMinutes / 1000 - 1 - Integer.parseInt(timeString));
+        timeInt += (noOfSeconds / 1000 - 1 - Integer.parseInt(timeString));
         questionInt++;
         answers += String.valueOf(type);
         scoreInt += currentScore * (1 - type / 2);
@@ -238,7 +239,7 @@ public class Question extends AppCompatActivity {
     }
 
     private void startTimer() {
-        countDownTimer = new CountDownTimer(noOfMinutes, 1000) {
+        countDownTimer = new CountDownTimer(noOfSeconds, 1000) {
             public void onTick(long millisUntilFinished) {
                 //Convert milliseconds into hour,minute and seconds
                 String hms = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
@@ -303,8 +304,6 @@ public class Question extends AppCompatActivity {
 
         TextView Message = customView.findViewById(R.id.message);
 
-        lastQuestion = Integer.parseInt(res.getString(R.string.numberOfQuestions)) + 1;
-
         switch (answers.charAt(questionInt - 2) - '0') {
             case 1:
                 Message.setText("נכון!");
@@ -323,7 +322,9 @@ public class Question extends AppCompatActivity {
             @Override
             public void run() {
                 Intent a = new Intent(Question.this, Question.class);
-                if(questionInt == lastQuestion)
+                if ((questionInt - 1) % MainActivity.QUESTIONS_PER_QR == 0 && MainActivity.QR_ENABLED)
+                    a = new Intent(Question.this, QRActivity.class);
+                if (questionInt == Integer.parseInt(res.getString(R.string.numberOfQuestions)) + 1)
                     a = new Intent(Question.this, EndActivity.class);
                 startActivity(a);
                 finish();

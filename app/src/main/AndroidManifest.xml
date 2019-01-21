@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="eparon.onevshundred">
+
+    <uses-permission android:name="android.permission.CAMERA" />
 
     <application
         android:allowBackup="true"
@@ -13,19 +16,30 @@
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name=".EndActivity"
+            android:name=".Question"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".Question"
+            android:name=".EndActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Info"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".QRActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".zxing.AnyOrientationCaptureActivity"
+            android:screenOrientation="portrait"
+            android:stateNotNeeded="true"
+            android:theme="@style/zxing_CaptureTheme"
+            android:windowSoftInputMode="stateAlwaysHidden"/>
+        <activity android:name="com.journeyapps.barcodescanner.CaptureActivity" android:screenOrientation="portrait" tools:replace="screenOrientation" />
     </application>
 
 </manifest>

@@ -14,6 +14,10 @@ public class MainActivity extends AppCompatActivity {
     SharedPreferences prefs;
 
     private static boolean skipInfo = false; // Skips the Info Screen
+    public static int NUMBER_OF_SECONDS = 30; //
+    public static int NO_HELPS_BONUS_PERCENTAGE = 10;
+    public static boolean QR_ENABLED = false;
+    public static int QUESTIONS_PER_QR = 5;
 
     int scoreInt, timeInt;
     int questionInt;

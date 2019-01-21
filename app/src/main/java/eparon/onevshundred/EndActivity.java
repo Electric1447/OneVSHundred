@@ -13,8 +13,6 @@ public class EndActivity extends AppCompatActivity {
     public String PREFS_OVH = "OVHPrefsFile";
     SharedPreferences prefs;
 
-    private static int NO_HELPS_BONUS_PERCENTAGE = 10;
-
     TextView EndM, TimeM, totalScore, qScore, timeScore, helpScore;
 
     int scoreInt, timeInt;
@@ -69,7 +67,7 @@ public class EndActivity extends AppCompatActivity {
             hScore = 0;
 
             if (!helpUsed)
-                hScore = (scoreInt + timebonus) / NO_HELPS_BONUS_PERCENTAGE;
+                hScore = (scoreInt + timebonus) / MainActivity.NO_HELPS_BONUS_PERCENTAGE;
 
             tScore = scoreInt + timebonus + hScore;
         }
