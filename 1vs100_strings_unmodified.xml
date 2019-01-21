@@ -132,4 +132,30 @@
         20    <item>Answer D20</item>
     </string-array>
 
+    <string-array name="qrmain">
+        1     <item>Location 1</item>
+        2     <item>Location 2</item>
+        3     <item>Location 3</item>
+        4     <item>Location 4</item>
+        5     <item>Location 5</item>
+        6     <item>Location 6</item>
+        7     <item>Location 7</item>
+        8     <item>Location 8</item>
+        9     <item>Location 9</item>
+        10    <item>Location 10</item>
+    </string-array>
+
+    <string-array name="qrcodes">
+        1     <item>465178</item>
+        2     <item>363636</item>
+        3     <item>851514</item>
+        4     <item>191977</item>
+        5     <item>178447</item>
+        6     <item>584708</item>
+        7     <item>478749</item>
+        8     <item>598378</item>
+        9     <item>778907</item>
+        10    <item>124075</item>
+    </string-array>
+
 </resources>
