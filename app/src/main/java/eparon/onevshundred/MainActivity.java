@@ -19,13 +19,6 @@ public class MainActivity extends AppCompatActivity {
     public static boolean QR_ENABLED = false;
     public static int QUESTIONS_PER_QR = 5;
 
-    int scoreInt, timeInt;
-    int questionInt;
-    String answers;
-    boolean helpUsed;
-
-    boolean helpWH, help50, helpPH;
-
     @Override
     public void onBackPressed() { }
 
@@ -36,39 +29,22 @@ public class MainActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
 
-        scoreInt = prefs.getInt("scoreInt", scoreInt);
-        timeInt = prefs.getInt("timeInt", timeInt);
-        questionInt = prefs.getInt("questionInt", questionInt);
-        answers = prefs.getString("answers", answers);
-        helpUsed = prefs.getBoolean("helpUsed", helpUsed);
-        helpWH = prefs.getBoolean("helpWH", helpWH);
-        help50 = prefs.getBoolean("help50", help50);
-        helpPH = prefs.getBoolean("helpPH", helpPH);
-
         TextView Welcome = findViewById(R.id.welcome);
         String appname = getResources().getString(R.string.app_name);
         Welcome.setText(String.format("ברוכים הבאים ל: %s!", appname));
     }
 
     public void StartGame (View view){
-        scoreInt = 0;
-        timeInt = 0;
-        questionInt = 1;
-        answers = "";
-        helpUsed = false;
-        helpWH = true;
-        help50 = true;
-        helpPH = true;
 
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("scoreInt", scoreInt);
-        editor.putInt("timeInt", timeInt);
-        editor.putInt("questionInt", questionInt);
-        editor.putString("answers", answers);
-        editor.putBoolean("helpUsed", helpUsed);
-        editor.putBoolean("helpWH", helpWH);
-        editor.putBoolean("help50", help50);
-        editor.putBoolean("helpPH", helpPH);
+        editor.putInt("scoreInt", 0);
+        editor.putInt("timeInt", 0);
+        editor.putInt("questionInt", 1);
+        editor.putString("answers", "");
+        editor.putBoolean("helpUsed", false);
+        editor.putBoolean("helpWH", true);
+        editor.putBoolean("help50", true);
+        editor.putBoolean("helpPH", true);
         editor.apply();
 
         Intent a = new Intent(MainActivity.this, Info.class);

@@ -130,7 +130,7 @@
             android:scaleY="1.5"
             app:fabCustomSize="32dp"
             android:clickable="true"
-            android:onClick="helpWheel"
+            android:onClick="help"
             android:scaleType="center"
             android:src="@drawable/ic_custom_wheel_48dp"/>
 
@@ -146,7 +146,7 @@
                 android:layout_marginLeft="12dp"
                 android:layout_marginTop="6dp"
                 android:clickable="true"
-                android:onClick="help50"/>
+                android:onClick="help"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -171,7 +171,7 @@
             android:scaleY="1.5"
             app:fabCustomSize="32dp"
             android:clickable="true"
-            android:onClick="helpPhone"
+            android:onClick="help"
             android:scaleType="center"
             android:src="@drawable/ic_custom_phone_48dp"/>
 

@@ -58,7 +58,8 @@ public class Question extends AppCompatActivity {
     String answers;
     String timeString;
 
-    boolean helpWH, help50, helpPH;
+    boolean[] help = new boolean[3];
+    String[] helpStr = new String[] {"helpWH", "help50", "helpPH"};
     boolean helpUsed;
 
     int[] btnMain = new int[buttons];
@@ -91,9 +92,9 @@ public class Question extends AppCompatActivity {
         questionInt = prefs.getInt("questionInt", questionInt);
         answers = prefs.getString("answers", answers);
         helpUsed = prefs.getBoolean("helpUsed", helpUsed);
-        helpWH = prefs.getBoolean("helpWH", helpWH);
-        help50 = prefs.getBoolean("help50", help50);
-        helpPH = prefs.getBoolean("helpPH", helpPH);
+
+        for (int i = 0; i < help.length; i++)
+            help[i] = prefs.getBoolean(helpStr[i], help[i]);
 
         colorLGreen = getResources().getDrawable(R.drawable.custombutton_lgreen);
         colorGrey = getResources().getDrawable(R.drawable.custombutton_grey);
@@ -137,9 +138,8 @@ public class Question extends AppCompatActivity {
             btnMain[i] = ir;
         }
 
-        setHelpButtonProps(0, helpWH);
-        setHelpButtonProps(1, help50);
-        setHelpButtonProps(2, helpPH);
+        for (int i = 0; i < help.length; i++)
+            setHelpButtonProps(i, help[i]);
 
         if (buttons != 4) {
             setHelpButtonProps(1, false);
@@ -180,61 +180,46 @@ public class Question extends AppCompatActivity {
 
     public void answerButton4 (View view) { answer((btnMain[3] + 1) / 3 + 1); }
 
-    public void helpWheel (View view){
+    public void help (View view) {
         useHelp();
 
-        helpWH = false;
+        int i = 0;
+        if (view.getId() == R.id.fab2) i = 1;
+        if (view.getId() == R.id.fab3) i = 2;
 
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("helpWH", helpWH);
+        editor.putBoolean(helpStr[i], false);
         editor.apply();
 
-        answer(1);
-    }
+        switch (i) {
+            case 0:
+                answer(1);
+                break;
+            case 1:
+                setButtonProps(3, colorGrey, false);
+                setButtonProps(4, colorGrey, false);
+                break;
+            case 2:
+                Random d = new Random();
+                int phoneHelpInt = (int)(d.nextDouble() * 100) / 15;
 
-    public void help50 (View view){
-        setButtonProps(3, colorGrey, false);
-        setButtonProps(4, colorGrey, false);
+                if(phoneHelpInt > 2)
+                    phoneHelpInt = 2;
 
-        useHelp();
+                phoneHelpInt = 3 - phoneHelpInt;
 
-        help50 = false;
-
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("help50", help50);
-        editor.apply();
-    }
-
-    public void helpPhone (View view){
-        Random d = new Random();
-        double phoneHelpDouble = d.nextDouble() * 100;
-        int phoneHelpInt = (int)phoneHelpDouble / 15;
-
-        if(phoneHelpInt > 2)
-            phoneHelpInt = 2;
-
-        phoneHelpInt = 3 - phoneHelpInt;
-
-        setButtonProps(phoneHelpInt, colorLGreen, true);
-        setButtonProps(4, colorGrey, false);
-
-        useHelp();
-
-        helpPH = false;
-
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("helpPH", helpPH);
-        editor.apply();
+                setButtonProps(phoneHelpInt, colorLGreen, true);
+                setButtonProps(4, colorGrey, false);
+                break;
+        }
     }
 
     public void useHelp (){
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 3; i++)
             setHelpButtonProps(i, false);
-        }
 
-        helpUsed = true;
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("helpUsed", helpUsed);
+        editor.putBoolean("helpUsed", true);
         editor.apply();
     }
 
@@ -256,9 +241,8 @@ public class Question extends AppCompatActivity {
     }
 
     private void setButtonsText() {
-        for (int i = 0; i < buttons; i++){
+        for (int i = 0; i < buttons; i++)
             btn[i].setText(qArr[btnMain[i] - 1][questionInt - 1]);
-        }
     }
 
     public void setButtonProps(int buttonType, Drawable color, boolean setClickable){
@@ -278,12 +262,12 @@ public class Question extends AppCompatActivity {
 
     public void PopUp (){
 
-        for (int i = 0; i < buttons; i++) {
+        for (int i = 0; i < buttons; i++)
             btn[i].setClickable(false);
-        }
-        for (int i = 0; i < 3; i++) {
+
+        for (int i = 0; i < 3; i++)
             setHelpButtonProps(i, false);
-        }
+
 
         CoordinatorLayout mCoordinatorLayout = findViewById(R.id.cl);
         Context mContext = getApplicationContext();
