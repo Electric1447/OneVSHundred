@@ -10,8 +10,9 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@color/colorPrimaryDark">
 
         <TextView
             android:id="@+id/welcome"
@@ -19,7 +20,10 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textColor="#FFF"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="17dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:textStyle="bold"
             android:textSize="40sp"/>
 

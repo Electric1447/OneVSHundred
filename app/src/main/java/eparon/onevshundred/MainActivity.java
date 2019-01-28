@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView Welcome = findViewById(R.id.welcome);
         String appname = getResources().getString(R.string.app_name);
-        Welcome.setText(String.format("ברוכים הבאים ל: %s!", appname));
+        Welcome.setText(String.format("ברוכים הבאים ל: \n%s!", appname));
     }
 
     public void StartGame (View view){
