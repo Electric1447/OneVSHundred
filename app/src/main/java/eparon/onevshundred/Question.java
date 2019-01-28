@@ -60,7 +60,6 @@ public class Question extends AppCompatActivity {
 
     boolean[] help = new boolean[3];
     String[] helpStr = new String[] {"helpWH", "help50", "helpPH"};
-    boolean helpUsed;
 
     int[] btnMain = new int[buttons];
 
@@ -91,8 +90,6 @@ public class Question extends AppCompatActivity {
         timeInt = prefs.getInt("timeInt", timeInt);
         questionInt = prefs.getInt("questionInt", questionInt);
         answers = prefs.getString("answers", answers);
-        helpUsed = prefs.getBoolean("helpUsed", helpUsed);
-
         for (int i = 0; i < help.length; i++)
             help[i] = prefs.getBoolean(helpStr[i], help[i]);
 
@@ -181,7 +178,8 @@ public class Question extends AppCompatActivity {
     public void answerButton4 (View view) { answer((btnMain[3] + 1) / 3 + 1); }
 
     public void help (View view) {
-        useHelp();
+        for (int i = 0; i < 3; i++)
+            setHelpButtonProps(i, false);
 
         int i = 0;
         if (view.getId() == R.id.fab2) i = 1;
@@ -212,15 +210,6 @@ public class Question extends AppCompatActivity {
                 setButtonProps(4, colorGrey, false);
                 break;
         }
-    }
-
-    public void useHelp (){
-        for (int i = 0; i < 3; i++)
-            setHelpButtonProps(i, false);
-
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putBoolean("helpUsed", true);
-        editor.apply();
     }
 
     private void startTimer() {

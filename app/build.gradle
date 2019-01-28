@@ -6,8 +6,8 @@ android {
         applicationId "eparon.onevshundred"
         minSdkVersion 21
         targetSdkVersion 28
-        versionCode 4000100
-        versionName "4.0.1-0"
+        versionCode 4000101
+        versionName "4.0.1-1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

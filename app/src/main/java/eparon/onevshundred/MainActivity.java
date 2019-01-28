@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("timeInt", 0);
         editor.putInt("questionInt", 1);
         editor.putString("answers", "");
-        editor.putBoolean("helpUsed", false);
+        //editor.putBoolean("helpUsed", false);
         editor.putBoolean("helpWH", true);
         editor.putBoolean("help50", true);
         editor.putBoolean("helpPH", true);

@@ -17,7 +17,9 @@ public class EndActivity extends AppCompatActivity {
 
     int scoreInt, timeInt;
     String answers;
-    boolean helpUsed;
+
+    boolean[] help = new boolean[3];
+    String[] helpStr = new String[] {"helpWH", "help50", "helpPH"};
 
     int cAnswersI = 0;
     double cAnswersD;
@@ -37,19 +39,19 @@ public class EndActivity extends AppCompatActivity {
         scoreInt = prefs.getInt("scoreInt", scoreInt);
         timeInt = prefs.getInt("timeInt", timeInt);
         answers = prefs.getString("answers", answers);
-        helpUsed = prefs.getBoolean("helpUsed", helpUsed);
+        for (int i = 0; i < help.length; i++)
+            help[i] = prefs.getBoolean(helpStr[i], help[i]);
 
         EndM = findViewById(R.id.endMessage);
         TimeM = findViewById(R.id.timeMessage);
-        totalScore = findViewById(R.id.totalScore);
         qScore = findViewById(R.id.questionScore);
         timeScore = findViewById(R.id.timeScore);
         helpScore = findViewById(R.id.helpScore);
+        totalScore = findViewById(R.id.totalScore);
 
         int[] answersArray = new int[answers.length()];
         for (int i = 0; i < answers.length(); i++) {
-            answersArray[i] = answers.charAt(i) - '0';
-            answersArray[i] /= 2;
+            answersArray[i] = (answers.charAt(i) - '0') / 2;
             cAnswersI += answersArray[i];
         }
 
@@ -64,9 +66,8 @@ public class EndActivity extends AppCompatActivity {
 
         if (scoreInt != 0) {
             timebonus = (answers.length() * 30 - timeInt) / 3;
-            hScore = 0;
 
-            if (!helpUsed)
+            if (help[0] && help[1] && help[2])
                 hScore = (scoreInt + timebonus) / MainActivity.NO_HELPS_BONUS_PERCENTAGE;
 
             tScore = scoreInt + timebonus + hScore;
