@@ -44,12 +44,10 @@ public class QRActivity extends AppCompatActivity {
     }
 
     public void SumbitPin (View view) {
-        if (Pin.getText().toString().equals(qrCodes[(questionInt - 1) / MainActivity.QUESTIONS_PER_QR - 1])) {
-            Intent a = new Intent(QRActivity.this, Question.class);
-            startActivity(a);
-        } else {
+        if (Pin.getText().toString().equals(qrCodes[(questionInt - 1) / MainActivity.QUESTIONS_PER_QR - 1]))
+            startActivity(new Intent(QRActivity.this, Question.class));
+        else
             Toast.makeText(this, "Please enter a valid pin", Toast.LENGTH_LONG).show();
-        }
     }
 
     public void scanBarcode(View view) {
@@ -76,15 +74,13 @@ public class QRActivity extends AppCompatActivity {
 
         IntentResult result = IntentIntegrator.parseActivityResult(resultCode, data);
 
-        if(result.getContents() == null) {
+        if (result.getContents() == null)
             Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-        } else {
-            if (result.getContents().equals("OneVSHundered_HASH:_" + qrCodes[(questionInt - 1) / MainActivity.QUESTIONS_PER_QR - 1])) {
-                Intent a = new Intent(QRActivity.this, Question.class);
-                startActivity(a);
-            } else {
+        else {
+            if (result.getContents().equals("OneVSHundered_HASH:_" + qrCodes[(questionInt - 1) / MainActivity.QUESTIONS_PER_QR - 1]))
+                startActivity(new Intent(QRActivity.this, Question.class));
+            else
                 Toast.makeText(this, "Invalid QR Code", Toast.LENGTH_LONG).show();
-            }
         }
     }
 

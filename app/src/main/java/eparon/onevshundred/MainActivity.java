@@ -20,9 +20,6 @@ public class MainActivity extends AppCompatActivity {
     public static int QUESTIONS_PER_QR = 5;
 
     @Override
-    public void onBackPressed() { }
-
-    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -41,14 +38,13 @@ public class MainActivity extends AppCompatActivity {
         editor.putInt("timeInt", 0);
         editor.putInt("questionInt", 1);
         editor.putString("answers", "");
-        //editor.putBoolean("helpUsed", false);
         editor.putBoolean("helpWH", true);
         editor.putBoolean("help50", true);
         editor.putBoolean("helpPH", true);
         editor.apply();
 
         Intent a = new Intent(MainActivity.this, Info.class);
-        if(skipInfo)
+        if (skipInfo)
             a = new Intent(MainActivity.this, Question.class);
         startActivity(a);
     }

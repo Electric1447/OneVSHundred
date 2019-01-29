@@ -12,25 +12,22 @@ import android.widget.TextView;
 
 public class Info extends AppCompatActivity {
 
-    int COLOR_YELLOW = 0xFFFFFF00;
-    int COLOR_DGREY = 0xFF666666;
+    int COLOR_YELLOW, COLOR_DGREY;
 
-    TextView Info;
     CheckBox Agree;
     FloatingActionButton Next;
-
-    @Override
-    public void onBackPressed() { }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        Info = findViewById(R.id.info);
+        COLOR_YELLOW = getResources().getColor(R.color.colorYellow);
+        COLOR_DGREY = getResources().getColor(R.color.colorDGrey);
+
         Agree = findViewById(R.id.checkbox);
         Next = findViewById(R.id.fab);
-
+        TextView Info = findViewById(R.id.info);
         Info.setMovementMethod(new ScrollingMovementMethod());
 
         Next.setClickable(false);
@@ -48,10 +45,8 @@ public class Info extends AppCompatActivity {
     }
 
     public void GoNext(View view) {
-        if (Agree.isChecked()) {
-            Intent q = new Intent(Info.this, Question.class);
-            startActivity(q);
-        }
+        if (Agree.isChecked())
+            startActivity(new Intent(Info.this, Question.class));
     }
 
 }

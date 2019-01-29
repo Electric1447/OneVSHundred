@@ -10,11 +10,9 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.os.Handler;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -23,6 +21,7 @@ import android.widget.TextView;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -31,24 +30,23 @@ public class Question extends AppCompatActivity {
     public String PREFS_OVH = "OVHPrefsFile";
     SharedPreferences prefs;
 
-    private static int SPLASH_TIME_OUT = 1000;
+    Locale l = Locale.getDefault();
+
     private static int noOfSeconds = (MainActivity.NUMBER_OF_SECONDS + 1) * 1000;
     private int buttons = 4;
+    private static int[] btnIDArray = new int[] {R.id.button1, R.id.button2, R.id.button3, R.id.button4};
 
     private TextView countdownTimerText;
     private static CountDownTimer countDownTimer;
 
-    int COLOR_GREEN = 0xFF00FF00;
-    int COLOR_RED = 0xFFFF0000;
-    int COLOR_WHITE = 0xFFFFFFFF;
-    int COLOR_DGREY = 0xFF666666;
+    int COLOR_GREEN, COLOR_RED, COLOR_WHITE, COLOR_DGREY;
 
     Resources res;
     String[] qMain;
     TypedArray ta;
     String[][] qArr;
 
-    Drawable colorLGreen, colorGrey;
+    Drawable BUTTON_COLOR_LGREEN, BUTTON_COLOR_GREY;
     TextView score, Title, Question;
     Button[] btn = new Button[buttons];
     FloatingActionButton[] btnh = new FloatingActionButton[3];
@@ -93,16 +91,20 @@ public class Question extends AppCompatActivity {
         for (int i = 0; i < help.length; i++)
             help[i] = prefs.getBoolean(helpStr[i], help[i]);
 
-        colorLGreen = getResources().getDrawable(R.drawable.custombutton_lgreen);
-        colorGrey = getResources().getDrawable(R.drawable.custombutton_grey);
+        COLOR_GREEN = res.getColor(R.color.colorGreen);
+        COLOR_RED = res.getColor(R.color.colorRed);
+        COLOR_WHITE = res.getColor(R.color.colorWhite);
+        COLOR_DGREY = res.getColor(R.color.colorDGrey);
+        BUTTON_COLOR_LGREEN = res.getDrawable(R.drawable.custombutton_lgreen);
+        BUTTON_COLOR_GREY = res.getDrawable(R.drawable.custombutton_grey);
 
         Title = findViewById(R.id.top);
         Question = findViewById(R.id.question);
+        countdownTimerText = findViewById(R.id.countdownText);
+        score = findViewById(R.id.score);
 
-        btn[0] = findViewById(R.id.button1);
-        btn[1] = findViewById(R.id.button2);
-        btn[2] = findViewById(R.id.button3);
-        btn[3] = findViewById(R.id.button4);
+        for (int i = 0; i < buttons; i++)
+            btn[i] = findViewById(btnIDArray[i]);
 
         btnh[0] = findViewById(R.id.fab1); // Help Wheel
         btnh[1] = findViewById(R.id.fab2); // Help 50
@@ -111,9 +113,6 @@ public class Question extends AppCompatActivity {
         currentScore = ((questionInt - 1) / 4 + 1) * 20;
         if (MainActivity.QR_ENABLED)
             currentScore = 50;
-
-        countdownTimerText = findViewById(R.id.countdownText);
-        score = findViewById(R.id.score);
 
         if (qArr[2][questionInt - 1].equals("EMPTY") && qArr[3][questionInt - 1].equals("EMPTY")) {
             buttons = 2;
@@ -125,7 +124,7 @@ public class Question extends AppCompatActivity {
             btn[3].setVisibility(View.GONE);
         }
 
-        for (int i = 0; i < buttons; i++){
+        for (int i = 0; i < buttons; i++) {
             int ir;
             do {
                 Random r = new Random();
@@ -143,9 +142,9 @@ public class Question extends AppCompatActivity {
             setHelpButtonProps(2, false);
         }
 
-        Title.setText("שאלה " + questionInt + " - " + currentScore + " נקודות");
+        Title.setText(String.format(l,"שאלה %d - %d נקודות", questionInt, currentScore));
         Question.setText(qMain[questionInt - 1]);
-        score.setText(scoreInt + " נקודות");
+        score.setText(String.format(l,"%d נקודות", scoreInt));
         setButtonsText();
 
         startTimer();
@@ -169,13 +168,11 @@ public class Question extends AppCompatActivity {
         PopUp();
     }
 
-    public void answerButton1 (View view) { answer((btnMain[0] + 1) / 3 + 1); }
-
-    public void answerButton2 (View view) { answer((btnMain[1] + 1) / 3 + 1); }
-
-    public void answerButton3 (View view) { answer((btnMain[2] + 1) / 3 + 1); }
-
-    public void answerButton4 (View view) { answer((btnMain[3] + 1) / 3 + 1); }
+    public void answerButton (View view) {
+        for (int i = 0; i < buttons; i++)
+            if (view.getId() == btnIDArray[i])
+                answer((btnMain[i] + 1) / 3 + 1);
+    }
 
     public void help (View view) {
         for (int i = 0; i < 3; i++)
@@ -194,29 +191,29 @@ public class Question extends AppCompatActivity {
                 answer(1);
                 break;
             case 1:
-                setButtonProps(3, colorGrey, false);
-                setButtonProps(4, colorGrey, false);
+                setButtonProps(3, BUTTON_COLOR_GREY, false);
+                setButtonProps(4, BUTTON_COLOR_GREY, false);
                 break;
             case 2:
                 Random d = new Random();
                 int phoneHelpInt = (int)(d.nextDouble() * 100) / 15;
 
-                if(phoneHelpInt > 2)
+                if (phoneHelpInt > 2)
                     phoneHelpInt = 2;
 
                 phoneHelpInt = 3 - phoneHelpInt;
 
-                setButtonProps(phoneHelpInt, colorLGreen, true);
-                setButtonProps(4, colorGrey, false);
+                setButtonProps(phoneHelpInt, BUTTON_COLOR_LGREEN, true);
+                setButtonProps(4, BUTTON_COLOR_GREY, false);
                 break;
         }
     }
 
-    private void startTimer() {
+    private void startTimer () {
         countDownTimer = new CountDownTimer(noOfSeconds, 1000) {
-            public void onTick(long millisUntilFinished) {
+            public void onTick (long millisUntilFinished) {
                 //Convert milliseconds into hour,minute and seconds
-                String hms = String.format("%02d", TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
+                String hms = String.format(l, "%02d",TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
                 countdownTimerText.setText(hms);
 
                 if (Integer.parseInt(hms) <= 10 && Integer.parseInt(hms) % 2 == 0)
@@ -224,56 +221,42 @@ public class Question extends AppCompatActivity {
                 else
                     countdownTimerText.setTextColor(COLOR_WHITE);
             }
-
-            public void onFinish() { answer(3); }
+            public void onFinish () { answer(3); }
         }.start();
     }
 
-    private void setButtonsText() {
+    private void setButtonsText () {
         for (int i = 0; i < buttons; i++)
             btn[i].setText(qArr[btnMain[i] - 1][questionInt - 1]);
     }
 
-    public void setButtonProps(int buttonType, Drawable color, boolean setClickable){
-        for (int i = 0; i < buttons; i++){
-            if (btnMain[i] == buttonType){
-                btn[i].setBackground(color);
+    public void setButtonProps (int buttonType, Drawable buttonColor, boolean setClickable) {
+        for (int i = 0; i < buttons; i++) {
+            if (btnMain[i] == buttonType) {
+                btn[i].setBackground(buttonColor);
                 btn[i].setClickable(setClickable);
             }
         }
     }
 
-    public void setHelpButtonProps(int buttonType, boolean setValue){
+    public void setHelpButtonProps (int buttonType, boolean setValue) {
         btnh[buttonType].setClickable(setValue);
         if (!setValue)
             btnh[buttonType].setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
     }
 
-    public void PopUp (){
+    public void PopUp () {
 
         for (int i = 0; i < buttons; i++)
             btn[i].setClickable(false);
-
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < help.length; i++)
             setHelpButtonProps(i, false);
 
+        View customView = View.inflate(this, R.layout.popup_layout,null);
 
-        CoordinatorLayout mCoordinatorLayout = findViewById(R.id.cl);
-        Context mContext = getApplicationContext();
-        PopupWindow aPopupWindow;
-
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-
-        View customView = inflater.inflate(R.layout.popup_layout,null);
-
-        aPopupWindow = new PopupWindow(
-                customView,
-                ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT
-        );
-
-        aPopupWindow.setElevation(5.0f);
-        aPopupWindow.showAtLocation(mCoordinatorLayout, Gravity.CENTER,0,0);
+        PopupWindow myPopupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        myPopupWindow.setElevation(5.0f);
+        myPopupWindow.showAtLocation(findViewById(R.id.cl), Gravity.CENTER,0,0);
 
         TextView Message = customView.findViewById(R.id.message);
 
@@ -291,9 +274,10 @@ public class Question extends AppCompatActivity {
                 Message.setTextColor(COLOR_RED);
                 break;
         }
+
         new Handler().postDelayed(new Runnable() {
             @Override
-            public void run() {
+            public void run () {
                 Intent a = new Intent(Question.this, Question.class);
                 if ((questionInt - 1) % MainActivity.QUESTIONS_PER_QR == 0 && MainActivity.QR_ENABLED)
                     a = new Intent(Question.this, QRActivity.class);
@@ -302,7 +286,7 @@ public class Question extends AppCompatActivity {
                 startActivity(a);
                 finish();
             }
-        }, SPLASH_TIME_OUT);
+        }, 1000);
     }
 
 }
