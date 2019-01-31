@@ -48,14 +48,15 @@ public class EndActivity extends AppCompatActivity {
         TextView helpScore = findViewById(R.id.helpScore);
         TextView totalScore = findViewById(R.id.totalScore);
 
+        // Getting the answers from a String to an Integer Array.
         int[] answersArray = new int[answers.length()];
         for (int i = 0; i < answers.length(); i++) {
-            answersArray[i] = (answers.charAt(i) - '0') / 2;
+            answersArray[i] = (answers.charAt(i) - '0') / 2; // Converting timed-out to incorrect.
             cAnswersI += answersArray[i];
         }
 
-        cAnswersI = answers.length() - cAnswersI;
-        double cAnswersD = (double)Math.round(((cAnswersI / (double)answers.length()) * 100) * 10d) / 10d;
+        cAnswersI = answers.length() - cAnswersI; // Correct answers calculation
+        double cAnswersD = (double)Math.round(((cAnswersI / (double)answers.length()) * 100) * 10d) / 10d; // Calculating the presentage of correct answers.
 
         EndM.setText(String.format(l,"עניתם נכון על %d מתוך %d שאלות (%s%%)", cAnswersI, answers.length(), cAnswersD));
 
@@ -63,13 +64,13 @@ public class EndActivity extends AppCompatActivity {
         String hms = String.format(l,"%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(ti1000) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(ti1000)), TimeUnit.MILLISECONDS.toSeconds(ti1000) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(ti1000)));
         TimeM.setText(String.format("זמן: %s", hms));
 
-        if (scoreInt != 0) {
+        if (scoreInt != 0) { // Checking if the Score isn't zero
             timebonus = (answers.length() * 30 - timeInt) / 3;
 
-            if (help[0] && help[1] && help[2])
+            if (help[0] && help[1] && help[2]) // Checking if Helps have been used
                 hScore = (scoreInt + timebonus) / MainActivity.NO_HELPS_BONUS_PERCENTAGE;
 
-            tScore = scoreInt + timebonus + hScore;
+            tScore = scoreInt + timebonus + hScore; // Calculating the total score
         }
 
         qScore.setText(String.format(l,"שאלות: %d", scoreInt));

@@ -22,13 +22,14 @@ public class Info extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
+        // Initializing Resources & Views
         COLOR_YELLOW = getResources().getColor(R.color.colorYellow);
         COLOR_DGREY = getResources().getColor(R.color.colorDGrey);
 
         Agree = findViewById(R.id.checkbox);
         Next = findViewById(R.id.fab);
         TextView Info = findViewById(R.id.info);
-        Info.setMovementMethod(new ScrollingMovementMethod());
+        Info.setMovementMethod(new ScrollingMovementMethod()); // Set the info box to be scrollable
 
         Next.setClickable(false);
         Next.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));

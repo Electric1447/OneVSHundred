@@ -71,6 +71,7 @@ public class Question extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_question);
 
+        // Getting Resources
         res = getResources();
         qMain = res.getStringArray(R.array.qmain);
         ta = res.obtainTypedArray(R.array.qarr);
@@ -98,6 +99,7 @@ public class Question extends AppCompatActivity {
         BUTTON_COLOR_LGREEN = res.getDrawable(R.drawable.custombutton_lgreen);
         BUTTON_COLOR_GREY = res.getDrawable(R.drawable.custombutton_grey);
 
+        // Setting objects
         Title = findViewById(R.id.top);
         Question = findViewById(R.id.question);
         countdownTimerText = findViewById(R.id.countdownText);
@@ -110,7 +112,7 @@ public class Question extends AppCompatActivity {
         btnh[1] = findViewById(R.id.fab2); // Help 50
         btnh[2] = findViewById(R.id.fab3); // Help Phone
 
-        currentScore = ((questionInt - 1) / 4 + 1) * 20;
+        currentScore = ((questionInt - 1) / 4 + 1) * 20; // Setting the Score
         if (MainActivity.QR_ENABLED)
             currentScore = 50;
 
@@ -124,6 +126,7 @@ public class Question extends AppCompatActivity {
             btn[3].setVisibility(View.GONE);
         }
 
+        // Randomizing the button order
         for (int i = 0; i < buttons; i++) {
             int ir;
             do {
@@ -151,12 +154,14 @@ public class Question extends AppCompatActivity {
     }
 
     public void answer (int type) {
+        // Setting the variables of the Time, Score, etc
         timeString = countdownTimerText.getText().toString();
         timeInt += (noOfSeconds / 1000 - 1 - Integer.parseInt(timeString));
         questionInt++;
         answers += String.valueOf(type);
         scoreInt += currentScore * (1 - type / 2);
 
+        // Saving those variables to the SharedPrefs
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("timeInt", timeInt);
         editor.putInt("questionInt", questionInt);
@@ -175,26 +180,32 @@ public class Question extends AppCompatActivity {
     }
 
     public void help (View view) {
+        // Disabling the help buttons
         for (int i = 0; i < 3; i++)
             setHelpButtonProps(i, false);
 
+        // Checking which button was pressed
         int i = 0;
         if (view.getId() == R.id.fab2) i = 1;
         if (view.getId() == R.id.fab3) i = 2;
 
+        // Making that button used in the SharedPrefs
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean(helpStr[i], false);
         editor.apply();
 
         switch (i) {
             case 0:
+                // Help Wheel
                 answer(1);
                 break;
             case 1:
+                // Help 50/50
                 setButtonProps(3, BUTTON_COLOR_GREY, false);
                 setButtonProps(4, BUTTON_COLOR_GREY, false);
                 break;
             case 2:
+                // Help Phone
                 Random d = new Random();
                 int phoneHelpInt = (int)(d.nextDouble() * 100) / 15;
 
@@ -216,6 +227,7 @@ public class Question extends AppCompatActivity {
                 String hms = String.format(l, "%02d",TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
                 countdownTimerText.setText(hms);
 
+                // Timer blinks red in the last 10 seconds
                 if (Integer.parseInt(hms) <= 10 && Integer.parseInt(hms) % 2 == 0)
                     countdownTimerText.setTextColor(COLOR_RED);
                 else
@@ -231,7 +243,7 @@ public class Question extends AppCompatActivity {
     }
 
     public void setButtonProps (int buttonType, Drawable buttonColor, boolean setClickable) {
-        for (int i = 0; i < buttons; i++) {
+        for (int i = 0; i < buttons; i++) { // Checking all the Answer Buttons if they are the type requested.
             if (btnMain[i] == buttonType) {
                 btn[i].setBackground(buttonColor);
                 btn[i].setClickable(setClickable);
@@ -240,18 +252,20 @@ public class Question extends AppCompatActivity {
     }
 
     public void setHelpButtonProps (int buttonType, boolean setValue) {
-        btnh[buttonType].setClickable(setValue);
+        btnh[buttonType].setClickable(setValue); // Setting the help button value.
         if (!setValue)
             btnh[buttonType].setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
     }
 
     public void PopUp () {
 
+        // Disabling all of the buttons
         for (int i = 0; i < buttons; i++)
             btn[i].setClickable(false);
         for (int i = 0; i < help.length; i++)
             setHelpButtonProps(i, false);
 
+        // Creating the custom Popup message
         View customView = View.inflate(this, R.layout.popup_layout,null);
 
         PopupWindow myPopupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -260,6 +274,7 @@ public class Question extends AppCompatActivity {
 
         TextView Message = customView.findViewById(R.id.message);
 
+        // Setting the Text and the Text Color by the Answer
         switch (answers.charAt(questionInt - 2) - '0') {
             case 1:
                 Message.setText("נכון!");
@@ -279,9 +294,9 @@ public class Question extends AppCompatActivity {
             @Override
             public void run () {
                 Intent a = new Intent(Question.this, Question.class);
-                if ((questionInt - 1) % MainActivity.QUESTIONS_PER_QR == 0 && MainActivity.QR_ENABLED)
+                if ((questionInt - 1) % MainActivity.QUESTIONS_PER_QR == 0 && MainActivity.QR_ENABLED) // If QR is enabled & the next activity is a QR activity, go to the QR activity,
                     a = new Intent(Question.this, QRActivity.class);
-                if (questionInt == Integer.parseInt(res.getString(R.string.numberOfQuestions)) + 1)
+                if (questionInt == Integer.parseInt(res.getString(R.string.numberOfQuestions)) + 1) // If the question is the last Question GOTO the End screen
                     a = new Intent(Question.this, EndActivity.class);
                 startActivity(a);
                 finish();
