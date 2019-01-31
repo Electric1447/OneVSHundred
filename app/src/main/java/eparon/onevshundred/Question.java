@@ -63,6 +63,8 @@ public class Question extends AppCompatActivity {
 
     int currentScore;
 
+    String ac, aic, atu;
+
     @Override
     public void onBackPressed() { }
 
@@ -145,9 +147,22 @@ public class Question extends AppCompatActivity {
             setHelpButtonProps(2, false);
         }
 
-        Title.setText(String.format(l,"שאלה %d - %d נקודות", questionInt, currentScore));
+        String qs = res.getString(R.string.qText);
+        String ps = res.getString(R.string.pText);
+        ac = res.getString(R.string.correct);
+        aic = res.getString(R.string.incorrect);
+        atu = res.getString(R.string.timesup);
+        if (getResources().getString(R.string.Lang).equals("English")) {
+            qs = res.getString(R.string.qTextENG);
+            ps = res.getString(R.string.pTextENG);
+            ac = res.getString(R.string.correctENG);
+            aic = res.getString(R.string.incorrectENG);
+            atu = res.getString(R.string.timesupENG);
+            score.setText(String.format(l,"%s %d", res.getString(R.string.pText2ENG), scoreInt));
+        } else
+            score.setText(String.format(l,"%d %s", scoreInt, ps));
+        Title.setText(String.format(l,"%s %d - %d %s", qs, questionInt, currentScore, ps));
         Question.setText(qMain[questionInt - 1]);
-        score.setText(String.format(l,"%d נקודות", scoreInt));
         setButtonsText();
 
         startTimer();
@@ -277,15 +292,15 @@ public class Question extends AppCompatActivity {
         // Setting the Text and the Text Color by the Answer
         switch (answers.charAt(questionInt - 2) - '0') {
             case 1:
-                Message.setText("נכון!");
+                Message.setText(ac);
                 Message.setTextColor(COLOR_GREEN);
                 break;
             case 2:
-                Message.setText("לא נכון!");
+                Message.setText(aic);
                 Message.setTextColor(COLOR_RED);
                 break;
             case 3:
-                Message.setText("עבר הזמן!");
+                Message.setText(atu);
                 Message.setTextColor(COLOR_RED);
                 break;
         }

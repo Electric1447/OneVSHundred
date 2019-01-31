@@ -26,10 +26,21 @@ public class Info extends AppCompatActivity {
         COLOR_YELLOW = getResources().getColor(R.color.colorYellow);
         COLOR_DGREY = getResources().getColor(R.color.colorDGrey);
 
+        String title = getResources().getString(R.string.infoTitle);
+        String agree = getResources().getString(R.string.checkBox);
+        if (getResources().getString(R.string.Lang).equals("English")) {
+            title = getResources().getString(R.string.infoTitleENG);
+            agree = getResources().getString(R.string.checkBoxENG);
+        }
+
         Agree = findViewById(R.id.checkbox);
         Next = findViewById(R.id.fab);
+        TextView InfoTitle = findViewById(R.id.infoTitle);
         TextView Info = findViewById(R.id.info);
         Info.setMovementMethod(new ScrollingMovementMethod()); // Set the info box to be scrollable
+
+        InfoTitle.setText(title);
+        Agree.setText(agree);
 
         Next.setClickable(false);
         Next.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));

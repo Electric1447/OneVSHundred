@@ -26,9 +26,30 @@ public class MainActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
 
+        String wstr = getResources().getString(R.string.welcome);
+        String hs1 = getResources().getString(R.string.helpWheel);
+        String hs2 = getResources().getString(R.string.help50);
+        String hs3 = getResources().getString(R.string.helpPhone);
+        String start = getResources().getString(R.string.start);
+        if (getResources().getString(R.string.Lang).equals("English")) {
+            wstr = getResources().getString(R.string.welcomeENG);
+            hs1 = getResources().getString(R.string.helpWheelENG);
+            hs2 = getResources().getString(R.string.help50ENG);
+            hs3 = getResources().getString(R.string.helpPhoneENG);
+            start = getResources().getString(R.string.startENG);
+        }
+
         TextView Welcome = findViewById(R.id.welcome);
+        TextView HW = findViewById(R.id.ht1);
+        TextView H50 = findViewById(R.id.ht2);
+        TextView HP = findViewById(R.id.ht3);
+        TextView Start = findViewById(R.id.start);
         String appname = getResources().getString(R.string.app_name);
-        Welcome.setText(String.format("ברוכים הבאים ל: \n%s!", appname));
+        Welcome.setText(String.format("%s\n%s!", wstr, appname));
+        HW.setText(hs1);
+        H50.setText(hs2);
+        HP.setText(hs3);
+        Start.setText(start);
     }
 
     public void StartGame (View view){

@@ -41,12 +41,40 @@ public class EndActivity extends AppCompatActivity {
         for (int i = 0; i < help.length; i++)
             help[i] = prefs.getBoolean(helpStr[i], help[i]);
 
+        String title = getResources().getString(R.string.endTitle);
+        String score = getResources().getString(R.string.score);
+        String et1 = getResources().getString(R.string.endText1);
+        String et2 = getResources().getString(R.string.endText2);
+        String et3 = getResources().getString(R.string.endText3);
+        String time = getResources().getString(R.string.endTime);
+        String eqs = getResources().getString(R.string.q);
+        String ets = getResources().getString(R.string.bt);
+        String ehs = getResources().getString(R.string.bh);
+        String total = getResources().getString(R.string.total);
+        if (getResources().getString(R.string.Lang).equals("English")) {
+            title = getResources().getString(R.string.endTitleENG);
+            score = getResources().getString(R.string.scoreENG);
+            et1 = getResources().getString(R.string.endText1ENG);
+            et2 = getResources().getString(R.string.endText2ENG);
+            et3 = getResources().getString(R.string.endText3ENG);
+            time = getResources().getString(R.string.endTimeENG);
+            eqs = getResources().getString(R.string.qENG);
+            ets = getResources().getString(R.string.btENG);
+            ehs = getResources().getString(R.string.bhENG);
+            total = getResources().getString(R.string.totalENG);
+        }
+
+        TextView Title = findViewById(R.id.view1);
+        TextView Score = findViewById(R.id.score);
         TextView EndM = findViewById(R.id.endMessage);
         TextView TimeM = findViewById(R.id.timeMessage);
         TextView qScore = findViewById(R.id.questionScore);
         TextView timeScore = findViewById(R.id.timeScore);
         TextView helpScore = findViewById(R.id.helpScore);
         TextView totalScore = findViewById(R.id.totalScore);
+
+        Title.setText(title);
+        Score.setText(score);
 
         // Getting the answers from a String to an Integer Array.
         int[] answersArray = new int[answers.length()];
@@ -58,11 +86,11 @@ public class EndActivity extends AppCompatActivity {
         cAnswersI = answers.length() - cAnswersI; // Correct answers calculation
         double cAnswersD = (double)Math.round(((cAnswersI / (double)answers.length()) * 100) * 10d) / 10d; // Calculating the presentage of correct answers.
 
-        EndM.setText(String.format(l,"עניתם נכון על %d מתוך %d שאלות (%s%%)", cAnswersI, answers.length(), cAnswersD));
+        EndM.setText(String.format(l,"%s %d %s %d %s (%s%%)", et1, cAnswersI, et2, answers.length(), et3, cAnswersD));
 
         int ti1000 = timeInt * 1000;
         String hms = String.format(l,"%02d:%02d", TimeUnit.MILLISECONDS.toMinutes(ti1000) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(ti1000)), TimeUnit.MILLISECONDS.toSeconds(ti1000) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(ti1000)));
-        TimeM.setText(String.format("זמן: %s", hms));
+        TimeM.setText(String.format("%s %s", time, hms));
 
         if (scoreInt != 0) { // Checking if the Score isn't zero
             timebonus = (answers.length() * 30 - timeInt) / 3;
@@ -73,10 +101,10 @@ public class EndActivity extends AppCompatActivity {
             tScore = scoreInt + timebonus + hScore; // Calculating the total score
         }
 
-        qScore.setText(String.format(l,"שאלות: %d", scoreInt));
-        timeScore.setText(String.format(l,"בונוס זמן: %d", timebonus));
-        helpScore.setText(String.format(l,"בונוס עזרות: %d", hScore));
-        totalScore.setText(String.format(l,"סכ\"ה: %d", tScore));
+        qScore.setText(String.format(l,"%s %d", eqs, scoreInt));
+        timeScore.setText(String.format(l,"%s %d", ets, timebonus));
+        helpScore.setText(String.format(l,"%s %d", ehs, hScore));
+        totalScore.setText(String.format(l,"%s %d", total, tScore));
     }
 
 }

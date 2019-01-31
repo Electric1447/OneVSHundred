@@ -40,7 +40,10 @@ public class QRActivity extends AppCompatActivity {
         Title = findViewById(R.id.nextLocationText);
         Pin = findViewById(R.id.digits);
 
-        Title.setText(String.format("המיקום הבא הוא: \n%s", qrMain[(questionInt - 1) / MainActivity.QUESTIONS_PER_QR - 1]));
+        String nls = getResources().getString(R.string.qrNextLocation);
+        if (getResources().getString(R.string.Lang).equals("English"))
+            nls = getResources().getString(R.string.qrNextLocationENG);
+        Title.setText(String.format("%s\n%s", nls, qrMain[(questionInt - 1) / MainActivity.QUESTIONS_PER_QR - 1]));
     }
 
     public void SumbitPin (View view) {

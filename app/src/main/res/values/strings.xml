@@ -2,13 +2,68 @@
     <string name="app_name">אחד נגד מאה</string>
 
     <string name="timer">00</string>
-
     <string name="numberOfQuestions">20</string>
 
-    <string name="score"><u>ניקוד</u>:</string>
+    <string name="infoText">Empty</string>
+
+    <string name="Lang">Hebrew</string>
+
+    <string name="welcome">"ברוכים הבאים ל: </string>
+    <string name="helpWheel">גלגל הצלה</string>
+    <string name="help50">חמישים חמישים</string>
+    <string name="helpPhone">עזרה טלפונית</string>
+    <string name="start">התחל</string>
 
     <string name="infoTitle">קטע מידע</string>
-    <string name="infoText">Empty</string>
+    <string name="checkBox">קראתי ואני מסכים לתנאי השימוש</string>
+
+    <string name="qText">שאלה</string>
+    <string name="pText">נקודות</string>
+    <string name="correct">נכון!</string>
+    <string name="incorrect">לא נכון!</string>
+    <string name="timesup">עבר הזמן!</string>
+
+    <string name="qrNextLocation">המיקום הבא הוא: </string>
+
+    <string name="endTitle">כל הכבוד!</string>
+    <string name="score"><u>ניקוד</u>:</string>
+    <string name="endText1">עניתם נכון על</string>
+    <string name="endText2">מתוך</string>
+    <string name="endText3">שאלות</string>
+    <string name="endTime">זמן:</string>
+    <string name="q">שאלות:</string>
+    <string name="bt">בונוס זמן:</string>
+    <string name="bh">בונוס עזרות:</string>
+    <string name="total">סה"כ:</string>
+
+    <string name="welcomeENG">Welcome to: </string>
+    <string name="helpWheelENG">Help Wheel</string>
+    <string name="help50ENG">Fifty Fifty</string>
+    <string name="helpPhoneENG">Phone Help</string>
+    <string name="startENG">Start</string>
+
+    <string name="infoTitleENG">Info</string>
+    <string name="checkBoxENG">Agree</string>
+
+    <string name="qTextENG">Question</string>
+    <string name="pTextENG">Points</string>
+    <string name="pText2ENG">Score:</string>
+    <string name="correctENG">Correct!</string>
+    <string name="incorrectENG">Incorrect!</string>
+    <string name="timesupENG">Times up!</string>
+
+    <string name="qrNextLocationENG">The next location is: </string>
+
+    <string name="endTitleENG">Congratulations</string>
+    <string name="scoreENG"><u>Score</u>:</string>
+    <string name="endText1ENG">You answered</string>
+    <string name="endText2ENG">correct answer from</string>
+    <string name="endText3ENG">answers</string>
+    <string name="endTimeENG">Time:</string>
+    <string name="qENG">Questions:</string>
+    <string name="btENG">Time bonus:</string>
+    <string name="bhENG">No Helps bonus:</string>
+    <string name="totalENG">Total:</string>
 
     <string-array name="qmain">
         1     <item>Question 1</item>
@@ -31,6 +86,26 @@
         18    <item>Question 18</item>
         19    <item>Question 19</item>
         20    <item>Question 20</item>
+        21    <item>Question 21</item>
+        22    <item>Question 22</item>
+        23    <item>Question 23</item>
+        24    <item>Question 24</item>
+        25    <item>Question 25</item>
+        26    <item>Question 26</item>
+        27    <item>Question 27</item>
+        28    <item>Question 28</item>
+        29    <item>Question 29</item>
+        30    <item>Question 30</item>
+        31    <item>Question 31</item>
+        32    <item>Question 32</item>
+        33    <item>Question 33</item>
+        34    <item>Question 34</item>
+        35    <item>Question 35</item>
+        36    <item>Question 36</item>
+        37    <item>Question 37</item>
+        38    <item>Question 38</item>
+        39    <item>Question 39</item>
+        40    <item>Question 40</item>
     </string-array>
 
     <array name="qarr">
@@ -61,6 +136,26 @@
         18    <item>Answer A18</item>
         19    <item>Answer A19</item>
         20    <item>Answer A20</item>
+        21    <item>Answer A21</item>
+        22    <item>Answer A22</item>
+        23    <item>Answer A23</item>
+        24    <item>Answer A24</item>
+        25    <item>Answer A25</item>
+        26    <item>Answer A26</item>
+        27    <item>Answer A27</item>
+        28    <item>Answer A28</item>
+        29    <item>Answer A29</item>
+        30    <item>Answer A30</item>
+        31    <item>Answer A31</item>
+        32    <item>Answer A32</item>
+        33    <item>Answer A33</item>
+        34    <item>Answer A34</item>
+        35    <item>Answer A35</item>
+        36    <item>Answer A36</item>
+        37    <item>Answer A37</item>
+        38    <item>Answer A38</item>
+        39    <item>Answer A39</item>
+        40    <item>Answer A40</item>
     </string-array>
 
     <string-array name="qb">
@@ -84,6 +179,26 @@
         18    <item>Answer B18</item>
         19    <item>Answer B19</item>
         20    <item>Answer B20</item>
+        21    <item>Answer B21</item>
+        22    <item>Answer B22</item>
+        23    <item>Answer B23</item>
+        24    <item>Answer B24</item>
+        25    <item>Answer B25</item>
+        26    <item>Answer B26</item>
+        27    <item>Answer B27</item>
+        28    <item>Answer B28</item>
+        29    <item>Answer B29</item>
+        30    <item>Answer B30</item>
+        31    <item>Answer B31</item>
+        32    <item>Answer B32</item>
+        33    <item>Answer B33</item>
+        34    <item>Answer B34</item>
+        35    <item>Answer B35</item>
+        36    <item>Answer B36</item>
+        37    <item>Answer B37</item>
+        38    <item>Answer B38</item>
+        39    <item>Answer B39</item>
+        40    <item>Answer B40</item>
     </string-array>
 
     <string-array name="qc">
@@ -107,6 +222,26 @@
         18    <item>Answer C18</item>
         19    <item>Answer C19</item>
         20    <item>Answer C20</item>
+        21    <item>Answer C21</item>
+        22    <item>Answer C22</item>
+        23    <item>Answer C23</item>
+        24    <item>Answer C24</item>
+        25    <item>Answer C25</item>
+        26    <item>Answer C26</item>
+        27    <item>Answer C27</item>
+        28    <item>Answer C28</item>
+        29    <item>Answer C29</item>
+        30    <item>Answer C30</item>
+        31    <item>Answer C31</item>
+        32    <item>Answer C32</item>
+        33    <item>Answer C33</item>
+        34    <item>Answer C34</item>
+        35    <item>Answer C35</item>
+        36    <item>Answer C36</item>
+        37    <item>Answer C37</item>
+        38    <item>Answer C38</item>
+        39    <item>Answer C39</item>
+        40    <item>Answer C40</item>
     </string-array>
 
     <string-array name="qd">
@@ -130,6 +265,26 @@
         18    <item>Answer D18</item>
         19    <item>Answer D19</item>
         20    <item>Answer D20</item>
+        21    <item>Answer D21</item>
+        22    <item>Answer D22</item>
+        23    <item>Answer D23</item>
+        24    <item>Answer D24</item>
+        25    <item>Answer D25</item>
+        26    <item>Answer D26</item>
+        27    <item>Answer D27</item>
+        28    <item>Answer D28</item>
+        29    <item>Answer D29</item>
+        30    <item>Answer D30</item>
+        31    <item>Answer D31</item>
+        32    <item>Answer D32</item>
+        33    <item>Answer D33</item>
+        34    <item>Answer D34</item>
+        35    <item>Answer D35</item>
+        36    <item>Answer D36</item>
+        37    <item>Answer D37</item>
+        38    <item>Answer D38</item>
+        39    <item>Answer D39</item>
+        40    <item>Answer D40</item>
     </string-array>
 
     <string-array name="qrmain">

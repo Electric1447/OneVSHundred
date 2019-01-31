@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="@string/infoTitle"
+                android:id="@+id/infoTitle"
                 android:textColor="#FFF"
                 android:textSize="25sp"
                 android:textStyle="bold" />
@@ -81,7 +81,6 @@
                             android:layout_gravity="center_vertical"
                             android:layout_marginLeft="6dp"
                             android:onClick="DoAgree"
-                            android:text="קראתי ואני מסכים לתנאי השימוש"
                             android:textColor="#FFF"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -98,13 +97,13 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_margin="15dp"
-                            android:scaleX="1.5"
-                            android:scaleY="1.5"
-                            app:fabCustomSize="32dp"
                             android:gravity="right"
                             android:onClick="GoNext"
                             android:scaleType="center"
-                            android:src="@drawable/ic_custom_arrow_left_48dp" />
+                            android:scaleX="1.5"
+                            android:scaleY="1.5"
+                            android:src="@drawable/ic_custom_arrow_left_48dp"
+                            app:fabCustomSize="32dp" />
 
                     </LinearLayout>
 
