@@ -1,6 +1,8 @@
 package eparon.onevshundred;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.ColorStateList;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -12,15 +14,24 @@ import android.widget.TextView;
 
 public class Info extends AppCompatActivity {
 
+    public String PREFS_OVH = "OVHPrefsFile";
+    SharedPreferences prefs;
+
     int COLOR_YELLOW, COLOR_DGREY;
 
     CheckBox Agree;
     FloatingActionButton Next;
 
+    String lang;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
+
+        prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
+
+        lang = prefs.getString("lang", lang);
 
         // Initializing Resources & Views
         COLOR_YELLOW = getResources().getColor(R.color.colorYellow);
@@ -28,7 +39,7 @@ public class Info extends AppCompatActivity {
 
         String title = getResources().getString(R.string.infoTitle);
         String agree = getResources().getString(R.string.checkBox);
-        if (getResources().getString(R.string.Lang).equals("English")) {
+        if (lang.equals("English")) {
             title = getResources().getString(R.string.infoTitleENG);
             agree = getResources().getString(R.string.checkBoxENG);
         }

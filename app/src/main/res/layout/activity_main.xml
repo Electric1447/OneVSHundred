@@ -25,7 +25,7 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
             android:textStyle="bold"
-            android:textSize="40sp"/>
+            android:textSize="40sp" />
 
     </LinearLayout>
 
@@ -40,7 +40,8 @@
         android:layout_height="wrap_content"
         android:gravity="right"
         android:layout_margin="10dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        tools:ignore="RtlHardcoded">
 
         <TextView
             android:id="@+id/ht1"
@@ -50,17 +51,18 @@
             android:layout_gravity="center_vertical"
             android:textStyle="bold"
             android:layout_marginRight="10dp"
-            android:textSize="25sp"/>
+            android:textSize="25sp"
+            tools:ignore="RtlHardcoded" />
 
         <android.support.design.widget.FloatingActionButton
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_margin="15dp"
-            android:clickable="false"
+            android:onClick="debug1"
             android:scaleX="1.5"
             android:scaleY="1.5"
             app:fabCustomSize="32dp"
-            android:src="@drawable/ic_custom_wheel_48dp"/>
+            android:src="@drawable/ic_custom_wheel_48dp" />
 
     </LinearLayout>
 
@@ -69,7 +71,8 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:layout_margin="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="RtlHardcoded">
 
             <TextView
                 android:id="@+id/ht2"
@@ -79,7 +82,8 @@
                 android:layout_gravity="center_vertical"
                 android:textStyle="bold"
                 android:layout_marginRight="10dp"
-                android:textSize="25sp"/>
+                android:textSize="25sp"
+                tools:ignore="RtlHardcoded" />
 
             <FrameLayout
                 android:layout_width="wrap_content"
@@ -90,7 +94,7 @@
                     android:layout_height="50dp"
                     android:layout_marginLeft="6dp"
                     android:layout_marginRight="6dp"
-                    android:clickable="false"/>
+                    android:onClick="debug2" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -100,7 +104,7 @@
                     android:elevation="16dp"
                     android:textColor="#000"
                     android:textStyle="bold"
-                    android:textSize="25sp"/>
+                    android:textSize="25sp" />
 
             </FrameLayout>
 
@@ -111,7 +115,8 @@
             android:layout_height="wrap_content"
             android:gravity="right"
             android:layout_margin="10dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            tools:ignore="RtlHardcoded">
 
             <TextView
                 android:id="@+id/ht3"
@@ -121,13 +126,13 @@
                 android:layout_gravity="center_vertical"
                 android:textStyle="bold"
                 android:layout_marginRight="10dp"
-                android:textSize="25sp"/>
+                android:textSize="25sp" />
 
             <android.support.design.widget.FloatingActionButton
                 android:layout_width="32dp"
                 android:layout_height="32dp"
                 android:layout_margin="15dp"
-                android:clickable="false"
+                android:onClick="debug3"
                 android:scaleX="1.5"
                 android:scaleY="1.5"
                 app:fabCustomSize="32dp"
@@ -158,5 +163,16 @@
         android:onClick="StartGame" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/dmm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:text="DEBUG MODE"
+        android:textColor="#FF0000"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="10dp"
+        android:background="#000"/>
 
 </android.support.design.widget.CoordinatorLayout>

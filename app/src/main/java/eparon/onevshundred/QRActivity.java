@@ -21,6 +21,8 @@ public class QRActivity extends AppCompatActivity {
 
     TextView Title, Pin;
 
+    int qrnum;
+    String lang;
     int questionInt;
     String[] qrMain, qrCodes;
 
@@ -33,6 +35,9 @@ public class QRActivity extends AppCompatActivity {
         setContentView(R.layout.activity_qr);
 
         prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
+
+        qrnum = prefs.getInt("qrnum", qrnum);
+        lang = prefs.getString("lang", lang);
         questionInt = prefs.getInt("questionInt", questionInt);
         qrMain = getResources().getStringArray(R.array.qrmain);
         qrCodes = getResources().getStringArray(R.array.qrcodes);
@@ -41,13 +46,13 @@ public class QRActivity extends AppCompatActivity {
         Pin = findViewById(R.id.digits);
 
         String nls = getResources().getString(R.string.qrNextLocation);
-        if (getResources().getString(R.string.Lang).equals("English"))
+        if (lang.equals("English"))
             nls = getResources().getString(R.string.qrNextLocationENG);
-        Title.setText(String.format("%s\n%s", nls, qrMain[(questionInt - 1) / MainActivity.QUESTIONS_PER_QR - 1]));
+        Title.setText(String.format("%s\n%s", nls, qrMain[(questionInt - 1) / qrnum - 1]));
     }
 
     public void SumbitPin (View view) {
-        if (Pin.getText().toString().equals(qrCodes[(questionInt - 1) / MainActivity.QUESTIONS_PER_QR - 1]))
+        if (Pin.getText().toString().equals(qrCodes[(questionInt - 1) / qrnum - 1]))
             startActivity(new Intent(QRActivity.this, Question.class));
         else
             Toast.makeText(this, "Please enter a valid pin", Toast.LENGTH_LONG).show();
@@ -80,7 +85,7 @@ public class QRActivity extends AppCompatActivity {
         if (result.getContents() == null)
             Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
         else {
-            if (result.getContents().equals("OneVSHundered_HASH:_" + qrCodes[(questionInt - 1) / MainActivity.QUESTIONS_PER_QR - 1]))
+            if (result.getContents().equals("OneVSHundered_HASH:_" + qrCodes[(questionInt - 1) / qrnum - 1]))
                 startActivity(new Intent(QRActivity.this, Question.class));
             else
                 Toast.makeText(this, "Invalid QR Code", Toast.LENGTH_LONG).show();

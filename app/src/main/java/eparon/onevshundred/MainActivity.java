@@ -7,17 +7,26 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     public String PREFS_OVH = "OVHPrefsFile";
     SharedPreferences prefs;
 
-    private static boolean skipInfo = false; // Skips the Info Screen
     public static int NUMBER_OF_SECONDS = 30; // Number of Second per Question
     public static int NO_HELPS_BONUS_PERCENTAGE = 10; // Bonus % for not using helps
-    public static boolean QR_ENABLED = false; // Enabling QR activities
-    public static int QUESTIONS_PER_QR = 5; // Question per QR activities
+
+    String lang;
+    boolean debugMode, skipInfo;
+
+    int a = 0, b = 0;
+
+    @Override
+    public void onBackPressed() {
+        this.finishAffinity();
+        this.finishAndRemoveTask();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,12 +35,20 @@ public class MainActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
 
+        lang = prefs.getString("lang", lang);
+        debugMode = prefs.getBoolean("debugMode", debugMode);
+        skipInfo = prefs.getBoolean("skipInfo", skipInfo);
+
+        TextView dmMsg = findViewById(R.id.dmm);
+        if (!debugMode)
+            dmMsg.setVisibility(View.GONE);
+
         String wstr = getResources().getString(R.string.welcome);
         String hs1 = getResources().getString(R.string.helpWheel);
         String hs2 = getResources().getString(R.string.help50);
         String hs3 = getResources().getString(R.string.helpPhone);
         String start = getResources().getString(R.string.start);
-        if (getResources().getString(R.string.Lang).equals("English")) {
+        if (lang.equals("English")) {
             wstr = getResources().getString(R.string.welcomeENG);
             hs1 = getResources().getString(R.string.helpWheelENG);
             hs2 = getResources().getString(R.string.help50ENG);
@@ -53,22 +70,30 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void StartGame (View view){
-
-        // Resetting the game variables
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("scoreInt", 0);
-        editor.putInt("timeInt", 0);
-        editor.putInt("questionInt", 1);
-        editor.putString("answers", "");
-        editor.putBoolean("helpWH", true);
-        editor.putBoolean("help50", true);
-        editor.putBoolean("helpPH", true);
-        editor.apply();
-
         Intent a = new Intent(MainActivity.this, Info.class);
         if (skipInfo)
             a = new Intent(MainActivity.this, Question.class);
         startActivity(a);
+    }
+
+    public void debug1 (View view) {
+        if (b == 0 || b == 4)
+            a++;
+    }
+
+    public void debug2 (View view) {
+        if (a == 2)
+            b++;
+    }
+
+    public void debug3 (View view) {
+        if (a == 3 && b == 4) {
+            Toast.makeText(this, "Debug Menu", Toast.LENGTH_SHORT).show();
+            Intent a = new Intent(MainActivity.this, DebugMenu.class);
+            startActivity(a);
+        }
+        a = 0;
+        b = 0;
     }
 
 }

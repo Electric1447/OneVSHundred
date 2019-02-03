@@ -1,12 +1,15 @@
 <resources>
     <string name="app_name">אחד נגד מאה</string>
 
-    <string name="timer">00</string>
+    <string name="Lang">Hebrew</string>
     <string name="numberOfQuestions">20</string>
+    <string name="skipInfo">False</string>
+    <string name="qr">False</string>
+    <string name="questionsPerQR">5</string>
+
+    <string name="timer">00</string>
 
     <string name="infoText">Empty</string>
-
-    <string name="Lang">Hebrew</string>
 
     <string name="welcome">"ברוכים הבאים ל: </string>
     <string name="helpWheel">גלגל הצלה</string>
@@ -64,6 +67,11 @@
     <string name="btENG">Time bonus:</string>
     <string name="bhENG">No Helps bonus:</string>
     <string name="totalENG">Total:</string>
+
+    <string-array name="language_array">
+        <item>Hebrew</item>
+        <item>English</item>
+    </string-array>
 
     <string-array name="qmain">
         1     <item>Question 1</item>

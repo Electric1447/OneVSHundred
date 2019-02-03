@@ -1,10 +1,10 @@
 package eparon.onevshundred;
 
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.TextView;
 
 import java.util.Locale;
@@ -17,6 +17,8 @@ public class EndActivity extends AppCompatActivity {
 
     Locale l = Locale.getDefault();
 
+    String lang;
+    boolean debugMode;
     int scoreInt, timeInt;
     String answers;
 
@@ -35,11 +37,17 @@ public class EndActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
 
+        debugMode = prefs.getBoolean("debugMode", debugMode);
+        lang = prefs.getString("lang", lang);
         scoreInt = prefs.getInt("scoreInt", scoreInt);
         timeInt = prefs.getInt("timeInt", timeInt);
         answers = prefs.getString("answers", answers);
         for (int i = 0; i < help.length; i++)
             help[i] = prefs.getBoolean(helpStr[i], help[i]);
+
+        TextView dmMsg = findViewById(R.id.dmm);
+        if (!debugMode)
+            dmMsg.setVisibility(View.GONE);
 
         String title = getResources().getString(R.string.endTitle);
         String score = getResources().getString(R.string.score);
@@ -51,7 +59,7 @@ public class EndActivity extends AppCompatActivity {
         String ets = getResources().getString(R.string.bt);
         String ehs = getResources().getString(R.string.bh);
         String total = getResources().getString(R.string.total);
-        if (getResources().getString(R.string.Lang).equals("English")) {
+        if (lang.equals("English")) {
             title = getResources().getString(R.string.endTitleENG);
             score = getResources().getString(R.string.scoreENG);
             et1 = getResources().getString(R.string.endText1ENG);
@@ -93,7 +101,7 @@ public class EndActivity extends AppCompatActivity {
         TimeM.setText(String.format("%s %s", time, hms));
 
         if (scoreInt != 0) { // Checking if the Score isn't zero
-            timebonus = (answers.length() * 30 - timeInt) / 3;
+            timebonus = (answers.length() * MainActivity.NUMBER_OF_SECONDS - timeInt) / 3;
 
             if (help[0] && help[1] && help[2]) // Checking if Helps have been used
                 hScore = (scoreInt + timebonus) / MainActivity.NO_HELPS_BONUS_PERCENTAGE;

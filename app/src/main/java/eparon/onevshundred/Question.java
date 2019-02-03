@@ -51,6 +51,10 @@ public class Question extends AppCompatActivity {
     Button[] btn = new Button[buttons];
     FloatingActionButton[] btnh = new FloatingActionButton[3];
 
+    int qnum, qrnum;
+    String lang;
+    boolean qr;
+
     int scoreInt, timeInt;
     int questionInt;
     String answers;
@@ -87,9 +91,13 @@ public class Question extends AppCompatActivity {
 
         prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
 
+        qnum = prefs.getInt("qnum", qnum);
+        qrnum = prefs.getInt("qrnum", qrnum);
         scoreInt = prefs.getInt("scoreInt", scoreInt);
         timeInt = prefs.getInt("timeInt", timeInt);
         questionInt = prefs.getInt("questionInt", questionInt);
+        qr = prefs.getBoolean("qr", qr);
+        lang = prefs.getString("lang", lang);
         answers = prefs.getString("answers", answers);
         for (int i = 0; i < help.length; i++)
             help[i] = prefs.getBoolean(helpStr[i], help[i]);
@@ -115,7 +123,7 @@ public class Question extends AppCompatActivity {
         btnh[2] = findViewById(R.id.fab3); // Help Phone
 
         currentScore = ((questionInt - 1) / 4 + 1) * 20; // Setting the Score
-        if (MainActivity.QR_ENABLED)
+        if (qr)
             currentScore = 50;
 
         if (qArr[2][questionInt - 1].equals("EMPTY") && qArr[3][questionInt - 1].equals("EMPTY")) {
@@ -152,7 +160,7 @@ public class Question extends AppCompatActivity {
         ac = res.getString(R.string.correct);
         aic = res.getString(R.string.incorrect);
         atu = res.getString(R.string.timesup);
-        if (getResources().getString(R.string.Lang).equals("English")) {
+        if (lang.equals("English")) {
             qs = res.getString(R.string.qTextENG);
             ps = res.getString(R.string.pTextENG);
             ac = res.getString(R.string.correctENG);
@@ -309,9 +317,9 @@ public class Question extends AppCompatActivity {
             @Override
             public void run () {
                 Intent a = new Intent(Question.this, Question.class);
-                if ((questionInt - 1) % MainActivity.QUESTIONS_PER_QR == 0 && MainActivity.QR_ENABLED) // If QR is enabled & the next activity is a QR activity, go to the QR activity,
+                if ((questionInt - 1) % qrnum == 0 && qr) // If QR is enabled & the next activity is a QR activity, go to the QR activity,
                     a = new Intent(Question.this, QRActivity.class);
-                if (questionInt == Integer.parseInt(res.getString(R.string.numberOfQuestions)) + 1) // If the question is the last Question GOTO the End screen
+                if (questionInt == qnum + 1) // If the question is the last Question GOTO the End screen
                     a = new Intent(Question.this, EndActivity.class);
                 startActivity(a);
                 finish();
