@@ -19,7 +19,7 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
 
     public String PREFS_OVH = "OVHPrefsFile";
     SharedPreferences prefs;
-    
+
     Switch DebugMode;
     CheckBox infoBox, qrBox;
     Spinner langSpinner;
