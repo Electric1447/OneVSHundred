@@ -82,6 +82,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/text1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="Skip Info"
@@ -117,6 +118,7 @@
             android:paddingBottom="12dp">
 
             <TextView
+                android:id="@+id/text2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingRight="7dp"
@@ -142,6 +144,7 @@
             android:paddingBottom="12dp">
 
             <TextView
+                android:id="@+id/text3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingRight="7dp"
@@ -177,6 +180,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/text4"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:text="QR Activities"
@@ -213,6 +217,7 @@
             android:paddingBottom="12dp">
 
             <TextView
+                android:id="@+id/text5"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:paddingRight="7dp"

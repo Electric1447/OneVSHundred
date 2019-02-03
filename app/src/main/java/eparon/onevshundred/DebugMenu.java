@@ -20,10 +20,13 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
     public String PREFS_OVH = "OVHPrefsFile";
     SharedPreferences prefs;
 
+    int COLOR_GREY, COLOR_BLACK;
+
     Switch DebugMode;
     CheckBox infoBox, qrBox;
     Spinner langSpinner;
     EditText noq, qrET;
+    TextView[] Text = new TextView[5];
 
     int qnum, qrnum;
     String lang;
@@ -71,6 +74,9 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
         skipInfo = prefs.getBoolean("skipInfo", skipInfo);
         qr = prefs.getBoolean("qr", qr);
 
+        COLOR_GREY = getResources().getColor(R.color.colorGrey);
+        COLOR_BLACK = getResources().getColor(R.color.colorBlack);
+
         DebugMode = findViewById(R.id.dmSwitch);
         DebugMode.setChecked(debugMode);
 
@@ -91,6 +97,28 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
 
         qrET = findViewById(R.id.qret);
 
+        Text[0] = findViewById(R.id.text1);
+        Text[1] = findViewById(R.id.text2);
+        Text[2] = findViewById(R.id.text3);
+        Text[3] = findViewById(R.id.text4);
+        Text[4] = findViewById(R.id.text5);
+
+        infoBox.setClickable(debugMode);
+        langSpinner.setEnabled(debugMode);
+        noq.setClickable(debugMode);
+        noq.setLongClickable(debugMode);
+        noq.setFocusable(debugMode);
+        noq.setFocusableInTouchMode(debugMode);
+        qrBox.setClickable(debugMode);
+        qrET.setClickable(debugMode);
+        qrET.setLongClickable(debugMode);
+        qrET.setFocusable(debugMode);
+        qrET.setFocusableInTouchMode(debugMode);
+
+        if (!debugMode)
+            for (TextView aText : Text)
+                aText.setTextColor(COLOR_GREY);
+
         TextView version = findViewById(R.id.ver);
         version.setText(String.format("Version %s", BuildConfig.VERSION_NAME));
     }
@@ -98,6 +126,25 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
     public void DM (View view) {
         debugMode = !debugMode;
         DebugMode.setChecked(debugMode);
+
+        infoBox.setClickable(debugMode);
+        langSpinner.setEnabled(debugMode);
+        noq.setClickable(debugMode);
+        noq.setLongClickable(debugMode);
+        noq.setFocusable(debugMode);
+        noq.setFocusableInTouchMode(debugMode);
+        qrBox.setClickable(debugMode);
+        qrET.setClickable(debugMode);
+        qrET.setLongClickable(debugMode);
+        qrET.setFocusable(debugMode);
+        qrET.setFocusableInTouchMode(debugMode);
+
+        if (debugMode)
+            for (TextView aText : Text)
+                aText.setTextColor(COLOR_BLACK);
+        if (!debugMode)
+            for (TextView aText : Text)
+                aText.setTextColor(COLOR_GREY);
     }
 
     @Override

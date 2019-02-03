@@ -87,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void debug3 (View view) {
-        if (a == 3 && b == 4) {
+        if ((a == 3 && b == 4) || debugMode) {
             Toast.makeText(this, "Debug Menu", Toast.LENGTH_SHORT).show();
             Intent a = new Intent(MainActivity.this, DebugMenu.class);
             startActivity(a);
