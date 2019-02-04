@@ -44,15 +44,11 @@ public class MainActivity extends AppCompatActivity {
             dmMsg.setVisibility(View.GONE);
 
         String wstr = getResources().getString(R.string.welcome);
-        String hs1 = getResources().getString(R.string.helpWheel);
-        String hs2 = getResources().getString(R.string.help50);
-        String hs3 = getResources().getString(R.string.helpPhone);
+        String[] hs = new String[] {getResources().getString(R.string.helpWheel), getResources().getString(R.string.help50), getResources().getString(R.string.helpPhone)};
         String start = getResources().getString(R.string.start);
         if (lang.equals("English")) {
             wstr = getResources().getString(R.string.welcomeENG);
-            hs1 = getResources().getString(R.string.helpWheelENG);
-            hs2 = getResources().getString(R.string.help50ENG);
-            hs3 = getResources().getString(R.string.helpPhoneENG);
+            hs = new String[] {getResources().getString(R.string.helpWheelENG), getResources().getString(R.string.help50ENG), getResources().getString(R.string.helpPhoneENG)};
             start = getResources().getString(R.string.startENG);
         }
 
@@ -63,9 +59,9 @@ public class MainActivity extends AppCompatActivity {
         TextView Start = findViewById(R.id.start);
         String appname = getResources().getString(R.string.app_name);
         Welcome.setText(String.format("%s\n%s!", wstr, appname));
-        HW.setText(hs1);
-        H50.setText(hs2);
-        HP.setText(hs3);
+        HW.setText(hs[0]);
+        H50.setText(hs[1]);
+        HP.setText(hs[2]);
         Start.setText(start);
     }
 

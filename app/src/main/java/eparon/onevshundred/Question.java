@@ -158,15 +158,11 @@ public class Question extends AppCompatActivity {
 
         String qs = res.getString(R.string.qText);
         String ps = res.getString(R.string.pText);
-        ans[0] = res.getString(R.string.correct);
-        ans[1] = res.getString(R.string.incorrect);
-        ans[2] = res.getString(R.string.timesup);
+        ans = new String[] {res.getString(R.string.correct), res.getString(R.string.incorrect), res.getString(R.string.timesup)};
         if (lang.equals("English")) {
             qs = res.getString(R.string.qTextENG);
             ps = res.getString(R.string.pTextENG);
-            ans[0] = res.getString(R.string.correctENG);
-            ans[1] = res.getString(R.string.incorrectENG);
-            ans[2] = res.getString(R.string.timesupENG);
+            ans = new String[] {res.getString(R.string.correct), res.getString(R.string.incorrect), res.getString(R.string.timesup)};
             score.setText(String.format(l,"%s %d", res.getString(R.string.pText2ENG), scoreInt));
         } else
             score.setText(String.format(l,"%d %s", scoreInt, ps));
@@ -180,6 +176,7 @@ public class Question extends AppCompatActivity {
     public void answer (int type) {
         // Setting the variables of the Time, Score, etc
         timeInt += (noOfSeconds / 1000 - 1 - Integer.parseInt(countdownTimerText.getText().toString()));
+        if (countdownTimerText.getText().toString().equals("30")) timeInt++;
         questionInt++;
         scoreInt += currentScore * (1 - type / 2);
         answers += String.valueOf(type);
