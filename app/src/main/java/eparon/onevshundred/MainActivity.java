@@ -17,8 +17,8 @@ public class MainActivity extends AppCompatActivity {
     public static int NUMBER_OF_SECONDS = 30; // Number of Second per Question
     public static int NO_HELPS_BONUS_PERCENTAGE = 10; // Bonus % for not using helps
 
-    String lang;
     boolean debugMode, skipInfo;
+    String lang;
 
     int a = 0, b = 0;
 
@@ -35,9 +35,9 @@ public class MainActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
 
-        lang = prefs.getString("lang", lang);
         debugMode = prefs.getBoolean("debugMode", debugMode);
         skipInfo = prefs.getBoolean("skipInfo", skipInfo);
+        lang = prefs.getString("lang", lang);
 
         TextView dmMsg = findViewById(R.id.dmm);
         if (!debugMode)

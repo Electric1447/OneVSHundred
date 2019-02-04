@@ -21,9 +21,10 @@ public class QRActivity extends AppCompatActivity {
 
     TextView Title, Pin;
 
+    boolean debugMode;
     int qrnum;
-    String lang;
     int questionInt;
+    String lang;
     String[] qrMain, qrCodes;
 
     @Override
@@ -36,11 +37,17 @@ public class QRActivity extends AppCompatActivity {
 
         prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
 
+        debugMode = prefs.getBoolean("debugMode", debugMode);
         qrnum = prefs.getInt("qrnum", qrnum);
-        lang = prefs.getString("lang", lang);
         questionInt = prefs.getInt("questionInt", questionInt);
+        lang = prefs.getString("lang", lang);
+
         qrMain = getResources().getStringArray(R.array.qrmain);
         qrCodes = getResources().getStringArray(R.array.qrcodes);
+
+        TextView dmMsg = findViewById(R.id.dmm);
+        if (!debugMode)
+            dmMsg.setVisibility(View.GONE);
 
         Title = findViewById(R.id.nextLocationText);
         Pin = findViewById(R.id.digits);

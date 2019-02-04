@@ -1,57 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="eparon.onevshundred.DebugMenu">
+    tools:context="eparon.onevshundred.DebugMenu"
+    tools:ignore="Autofill,HardcodedText,RtlHardcoded,RtlSymmetry">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Debug Menu"
-            android:textColor="#000"
-            android:textSize="48sp"
             android:fontFamily="sans-serif-condensed-medium"
             android:gravity="center"
             android:paddingTop="10dp"
-            android:paddingBottom="24dp"/>
+            android:paddingBottom="24dp"
+            android:text="Debug Menu"
+            android:textColor="#000"
+            android:textSize="48sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:baselineAligned="false"
+            android:orientation="horizontal"
             android:paddingBottom="17dp">
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="Debug Mode"
-                    android:textSize="22sp"
-                    android:textStyle="bold"
                     android:textColor="#000"
-                    android:gravity="center" />
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <Switch
@@ -60,9 +60,8 @@
                     android:layout_height="match_parent"
                     android:layout_gravity="right"
                     android:gravity="center"
-                    android:paddingRight="5dp"
                     android:onClick="DM"
-                    tools:ignore="RtlHardcoded" />
+                    android:paddingRight="5dp" />
 
             </LinearLayout>
 
@@ -71,41 +70,40 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:baselineAligned="false"
+            android:orientation="horizontal"
             android:paddingBottom="12dp">
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/text1"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="Skip Info"
-                    android:textSize="18sp"
                     android:textColor="#000"
-                    android:gravity="center" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="wrap_content"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <CheckBox
                     android:id="@+id/skipInfo"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:paddingRight="5dp"
                     android:layout_gravity="right"
                     android:onClick="infoCheckbox"
-                    tools:ignore="RtlHardcoded" />
+                    android:paddingRight="5dp" />
 
             </LinearLayout>
 
@@ -121,12 +119,11 @@
                 android:id="@+id/text2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:paddingRight="7dp"
                 android:text="Language:"
-                android:textSize="18sp"
                 android:textColor="#000"
-                android:gravity="center"
-                tools:ignore="RtlHardcoded,RtlSymmetry" />
+                android:textSize="18sp" />
 
             <Spinner
                 android:id="@+id/lang_spinner"
@@ -147,64 +144,62 @@
                 android:id="@+id/text3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:paddingRight="7dp"
                 android:text="Number of quesions:"
-                android:textSize="18sp"
                 android:textColor="#000"
-                android:gravity="center"
-                tools:ignore="RtlHardcoded,RtlSymmetry" />
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/questions"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:inputType="number"
                 android:gravity="center"
-                android:maxLength="2"
                 android:hint="00"
-                android:textSize="20sp"/>
+                android:inputType="number"
+                android:maxLength="2"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:baselineAligned="false"
+            android:orientation="horizontal"
             android:paddingBottom="12dp">
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/text4"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
+                    android:gravity="center"
                     android:text="QR Activities"
-                    android:textSize="18sp"
                     android:textColor="#000"
-                    android:gravity="center" />
+                    android:textSize="18sp" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_weight="1"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <CheckBox
                     android:id="@+id/qrcb"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:paddingRight="5dp"
                     android:layout_gravity="right"
                     android:gravity="center"
-                    android:onClick="infoCheckbox"
-                    tools:ignore="RtlHardcoded" />
+                    android:onClick="qrCheckbox"
+                    android:paddingRight="5dp" />
 
             </LinearLayout>
 
@@ -220,22 +215,21 @@
                 android:id="@+id/text5"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:gravity="center"
                 android:paddingRight="7dp"
                 android:text="Number of quesions per QR:"
-                android:textSize="18sp"
                 android:textColor="#000"
-                android:gravity="center"
-                tools:ignore="RtlHardcoded,RtlSymmetry" />
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/qret"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:inputType="number"
                 android:gravity="center"
-                android:maxLength="2"
                 android:hint="00"
-                android:textSize="20sp"/>
+                android:inputType="number"
+                android:maxLength="2"
+                android:textSize="20sp" />
 
         </LinearLayout>
 
@@ -247,9 +241,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:padding="10dp"
-        android:textSize="15sp"
         android:text="Version X.X.X"
-        tools:ignore="HardcodedText" />
+        android:textSize="15sp" />
 
 
 </android.support.design.widget.CoordinatorLayout>

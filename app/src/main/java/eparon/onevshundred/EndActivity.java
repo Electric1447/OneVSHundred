@@ -17,9 +17,9 @@ public class EndActivity extends AppCompatActivity {
 
     Locale l = Locale.getDefault();
 
-    String lang;
     boolean debugMode;
     int scoreInt, timeInt;
+    String lang;
     String answers;
 
     boolean[] help = new boolean[3];
@@ -38,9 +38,9 @@ public class EndActivity extends AppCompatActivity {
         prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
 
         debugMode = prefs.getBoolean("debugMode", debugMode);
-        lang = prefs.getString("lang", lang);
         scoreInt = prefs.getInt("scoreInt", scoreInt);
         timeInt = prefs.getInt("timeInt", timeInt);
+        lang = prefs.getString("lang", lang);
         answers = prefs.getString("answers", answers);
         for (int i = 0; i < help.length; i++)
             help[i] = prefs.getBoolean(helpStr[i], help[i]);

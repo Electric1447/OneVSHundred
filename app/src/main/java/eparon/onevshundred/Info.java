@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class Info extends AppCompatActivity {
@@ -19,9 +20,11 @@ public class Info extends AppCompatActivity {
 
     int COLOR_YELLOW, COLOR_DGREY;
 
-    CheckBox Agree;
+    TextView cbText;
     FloatingActionButton Next;
+    CheckBox Agree;
 
+    boolean debugMode;
     String lang;
 
     @Override
@@ -31,11 +34,16 @@ public class Info extends AppCompatActivity {
 
         prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
 
+        debugMode = prefs.getBoolean("debugMode", debugMode);
         lang = prefs.getString("lang", lang);
 
         // Initializing Resources & Views
         COLOR_YELLOW = getResources().getColor(R.color.colorYellow);
         COLOR_DGREY = getResources().getColor(R.color.colorDGrey);
+
+        TextView dmMsg = findViewById(R.id.dmm);
+        if (!debugMode)
+            dmMsg.setVisibility(View.GONE);
 
         String title = getResources().getString(R.string.infoTitle);
         String agree = getResources().getString(R.string.checkBox);
@@ -44,6 +52,7 @@ public class Info extends AppCompatActivity {
             agree = getResources().getString(R.string.checkBoxENG);
         }
 
+        cbText = findViewById(R.id.checkboxText);
         Agree = findViewById(R.id.checkbox);
         Next = findViewById(R.id.fab);
         TextView InfoTitle = findViewById(R.id.infoTitle);
@@ -51,13 +60,15 @@ public class Info extends AppCompatActivity {
         Info.setMovementMethod(new ScrollingMovementMethod()); // Set the info box to be scrollable
 
         InfoTitle.setText(title);
-        Agree.setText(agree);
+        cbText.setText(agree);
 
         Next.setClickable(false);
         Next.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
     }
 
     public void DoAgree(View view) {
+        if (view.getId() == R.id.cbView)
+            Agree.setChecked(!Agree.isChecked());
 
         Next.setClickable(Agree.isChecked());
 

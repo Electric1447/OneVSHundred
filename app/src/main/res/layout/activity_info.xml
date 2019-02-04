@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context="eparon.onevshundred.Info">
+    tools:context="eparon.onevshundred.Info"
+    tools:ignore="Autofill,HardcodedText,RtlHardcoded,RtlSymmetry">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,10 +21,10 @@
             android:padding="15dp">
 
             <TextView
+                android:id="@+id/infoTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:id="@+id/infoTitle"
                 android:textColor="#FFF"
                 android:textSize="25sp"
                 android:textStyle="bold" />
@@ -44,15 +44,15 @@
 
                 <TextView
                     android:id="@+id/info"
-                    android:text="@string/infoText"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/rounded_corner"
+                    android:padding="5dp"
                     android:scrollbars="vertical"
+                    android:text="@string/infoText"
                     android:textColor="#000"
                     android:textSize="15sp"
-                    android:textStyle="bold"
-                    android:padding="5dp"/>
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -61,58 +61,84 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:baselineAligned="false"
                 android:orientation="horizontal"
                 android:paddingBottom="20dp">
 
-                <RelativeLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/cbView"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="2dp"
+                    android:layout_weight="4.4"
+                    android:background="@drawable/agree_background"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:onClick="DoAgree"
+                    android:orientation="horizontal"
+                    android:paddingLeft="10dp">
 
-                    <LinearLayout
+                    <CheckBox
+                        android:id="@+id/checkbox"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_centerVertical="true">
+                        android:layout_gravity="center_vertical"
+                        android:onClick="DoAgree"
+                        android:paddingTop="15dp"
+                        android:paddingBottom="15dp" />
 
-                        <CheckBox
-                            android:id="@+id/checkbox"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="6dp"
-                            android:onClick="DoAgree"
-                            android:textColor="#FFF"
-                            android:textSize="18sp"
-                            android:textStyle="bold" />
-
-                    </LinearLayout>
-
-                    <LinearLayout
+                    <TextView
+                        android:id="@+id/checkboxText"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true">
+                        android:layout_gravity="center_vertical"
+                        android:layout_marginLeft="2dp"
+                        android:paddingRight="8dp"
+                        android:textColor="#000"
+                        android:textSize="18sp"
+                        android:textStyle="bold" />
 
-                        <android.support.design.widget.FloatingActionButton
-                            android:id="@+id/fab"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:layout_margin="15dp"
-                            android:gravity="right"
-                            android:onClick="GoNext"
-                            android:scaleType="center"
-                            android:scaleX="1.5"
-                            android:scaleY="1.5"
-                            android:src="@drawable/ic_custom_arrow_left_48dp"
-                            app:fabCustomSize="32dp" />
+                </LinearLayout>
 
-                    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:paddingRight="10dp">
 
-                </RelativeLayout>
+                    <android.support.design.widget.FloatingActionButton
+                        android:id="@+id/fab"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_margin="12dp"
+                        android:gravity="right"
+                        android:onClick="GoNext"
+                        android:scaleType="center"
+                        android:scaleX="1.5"
+                        android:scaleY="1.5"
+                        android:src="@drawable/ic_custom_arrow_left_48dp"
+                        app:fabCustomSize="32dp" />
+
+                </LinearLayout>
 
             </LinearLayout>
+
 
         </RelativeLayout>
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/dmm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_marginLeft="10dp"
+        android:layout_marginBottom="4dp"
+        android:background="#000"
+        android:text="DEBUG MODE"
+        android:textColor="#FF0000" />
 
 </android.support.design.widget.CoordinatorLayout>

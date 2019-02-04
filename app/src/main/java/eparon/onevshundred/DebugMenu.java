@@ -22,15 +22,15 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
 
     int COLOR_GREY, COLOR_BLACK;
 
-    Switch DebugMode;
-    CheckBox infoBox, qrBox;
-    Spinner langSpinner;
     EditText noq, qrET;
+    CheckBox infoBox, qrBox;
+    Switch DebugMode;
+    Spinner langSpinner;
     TextView[] Text = new TextView[5];
 
+    boolean debugMode, skipInfo, qr;
     int qnum, qrnum;
     String lang;
-    boolean debugMode, skipInfo, qr;
 
     boolean temp = false;
 
@@ -49,10 +49,11 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
                 Toast.makeText(this, "QR number should be between 3 to 10", Toast.LENGTH_LONG).show();
             else {
                 SharedPreferences.Editor editor = prefs.edit();
-                editor.putInt("qnum", qnum);
-                editor.putString("lang", lang);
                 editor.putBoolean("debugMode", debugMode);
                 editor.putBoolean("skipInfo", skipInfo);
+                editor.putBoolean("qr", qr);
+                editor.putInt("qnum", qnum);
+                editor.putString("lang", lang);
                 editor.apply();
                 Intent a = new Intent(DebugMenu.this, MainActivity.class);
                 startActivity(a);
@@ -67,12 +68,12 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
 
         prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
 
-        qnum = prefs.getInt("qnum", qnum);
-        qrnum = prefs.getInt("qrnum", qrnum);
-        lang = prefs.getString("lang", lang);
         debugMode = prefs.getBoolean("debugMode", debugMode);
         skipInfo = prefs.getBoolean("skipInfo", skipInfo);
         qr = prefs.getBoolean("qr", qr);
+        qnum = prefs.getInt("qnum", qnum);
+        qrnum = prefs.getInt("qrnum", qrnum);
+        lang = prefs.getString("lang", lang);
 
         COLOR_GREY = getResources().getColor(R.color.colorGrey);
         COLOR_BLACK = getResources().getColor(R.color.colorBlack);
@@ -162,6 +163,11 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
     public void infoCheckbox (View view) {
         skipInfo = !skipInfo;
         infoBox.setChecked(skipInfo);
+    }
+
+    public void qrCheckbox (View view) {
+        qr = !qr;
+        qrBox.setChecked(qr);
     }
 
 }

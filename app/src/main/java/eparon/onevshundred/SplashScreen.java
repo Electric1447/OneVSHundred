@@ -32,20 +32,20 @@ public class SplashScreen extends AppCompatActivity {
         SharedPreferences.Editor editor = prefs.edit();
 
         if (!debugMode) {
+            editor.putBoolean("skipInfo", skipInfo);
+            editor.putBoolean("qr", qr);
             editor.putInt("qnum", Integer.valueOf(getResources().getString(R.string.numberOfQuestions)));
             editor.putInt("qrnum", Integer.valueOf(getResources().getString(R.string.questionsPerQR)));
             editor.putString("lang", getResources().getString(R.string.Lang));
-            editor.putBoolean("skipInfo", skipInfo);
-            editor.putBoolean("qr", qr);
         }
 
+        editor.putBoolean("helpWH", true);
+        editor.putBoolean("help50", true);
+        editor.putBoolean("helpPH", true);
         editor.putInt("scoreInt", 0);
         editor.putInt("timeInt", 0);
         editor.putInt("questionInt", 1);
         editor.putString("answers", "");
-        editor.putBoolean("helpWH", true);
-        editor.putBoolean("help50", true);
-        editor.putBoolean("helpPH", true);
 
         editor.apply();
 

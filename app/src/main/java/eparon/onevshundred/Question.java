@@ -51,23 +51,19 @@ public class Question extends AppCompatActivity {
     Button[] btn = new Button[buttons];
     FloatingActionButton[] btnh = new FloatingActionButton[3];
 
+    boolean debugMode, qr;
     int qnum, qrnum;
     String lang;
-    boolean qr;
 
-    int scoreInt, timeInt;
-    int questionInt;
+    int questionInt, scoreInt, timeInt, currentScore;
     String answers;
-    String timeString;
 
     boolean[] help = new boolean[3];
     String[] helpStr = new String[] {"helpWH", "help50", "helpPH"};
 
     int[] btnMain = new int[buttons];
 
-    int currentScore;
-
-    String ac, aic, atu;
+    String[] ans = new String[3];
 
     @Override
     public void onBackPressed() { }
@@ -91,12 +87,13 @@ public class Question extends AppCompatActivity {
 
         prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
 
+        debugMode = prefs.getBoolean("debugMode", debugMode);
+        qr = prefs.getBoolean("qr", qr);
         qnum = prefs.getInt("qnum", qnum);
         qrnum = prefs.getInt("qrnum", qrnum);
         scoreInt = prefs.getInt("scoreInt", scoreInt);
         timeInt = prefs.getInt("timeInt", timeInt);
         questionInt = prefs.getInt("questionInt", questionInt);
-        qr = prefs.getBoolean("qr", qr);
         lang = prefs.getString("lang", lang);
         answers = prefs.getString("answers", answers);
         for (int i = 0; i < help.length; i++)
@@ -108,6 +105,10 @@ public class Question extends AppCompatActivity {
         COLOR_DGREY = res.getColor(R.color.colorDGrey);
         BUTTON_COLOR_LGREEN = res.getDrawable(R.drawable.custombutton_lgreen);
         BUTTON_COLOR_GREY = res.getDrawable(R.drawable.custombutton_grey);
+
+        TextView dmMsg = findViewById(R.id.dmm);
+        if (!debugMode)
+            dmMsg.setVisibility(View.GONE);
 
         // Setting objects
         Title = findViewById(R.id.top);
@@ -157,15 +158,15 @@ public class Question extends AppCompatActivity {
 
         String qs = res.getString(R.string.qText);
         String ps = res.getString(R.string.pText);
-        ac = res.getString(R.string.correct);
-        aic = res.getString(R.string.incorrect);
-        atu = res.getString(R.string.timesup);
+        ans[0] = res.getString(R.string.correct);
+        ans[1] = res.getString(R.string.incorrect);
+        ans[2] = res.getString(R.string.timesup);
         if (lang.equals("English")) {
             qs = res.getString(R.string.qTextENG);
             ps = res.getString(R.string.pTextENG);
-            ac = res.getString(R.string.correctENG);
-            aic = res.getString(R.string.incorrectENG);
-            atu = res.getString(R.string.timesupENG);
+            ans[0] = res.getString(R.string.correctENG);
+            ans[1] = res.getString(R.string.incorrectENG);
+            ans[2] = res.getString(R.string.timesupENG);
             score.setText(String.format(l,"%s %d", res.getString(R.string.pText2ENG), scoreInt));
         } else
             score.setText(String.format(l,"%d %s", scoreInt, ps));
@@ -178,18 +179,17 @@ public class Question extends AppCompatActivity {
 
     public void answer (int type) {
         // Setting the variables of the Time, Score, etc
-        timeString = countdownTimerText.getText().toString();
-        timeInt += (noOfSeconds / 1000 - 1 - Integer.parseInt(timeString));
+        timeInt += (noOfSeconds / 1000 - 1 - Integer.parseInt(countdownTimerText.getText().toString()));
         questionInt++;
-        answers += String.valueOf(type);
         scoreInt += currentScore * (1 - type / 2);
+        answers += String.valueOf(type);
 
         // Saving those variables to the SharedPrefs
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("timeInt", timeInt);
         editor.putInt("questionInt", questionInt);
-        editor.putString("answers", answers);
         editor.putInt("scoreInt", scoreInt);
+        editor.putString("answers", answers);
         editor.apply();
 
         countDownTimer.cancel();
@@ -298,20 +298,11 @@ public class Question extends AppCompatActivity {
         TextView Message = customView.findViewById(R.id.message);
 
         // Setting the Text and the Text Color by the Answer
-        switch (answers.charAt(questionInt - 2) - '0') {
-            case 1:
-                Message.setText(ac);
-                Message.setTextColor(COLOR_GREEN);
-                break;
-            case 2:
-                Message.setText(aic);
-                Message.setTextColor(COLOR_RED);
-                break;
-            case 3:
-                Message.setText(atu);
-                Message.setTextColor(COLOR_RED);
-                break;
-        }
+        Message.setText(ans[(answers.charAt(questionInt - 2) - '0') - 1]);
+        if ((answers.charAt(questionInt - 2) - '0') == 1)
+            Message.setTextColor(COLOR_GREEN);
+        else
+            Message.setTextColor(COLOR_RED);
 
         new Handler().postDelayed(new Runnable() {
             @Override
