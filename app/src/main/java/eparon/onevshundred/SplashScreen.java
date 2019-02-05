@@ -23,10 +23,8 @@ public class SplashScreen extends AppCompatActivity {
         debugMode = prefs.getBoolean("debugMode", debugMode);
 
         boolean skipInfo = false, qr = false;
-        if (getResources().getString(R.string.skipInfo).equals("True"))
-            skipInfo = true;
-        if (getResources().getString(R.string.qr).equals("True"))
-            qr = true;
+        if (getResources().getString(R.string.skipInfo).equals("True")) skipInfo = true;
+        if (getResources().getString(R.string.qr).equals("True")) qr = true;
 
         // Resetting the game variables
         SharedPreferences.Editor editor = prefs.edit();
@@ -44,13 +42,12 @@ public class SplashScreen extends AppCompatActivity {
         editor.putBoolean("helpPH", true);
         editor.putInt("scoreInt", 0);
         editor.putInt("timeInt", 0);
+        editor.putInt("answers", 0);
         editor.putInt("questionInt", 1);
-        editor.putString("answers", "");
 
         editor.apply();
 
-        Intent a = new Intent(SplashScreen.this, MainActivity.class);
-        startActivity(a);
+        startActivity(new Intent(SplashScreen.this, MainActivity.class));
     }
 
 }

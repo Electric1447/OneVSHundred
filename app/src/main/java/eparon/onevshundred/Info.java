@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.CheckBox;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class Info extends AppCompatActivity {
@@ -42,14 +41,12 @@ public class Info extends AppCompatActivity {
         COLOR_DGREY = getResources().getColor(R.color.colorDGrey);
 
         TextView dmMsg = findViewById(R.id.dmm);
-        if (!debugMode)
-            dmMsg.setVisibility(View.GONE);
+        if (!debugMode) dmMsg.setVisibility(View.GONE);
 
         String title = getResources().getString(R.string.infoTitle);
         String agree = getResources().getString(R.string.checkBox);
         if (lang.equals("English")) {
-            title = getResources().getString(R.string.infoTitleENG);
-            agree = getResources().getString(R.string.checkBoxENG);
+            title = getResources().getString(R.string.infoTitleENG); agree = getResources().getString(R.string.checkBoxENG);
         }
 
         cbText = findViewById(R.id.checkboxText);
@@ -72,10 +69,8 @@ public class Info extends AppCompatActivity {
 
         Next.setClickable(Agree.isChecked());
 
-        if (!Agree.isChecked())
-            Next.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
-        if (Agree.isChecked())
-            Next.setBackgroundTintList(ColorStateList.valueOf(COLOR_YELLOW));
+        if (!Agree.isChecked()) Next.setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
+        if (Agree.isChecked()) Next.setBackgroundTintList(ColorStateList.valueOf(COLOR_YELLOW));
     }
 
     public void GoNext(View view) {
@@ -84,4 +79,3 @@ public class Info extends AppCompatActivity {
     }
 
 }
-

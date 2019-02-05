@@ -32,7 +32,6 @@ public class Question extends AppCompatActivity {
 
     Locale l = Locale.getDefault();
 
-    private static int noOfSeconds = (MainActivity.NUMBER_OF_SECONDS + 1) * 1000;
     private int buttons = 4;
     private static int[] btnIDArray = new int[] {R.id.button1, R.id.button2, R.id.button3, R.id.button4};
 
@@ -52,11 +51,8 @@ public class Question extends AppCompatActivity {
     FloatingActionButton[] btnh = new FloatingActionButton[3];
 
     boolean debugMode, qr;
-    int qnum, qrnum;
+    int questionInt, answers, scoreInt, timeInt, currentScore, qnum, qrnum;
     String lang;
-
-    int questionInt, scoreInt, timeInt, currentScore;
-    String answers;
 
     boolean[] help = new boolean[3];
     String[] helpStr = new String[] {"helpWH", "help50", "helpPH"};
@@ -78,11 +74,9 @@ public class Question extends AppCompatActivity {
         qMain = res.getStringArray(R.array.qmain);
         ta = res.obtainTypedArray(R.array.qarr);
         qArr = new String[ta.length()][];
-        for (int i = 0; i < ta.length(); ++i) {
-            int id = ta.getResourceId(i, 0);
-            if (id > 0)
-                qArr[i] = res.getStringArray(id);
-        }
+        for (int i = 0; i < ta.length(); ++i)
+            if ((int)ta.getResourceId(i, 0) > 0)
+                qArr[i] = res.getStringArray((int)ta.getResourceId(i, 0));
         ta.recycle();
 
         prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
@@ -93,9 +87,9 @@ public class Question extends AppCompatActivity {
         qrnum = prefs.getInt("qrnum", qrnum);
         scoreInt = prefs.getInt("scoreInt", scoreInt);
         timeInt = prefs.getInt("timeInt", timeInt);
+        answers = prefs.getInt("answers", answers);
         questionInt = prefs.getInt("questionInt", questionInt);
         lang = prefs.getString("lang", lang);
-        answers = prefs.getString("answers", answers);
         for (int i = 0; i < help.length; i++)
             help[i] = prefs.getBoolean(helpStr[i], help[i]);
 
@@ -107,8 +101,7 @@ public class Question extends AppCompatActivity {
         BUTTON_COLOR_GREY = res.getDrawable(R.drawable.custombutton_grey);
 
         TextView dmMsg = findViewById(R.id.dmm);
-        if (!debugMode)
-            dmMsg.setVisibility(View.GONE);
+        if (!debugMode) dmMsg.setVisibility(View.GONE);
 
         // Setting objects
         Title = findViewById(R.id.top);
@@ -124,8 +117,7 @@ public class Question extends AppCompatActivity {
         btnh[2] = findViewById(R.id.fab3); // Help Phone
 
         currentScore = ((questionInt - 1) / 4 + 1) * 20; // Setting the Score
-        if (qr)
-            currentScore = 50;
+        if (qr) currentScore = 50;
 
         if (qArr[2][questionInt - 1].equals("EMPTY") && qArr[3][questionInt - 1].equals("EMPTY")) {
             buttons = 2;
@@ -160,8 +152,7 @@ public class Question extends AppCompatActivity {
         String ps = res.getString(R.string.pText);
         ans = new String[] {res.getString(R.string.correct), res.getString(R.string.incorrect), res.getString(R.string.timesup)};
         if (lang.equals("English")) {
-            qs = res.getString(R.string.qTextENG);
-            ps = res.getString(R.string.pTextENG);
+            qs = res.getString(R.string.qTextENG); ps = res.getString(R.string.pTextENG);
             ans = new String[] {res.getString(R.string.correct), res.getString(R.string.incorrect), res.getString(R.string.timesup)};
             score.setText(String.format(l,"%s %d", res.getString(R.string.pText2ENG), scoreInt));
         } else
@@ -171,26 +162,6 @@ public class Question extends AppCompatActivity {
         setButtonsText();
 
         startTimer();
-    }
-
-    public void answer (int type) {
-        // Setting the variables of the Time, Score, etc
-        timeInt += (noOfSeconds / 1000 - 1 - Integer.parseInt(countdownTimerText.getText().toString()));
-        if (countdownTimerText.getText().toString().equals("30")) timeInt++;
-        questionInt++;
-        scoreInt += currentScore * (1 - type / 2);
-        answers += String.valueOf(type);
-
-        // Saving those variables to the SharedPrefs
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putInt("timeInt", timeInt);
-        editor.putInt("questionInt", questionInt);
-        editor.putInt("scoreInt", scoreInt);
-        editor.putString("answers", answers);
-        editor.apply();
-
-        countDownTimer.cancel();
-        PopUp();
     }
 
     public void answerButton (View view) {
@@ -206,42 +177,38 @@ public class Question extends AppCompatActivity {
 
         // Checking which button was pressed
         int i = 0;
-        if (view.getId() == R.id.fab2) i = 1;
-        if (view.getId() == R.id.fab3) i = 2;
+
+        if (view.getId() == R.id.fab1)
+            answer(1);
+
+        if (view.getId() == R.id.fab2) {
+            i = 1;
+            // Help 50/50
+            setButtonProps(3, BUTTON_COLOR_GREY, false);
+            setButtonProps(4, BUTTON_COLOR_GREY, false);
+        }
+
+        if (view.getId() == R.id.fab3) {
+            i = 2;
+            // Help Phone
+            Random d = new Random();
+            int phoneHelpInt = (int)(d.nextDouble() * 100) / 15;
+
+            if (phoneHelpInt > 2) phoneHelpInt = 2;
+            phoneHelpInt = 3 - phoneHelpInt;
+
+            setButtonProps(phoneHelpInt, BUTTON_COLOR_LGREEN, true);
+            setButtonProps(4, BUTTON_COLOR_GREY, false);
+        }
 
         // Making that button used in the SharedPrefs
         SharedPreferences.Editor editor = prefs.edit();
         editor.putBoolean(helpStr[i], false);
         editor.apply();
-
-        switch (i) {
-            case 0:
-                // Help Wheel
-                answer(1);
-                break;
-            case 1:
-                // Help 50/50
-                setButtonProps(3, BUTTON_COLOR_GREY, false);
-                setButtonProps(4, BUTTON_COLOR_GREY, false);
-                break;
-            case 2:
-                // Help Phone
-                Random d = new Random();
-                int phoneHelpInt = (int)(d.nextDouble() * 100) / 15;
-
-                if (phoneHelpInt > 2)
-                    phoneHelpInt = 2;
-
-                phoneHelpInt = 3 - phoneHelpInt;
-
-                setButtonProps(phoneHelpInt, BUTTON_COLOR_LGREEN, true);
-                setButtonProps(4, BUTTON_COLOR_GREY, false);
-                break;
-        }
     }
 
     private void startTimer () {
-        countDownTimer = new CountDownTimer(noOfSeconds, 1000) {
+        countDownTimer = new CountDownTimer(((MainActivity.NUMBER_OF_SECONDS + 1) * 1000), 1000) {
             public void onTick (long millisUntilFinished) {
                 //Convert milliseconds into hour,minute and seconds
                 String hms = String.format(l, "%02d",TimeUnit.MILLISECONDS.toSeconds(millisUntilFinished) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millisUntilFinished)));
@@ -250,8 +217,7 @@ public class Question extends AppCompatActivity {
                 // Timer blinks red in the last 10 seconds
                 if (Integer.parseInt(hms) <= 10 && Integer.parseInt(hms) % 2 == 0)
                     countdownTimerText.setTextColor(COLOR_RED);
-                else
-                    countdownTimerText.setTextColor(COLOR_WHITE);
+                else countdownTimerText.setTextColor(COLOR_WHITE);
             }
             public void onFinish () { answer(3); }
         }.start();
@@ -262,7 +228,7 @@ public class Question extends AppCompatActivity {
             btn[i].setText(qArr[btnMain[i] - 1][questionInt - 1]);
     }
 
-    public void setButtonProps (int buttonType, Drawable buttonColor, boolean setClickable) {
+    private void setButtonProps (int buttonType, Drawable buttonColor, boolean setClickable) {
         for (int i = 0; i < buttons; i++) { // Checking all the Answer Buttons if they are the type requested.
             if (btnMain[i] == buttonType) {
                 btn[i].setBackground(buttonColor);
@@ -271,13 +237,29 @@ public class Question extends AppCompatActivity {
         }
     }
 
-    public void setHelpButtonProps (int buttonType, boolean setValue) {
+    private void setHelpButtonProps (int buttonType, boolean setValue) {
         btnh[buttonType].setClickable(setValue); // Setting the help button value.
-        if (!setValue)
-            btnh[buttonType].setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
+        if (!setValue) btnh[buttonType].setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
     }
 
-    public void PopUp () {
+    public void answer (int type) {
+
+        // Setting the variables of the Time, Score, etc
+        timeInt += (MainActivity.NUMBER_OF_SECONDS - Integer.parseInt(countdownTimerText.getText().toString()));
+        if (countdownTimerText.getText().toString().equals(String.valueOf(MainActivity.NUMBER_OF_SECONDS))) timeInt++;
+        questionInt++;
+        scoreInt += currentScore * (1 - type / 2);
+        answers += 1 - type / 2;
+
+        // Saving those variables to the SharedPrefs
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("timeInt", timeInt);
+        editor.putInt("questionInt", questionInt);
+        editor.putInt("scoreInt", scoreInt);
+        editor.putInt("answers", answers);
+        editor.apply();
+
+        countDownTimer.cancel();
 
         // Disabling all of the buttons
         for (int i = 0; i < buttons; i++)
@@ -286,7 +268,7 @@ public class Question extends AppCompatActivity {
             setHelpButtonProps(i, false);
 
         // Creating the custom Popup message
-        View customView = View.inflate(this, R.layout.popup_layout,null);
+        View customView = View.inflate(this, R.layout.popup_layout, null);
 
         PopupWindow myPopupWindow = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         myPopupWindow.setElevation(5.0f);
@@ -295,11 +277,9 @@ public class Question extends AppCompatActivity {
         TextView Message = customView.findViewById(R.id.message);
 
         // Setting the Text and the Text Color by the Answer
-        Message.setText(ans[(answers.charAt(questionInt - 2) - '0') - 1]);
-        if ((answers.charAt(questionInt - 2) - '0') == 1)
-            Message.setTextColor(COLOR_GREEN);
-        else
-            Message.setTextColor(COLOR_RED);
+        Message.setText(ans[type - 1]);
+        int[] temp_color = new int[] {COLOR_GREEN, COLOR_RED};
+        Message.setTextColor(temp_color[type / 2]);
 
         new Handler().postDelayed(new Runnable() {
             @Override

@@ -32,16 +32,14 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
     int qnum, qrnum;
     String lang;
 
-    boolean temp = false;
-
     @Override
     public void onBackPressed() {
-        if (noq.getText().toString().equals(""))
-            noq.setText(getResources().getString(R.string.numberOfQuestions));
-        if (qrET.getText().toString().equals(""))
-            qrET.setText(getResources().getString(R.string.questionsPerQR));
+        if (noq.getText().toString().equals("")) noq.setText(getResources().getString(R.string.numberOfQuestions));
+        if (qrET.getText().toString().equals("")) qrET.setText(getResources().getString(R.string.questionsPerQR));
+
         qnum = Integer.valueOf(noq.getText().toString());
         qrnum = Integer.valueOf(qrET.getText().toString());
+
         if (qnum > 40 || qnum < 5)
             Toast.makeText(this, "Questions number should be between 5 to 40", Toast.LENGTH_LONG).show();
         else {
@@ -55,8 +53,7 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
                 editor.putInt("qnum", qnum);
                 editor.putString("lang", lang);
                 editor.apply();
-                Intent a = new Intent(DebugMenu.this, MainActivity.class);
-                startActivity(a);
+                startActivity(new Intent(DebugMenu.this, MainActivity.class));
             }
         }
     }
@@ -65,6 +62,8 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debug);
+
+        Toast.makeText(this, "Debug Menu", Toast.LENGTH_SHORT).show();
 
         prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
 
@@ -104,21 +103,7 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
         Text[3] = findViewById(R.id.text4);
         Text[4] = findViewById(R.id.text5);
 
-        infoBox.setClickable(debugMode);
-        langSpinner.setEnabled(debugMode);
-        noq.setClickable(debugMode);
-        noq.setLongClickable(debugMode);
-        noq.setFocusable(debugMode);
-        noq.setFocusableInTouchMode(debugMode);
-        qrBox.setClickable(debugMode);
-        qrET.setClickable(debugMode);
-        qrET.setLongClickable(debugMode);
-        qrET.setFocusable(debugMode);
-        qrET.setFocusableInTouchMode(debugMode);
-
-        if (!debugMode)
-            for (TextView aText : Text)
-                aText.setTextColor(COLOR_GREY);
+        dmText();
 
         TextView version = findViewById(R.id.ver);
         version.setText(String.format("Version %s", BuildConfig.VERSION_NAME));
@@ -128,33 +113,12 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
         debugMode = !debugMode;
         DebugMode.setChecked(debugMode);
 
-        infoBox.setClickable(debugMode);
-        langSpinner.setEnabled(debugMode);
-        noq.setClickable(debugMode);
-        noq.setLongClickable(debugMode);
-        noq.setFocusable(debugMode);
-        noq.setFocusableInTouchMode(debugMode);
-        qrBox.setClickable(debugMode);
-        qrET.setClickable(debugMode);
-        qrET.setLongClickable(debugMode);
-        qrET.setFocusable(debugMode);
-        qrET.setFocusableInTouchMode(debugMode);
-
-        if (debugMode)
-            for (TextView aText : Text)
-                aText.setTextColor(COLOR_BLACK);
-        if (!debugMode)
-            for (TextView aText : Text)
-                aText.setTextColor(COLOR_GREY);
+        dmText();
     }
 
     @Override
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
-        if (temp) {
-            lang = adapterView.getItemAtPosition(position).toString();
-            Toast.makeText(adapterView.getContext(), lang, Toast.LENGTH_SHORT).show();
-        } else
-            temp = true;
+        lang = adapterView.getItemAtPosition(position).toString();
     }
 
     @Override
@@ -168,6 +132,25 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
     public void qrCheckbox (View view) {
         qr = !qr;
         qrBox.setChecked(qr);
+    }
+
+    private void dmText () {
+        infoBox.setClickable(debugMode);
+        langSpinner.setEnabled(debugMode);
+        noq.setClickable(debugMode);
+        noq.setLongClickable(debugMode);
+        noq.setFocusable(debugMode);
+        noq.setFocusableInTouchMode(debugMode);
+        qrBox.setClickable(debugMode);
+        qrET.setClickable(debugMode);
+        qrET.setLongClickable(debugMode);
+        qrET.setFocusable(debugMode);
+        qrET.setFocusableInTouchMode(debugMode);
+
+        int temp_color = COLOR_BLACK;
+        if (!debugMode) temp_color = COLOR_GREY;
+        for (TextView aText : Text)
+            aText.setTextColor(temp_color);
     }
 
 }

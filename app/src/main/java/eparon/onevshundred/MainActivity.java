@@ -7,7 +7,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -40,8 +39,7 @@ public class MainActivity extends AppCompatActivity {
         lang = prefs.getString("lang", lang);
 
         TextView dmMsg = findViewById(R.id.dmm);
-        if (!debugMode)
-            dmMsg.setVisibility(View.GONE);
+        if (!debugMode) dmMsg.setVisibility(View.GONE);
 
         String wstr = getResources().getString(R.string.welcome);
         String[] hs = new String[] {getResources().getString(R.string.helpWheel), getResources().getString(R.string.help50), getResources().getString(R.string.helpPhone)};
@@ -67,29 +65,22 @@ public class MainActivity extends AppCompatActivity {
 
     public void StartGame (View view){
         Intent a = new Intent(MainActivity.this, Info.class);
-        if (skipInfo)
-            a = new Intent(MainActivity.this, Question.class);
+        if (skipInfo) a = new Intent(MainActivity.this, Question.class);
         startActivity(a);
     }
 
     public void debug1 (View view) {
-        if (b == 0 || b == 4)
-            a++;
+        if (b == 0 || b == 4) a++;
     }
 
     public void debug2 (View view) {
-        if (a == 2)
-            b++;
+        if (a == 2) b++;
     }
 
     public void debug3 (View view) {
-        if ((a == 3 && b == 4) || debugMode) {
-            Toast.makeText(this, "Debug Menu", Toast.LENGTH_SHORT).show();
-            Intent a = new Intent(MainActivity.this, DebugMenu.class);
-            startActivity(a);
-        }
-        a = 0;
-        b = 0;
+        if ((a == 3 && b == 4) || debugMode)
+            startActivity(new Intent(MainActivity.this, DebugMenu.class));
+        a = 0; b = 0;
     }
 
 }
