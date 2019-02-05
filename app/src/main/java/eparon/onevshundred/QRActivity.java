@@ -55,7 +55,7 @@ public class QRActivity extends AppCompatActivity {
         Title.setText(String.format("%s\n%s", nls, qrMain[(questionInt - 1) / qrnum - 1]));
     }
 
-    public void SumbitPin (View view) {
+    public void SubmitPin (View view) {
         if (Pin.getText().toString().equals(qrCodes[(questionInt - 1) / qrnum - 1]))
             startActivity(new Intent(QRActivity.this, Question.class));
         else Toast.makeText(this, "Please enter a valid pin", Toast.LENGTH_LONG).show();

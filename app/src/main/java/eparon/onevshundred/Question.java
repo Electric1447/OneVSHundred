@@ -155,8 +155,7 @@ public class Question extends AppCompatActivity {
             qs = res.getString(R.string.qTextENG); ps = res.getString(R.string.pTextENG);
             ans = new String[] {res.getString(R.string.correct), res.getString(R.string.incorrect), res.getString(R.string.timesup)};
             score.setText(String.format(l,"%s %d", res.getString(R.string.pText2ENG), scoreInt));
-        } else
-            score.setText(String.format(l,"%d %s", scoreInt, ps));
+        } else score.setText(String.format(l,"%d %s", scoreInt, ps));
         Title.setText(String.format(l,"%s %d - %d %s", qs, questionInt, currentScore, ps));
         Question.setText(qMain[questionInt - 1]);
         setButtonsText();
@@ -242,7 +241,7 @@ public class Question extends AppCompatActivity {
         if (!setValue) btnh[buttonType].setBackgroundTintList(ColorStateList.valueOf(COLOR_DGREY));
     }
 
-    public void answer (int type) {
+    private void answer (int type) {
 
         // Setting the variables of the Time, Score, etc
         timeInt += (MainActivity.NUMBER_OF_SECONDS - Integer.parseInt(countdownTimerText.getText().toString()));
