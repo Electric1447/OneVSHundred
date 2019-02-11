@@ -75,8 +75,8 @@ public class Question extends AppCompatActivity {
         ta = res.obtainTypedArray(R.array.qarr);
         qArr = new String[ta.length()][];
         for (int i = 0; i < ta.length(); ++i)
-            if ((int)ta.getResourceId(i, 0) > 0)
-                qArr[i] = res.getStringArray((int)ta.getResourceId(i, 0));
+            if ((double)ta.getResourceId(i, 0) > 0)
+                qArr[i] = res.getStringArray(ta.getResourceId(i, 0));
         ta.recycle();
 
         prefs = getSharedPreferences(PREFS_OVH, Context.MODE_PRIVATE);
