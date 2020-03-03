@@ -4,10 +4,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -27,10 +28,11 @@ public class QRActivity extends AppCompatActivity {
     String[] qrMain, qrCodes;
 
     @Override
-    public void onBackPressed() { }
+    public void onBackPressed () {
+    }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_qr);
 
@@ -61,14 +63,14 @@ public class QRActivity extends AppCompatActivity {
         else Toast.makeText(this, "Please enter a valid pin", Toast.LENGTH_LONG).show();
     }
 
-    public void scanBarcode(View view) {
+    public void scanBarcode (View view) {
         IntentIntegrator integrator = new IntentIntegrator(this);
         integrator.setBeepEnabled(false);
         integrator.initiateScan();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult (int requestCode, int resultCode, Intent data) {
         if (requestCode != CUSTOMIZED_REQUEST_CODE && requestCode != IntentIntegrator.REQUEST_CODE) {
             // This is important, otherwise the result will not be passed to the fragment
             super.onActivityResult(requestCode, resultCode, data);

@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +13,8 @@ import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
@@ -33,12 +34,12 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
     String lang;
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed () {
         if (noq.getText().toString().equals("")) noq.setText(getResources().getString(R.string.numberOfQuestions));
         if (qrET.getText().toString().equals("")) qrET.setText(getResources().getString(R.string.questionsPerQR));
 
-        qnum = Integer.valueOf(noq.getText().toString());
-        qrnum = Integer.valueOf(qrET.getText().toString());
+        qnum = Integer.parseInt(noq.getText().toString());
+        qrnum = Integer.parseInt(qrET.getText().toString());
 
         if (qnum > 40 || qnum < 5)
             Toast.makeText(this, "Questions number should be between 5 to 40", Toast.LENGTH_LONG).show();
@@ -59,7 +60,7 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_debug);
 
@@ -117,12 +118,13 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
+    public void onItemSelected (AdapterView<?> adapterView, View view, int position, long l) {
         lang = adapterView.getItemAtPosition(position).toString();
     }
 
     @Override
-    public void onNothingSelected(AdapterView<?> adapterView) { }
+    public void onNothingSelected (AdapterView<?> adapterView) {
+    }
 
     public void infoCheckbox (View view) {
         skipInfo = !skipInfo;
@@ -149,6 +151,7 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
 
         int temp_color = COLOR_BLACK;
         if (!debugMode) temp_color = COLOR_GREY;
+
         for (TextView aText : Text)
             aText.setTextColor(temp_color);
     }

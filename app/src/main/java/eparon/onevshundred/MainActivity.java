@@ -3,10 +3,11 @@ package eparon.onevshundred;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -22,13 +23,13 @@ public class MainActivity extends AppCompatActivity {
     int a = 0, b = 0;
 
     @Override
-    public void onBackPressed() {
+    public void onBackPressed () {
         this.finishAffinity();
         this.finishAndRemoveTask();
     }
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -42,11 +43,11 @@ public class MainActivity extends AppCompatActivity {
         if (!debugMode) dmMsg.setVisibility(View.GONE);
 
         String wstr = getResources().getString(R.string.welcome);
-        String[] hs = new String[] {getResources().getString(R.string.helpWheel), getResources().getString(R.string.help50), getResources().getString(R.string.helpPhone)};
+        String[] hs = new String[]{getResources().getString(R.string.helpWheel), getResources().getString(R.string.help50), getResources().getString(R.string.helpPhone)};
         String start = getResources().getString(R.string.start);
         if (lang.equals("English")) {
             wstr = getResources().getString(R.string.welcomeENG);
-            hs = new String[] {getResources().getString(R.string.helpWheelENG), getResources().getString(R.string.help50ENG), getResources().getString(R.string.helpPhoneENG)};
+            hs = new String[]{getResources().getString(R.string.helpWheelENG), getResources().getString(R.string.help50ENG), getResources().getString(R.string.helpPhoneENG)};
             start = getResources().getString(R.string.startENG);
         }
 
@@ -63,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
         Start.setText(start);
     }
 
-    public void StartGame (View view){
+    public void StartGame (View view) {
         Intent a = new Intent(MainActivity.this, Info.class);
         if (skipInfo) a = new Intent(MainActivity.this, Question.class);
         startActivity(a);
@@ -80,7 +81,8 @@ public class MainActivity extends AppCompatActivity {
     public void debug3 (View view) {
         if ((a == 3 && b == 4) || debugMode)
             startActivity(new Intent(MainActivity.this, DebugMenu.class));
-        a = 0; b = 0;
+        a = 0;
+        b = 0;
     }
 
 }

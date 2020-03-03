@@ -4,7 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -14,7 +15,7 @@ public class SplashScreen extends AppCompatActivity {
     boolean debugMode = false;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splashscreen);
 
@@ -32,8 +33,8 @@ public class SplashScreen extends AppCompatActivity {
         if (!debugMode) {
             editor.putBoolean("skipInfo", skipInfo);
             editor.putBoolean("qr", qr);
-            editor.putInt("qnum", Integer.valueOf(getResources().getString(R.string.numberOfQuestions)));
-            editor.putInt("qrnum", Integer.valueOf(getResources().getString(R.string.questionsPerQR)));
+            editor.putInt("qnum", Integer.parseInt(getResources().getString(R.string.numberOfQuestions)));
+            editor.putInt("qrnum", Integer.parseInt(getResources().getString(R.string.questionsPerQR)));
             editor.putString("lang", getResources().getString(R.string.Lang));
         }
 
