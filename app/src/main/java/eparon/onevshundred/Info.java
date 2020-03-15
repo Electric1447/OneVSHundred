@@ -67,8 +67,7 @@ public class Info extends AppCompatActivity {
     }
 
     public void DoAgree (View view) {
-        if (view.getId() == R.id.cbView)
-            Agree.setChecked(!Agree.isChecked());
+        if (view.getId() == R.id.cbView) Agree.setChecked(!Agree.isChecked());
 
         Next.setClickable(Agree.isChecked());
 

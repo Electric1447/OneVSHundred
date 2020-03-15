@@ -41,21 +41,19 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
         qnum = Integer.parseInt(noq.getText().toString());
         qrnum = Integer.parseInt(qrET.getText().toString());
 
-        if (qnum > 40 || qnum < 5)
+        if (qnum > 40 || qnum < 5) {
             Toast.makeText(this, "Questions number should be between 5 to 40", Toast.LENGTH_LONG).show();
-        else {
-            if (qrnum > 10 || qrnum < 3)
-                Toast.makeText(this, "QR number should be between 3 to 10", Toast.LENGTH_LONG).show();
-            else {
-                SharedPreferences.Editor editor = prefs.edit();
-                editor.putBoolean("debugMode", debugMode);
-                editor.putBoolean("skipInfo", skipInfo);
-                editor.putBoolean("qr", qr);
-                editor.putInt("qnum", qnum);
-                editor.putString("lang", lang);
-                editor.apply();
-                startActivity(new Intent(DebugMenu.this, MainActivity.class));
-            }
+        } else if (qrnum > 10 || qrnum < 3) {
+            Toast.makeText(this, "QR number should be between 3 to 10", Toast.LENGTH_LONG).show();
+        } else {
+            SharedPreferences.Editor editor = prefs.edit();
+            editor.putBoolean("debugMode", debugMode);
+            editor.putBoolean("skipInfo", skipInfo);
+            editor.putBoolean("qr", qr);
+            editor.putInt("qnum", qnum);
+            editor.putString("lang", lang);
+            editor.apply();
+            startActivity(new Intent(DebugMenu.this, MainActivity.class));
         }
     }
 
@@ -152,8 +150,7 @@ public class DebugMenu extends AppCompatActivity implements AdapterView.OnItemSe
         int temp_color = COLOR_BLACK;
         if (!debugMode) temp_color = COLOR_GREY;
 
-        for (TextView aText : Text)
-            aText.setTextColor(temp_color);
+        for (TextView aText : Text) aText.setTextColor(temp_color);
     }
 
 }

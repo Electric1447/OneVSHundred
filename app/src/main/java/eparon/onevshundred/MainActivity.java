@@ -79,8 +79,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void debug3 (View view) {
-        if ((a == 3 && b == 4) || debugMode)
-            startActivity(new Intent(MainActivity.this, DebugMenu.class));
+        if ((a == 3 && b == 4) || debugMode) startActivity(new Intent(MainActivity.this, DebugMenu.class));
         a = 0;
         b = 0;
     }

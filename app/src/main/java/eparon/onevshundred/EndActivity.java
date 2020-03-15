@@ -44,8 +44,7 @@ public class EndActivity extends AppCompatActivity {
         scoreInt = prefs.getInt("scoreInt", scoreInt);
         timeInt = prefs.getInt("timeInt", timeInt);
         lang = prefs.getString("lang", lang);
-        for (int i = 0; i < help.length; i++)
-            help[i] = prefs.getBoolean(helpStr[i], help[i]);
+        for (int i = 0; i < help.length; i++) help[i] = prefs.getBoolean(helpStr[i], help[i]);
 
         TextView dmMsg = findViewById(R.id.dmm);
         if (!debugMode) dmMsg.setVisibility(View.GONE);
@@ -91,8 +90,7 @@ public class EndActivity extends AppCompatActivity {
             timeBonus = ((questionInt - 1) * MainActivity.NUMBER_OF_SECONDS - timeInt) / 3;
 
             // Checking if Helps have been used
-            if (help[0] && help[1] && help[2])
-                hScore = (scoreInt + timeBonus) / MainActivity.NO_HELPS_BONUS_PERCENTAGE;
+            if (help[0] && help[1] && help[2]) hScore = (scoreInt + timeBonus) / MainActivity.NO_HELPS_BONUS_PERCENTAGE;
 
             tScore = scoreInt + timeBonus + hScore; // Calculating the total score
         }

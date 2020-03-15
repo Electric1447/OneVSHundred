@@ -18,7 +18,7 @@ public class QRActivity extends AppCompatActivity {
     public String PREFS_OVH = "OVHPrefsFile";
     SharedPreferences prefs;
 
-    public final int CUSTOMIZED_REQUEST_CODE = 0x0000ffff;
+    public static final int CUSTOMIZED_REQUEST_CODE = 0x0000ffff;
 
     TextView Title, Pin;
 
@@ -60,7 +60,8 @@ public class QRActivity extends AppCompatActivity {
     public void SubmitPin (View view) {
         if (Pin.getText().toString().equals(qrCodes[(questionInt - 1) / qrnum - 1]))
             startActivity(new Intent(QRActivity.this, Question.class));
-        else Toast.makeText(this, "Please enter a valid pin", Toast.LENGTH_LONG).show();
+        else
+            Toast.makeText(this, "Please enter a valid pin", Toast.LENGTH_LONG).show();
     }
 
     public void scanBarcode (View view) {
@@ -79,12 +80,13 @@ public class QRActivity extends AppCompatActivity {
 
         IntentResult result = IntentIntegrator.parseActivityResult(resultCode, data);
 
-        if (result.getContents() == null)
+        if (result.getContents() == null) {
             Toast.makeText(this, "Cancelled", Toast.LENGTH_LONG).show();
-        else {
+        } else {
             if (result.getContents().equals("OneVSHundered_HASH:_" + qrCodes[(questionInt - 1) / qrnum - 1]))
                 startActivity(new Intent(QRActivity.this, Question.class));
-            else Toast.makeText(this, "Invalid QR Code", Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(this, "Invalid QR Code", Toast.LENGTH_LONG).show();
         }
     }
 

@@ -35,7 +35,7 @@ public class Question extends AppCompatActivity {
     Locale l = Locale.getDefault();
 
     private int buttons = 4;
-    private static int[] btnIDArray = new int[]{R.id.button1, R.id.button2, R.id.button3, R.id.button4};
+    private static int[] btnIDArray = new int[] {R.id.button1, R.id.button2, R.id.button3, R.id.button4};
 
     private TextView countdownTimerText;
     private static CountDownTimer countDownTimer;
@@ -57,7 +57,7 @@ public class Question extends AppCompatActivity {
     String lang;
 
     boolean[] help = new boolean[3];
-    String[] helpStr = new String[]{"helpWH", "help50", "helpPH"};
+    String[] helpStr = new String[] {"helpWH", "help50", "helpPH"};
 
     int[] btnMain = new int[buttons];
 
@@ -93,8 +93,7 @@ public class Question extends AppCompatActivity {
         answers = prefs.getInt("answers", answers);
         questionInt = prefs.getInt("questionInt", questionInt);
         lang = prefs.getString("lang", lang);
-        for (int i = 0; i < help.length; i++)
-            help[i] = prefs.getBoolean(helpStr[i], help[i]);
+        for (int i = 0; i < help.length; i++) help[i] = prefs.getBoolean(helpStr[i], help[i]);
 
         COLOR_GREEN = res.getColor(R.color.colorGreen);
         COLOR_RED = res.getColor(R.color.colorRed);
@@ -111,9 +110,7 @@ public class Question extends AppCompatActivity {
         Question = findViewById(R.id.question);
         countdownTimerText = findViewById(R.id.countdownText);
         score = findViewById(R.id.score);
-
-        for (int i = 0; i < buttons; i++)
-            btn[i] = findViewById(btnIDArray[i]);
+        for (int i = 0; i < buttons; i++) btn[i] = findViewById(btnIDArray[i]);
 
         btnh[0] = findViewById(R.id.fab1); // Help Wheel
         btnh[1] = findViewById(R.id.fab2); // Help 50
@@ -142,8 +139,7 @@ public class Question extends AppCompatActivity {
             btnMain[i] = ir;
         }
 
-        for (int i = 0; i < help.length; i++)
-            setHelpButtonProps(i, help[i]);
+        for (int i = 0; i < help.length; i++) setHelpButtonProps(i, help[i]);
 
         if (buttons != 4) {
             setHelpButtonProps(1, false);
@@ -152,11 +148,11 @@ public class Question extends AppCompatActivity {
 
         String qs = res.getString(R.string.qText);
         String ps = res.getString(R.string.pText);
-        ans = new String[]{res.getString(R.string.correct), res.getString(R.string.incorrect), res.getString(R.string.timesup)};
+        ans = new String[] {res.getString(R.string.correct), res.getString(R.string.incorrect), res.getString(R.string.timesup)};
         if (lang.equals("English")) {
             qs = res.getString(R.string.qTextENG);
             ps = res.getString(R.string.pTextENG);
-            ans = new String[]{res.getString(R.string.correct), res.getString(R.string.incorrect), res.getString(R.string.timesup)};
+            ans = new String[] {res.getString(R.string.correct), res.getString(R.string.incorrect), res.getString(R.string.timesup)};
             score.setText(String.format(l, "%s %d", res.getString(R.string.pText2ENG), scoreInt));
         } else score.setText(String.format(l, "%d %s", scoreInt, ps));
         Title.setText(String.format(l, "%s %d - %d %s", qs, questionInt, currentScore, ps));
@@ -174,30 +170,30 @@ public class Question extends AppCompatActivity {
 
     public void help (View view) {
         // Disabling the help buttons
-        for (int i = 0; i < 3; i++)
-            setHelpButtonProps(i, false);
+        for (int i = 0; i < 3; i++) setHelpButtonProps(i, false);
 
-        // Checking which button was pressed
-        int i = 0;
+        int i = 0; // Checking which button was pressed
 
-        if (view.getId() == R.id.fab1)
-            answer(1);
-        else if (view.getId() == R.id.fab2) {
-            i = 1;
-            // Help 50/50
-            setButtonProps(3, BUTTON_COLOR_GREY, false);
-            setButtonProps(4, BUTTON_COLOR_GREY, false);
-        } else if (view.getId() == R.id.fab3) {
-            i = 2;
-            // Help Phone
-            Random d = new Random();
-            int phoneHelpInt = (int)(d.nextDouble() * 100) / 15;
+        switch (view.getId()) {
+            case R.id.fab1: // Help Wheel
+                answer(1);
+                break;
+            case R.id.fab2: // Help 50/50
+                i = 1;
+                setButtonProps(3, BUTTON_COLOR_GREY, false);
+                setButtonProps(4, BUTTON_COLOR_GREY, false);
+                break;
+            case R.id.fab3: // Help Phone
+                i = 2;
+                Random d = new Random();
+                int phoneHelpInt = (int)(d.nextDouble() * 100) / 15;
 
-            if (phoneHelpInt > 2) phoneHelpInt = 2;
-            phoneHelpInt = 3 - phoneHelpInt;
+                if (phoneHelpInt > 2) phoneHelpInt = 2;
+                phoneHelpInt = 3 - phoneHelpInt;
 
-            setButtonProps(phoneHelpInt, BUTTON_COLOR_LGREEN, true);
-            setButtonProps(4, BUTTON_COLOR_GREY, false);
+                setButtonProps(phoneHelpInt, BUTTON_COLOR_LGREEN, true);
+                setButtonProps(4, BUTTON_COLOR_GREY, false);
+                break;
         }
 
         // Making that button used in the SharedPrefs
@@ -273,26 +269,25 @@ public class Question extends AppCompatActivity {
             setHelpButtonProps(i, false);
 
         // Creating the custom Popup message
-        View customView = View.inflate(this, R.layout.popup_layout, null);
+        View popupView = View.inflate(this, R.layout.popup_layout, null);
 
-        PopupWindow pw = new PopupWindow(customView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        PopupWindow pw = new PopupWindow(popupView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         pw.setElevation(5.0f);
         pw.showAtLocation(findViewById(R.id.cl), Gravity.CENTER, 0, 0);
 
-        TextView Message = customView.findViewById(R.id.message);
-
         // Setting the Text and the Text Color by the Answer
+        TextView Message = popupView.findViewById(R.id.message);
         Message.setText(ans[type - 1]);
-        int[] temp_color = new int[]{COLOR_GREEN, COLOR_RED};
+        int[] temp_color = new int[] {COLOR_GREEN, COLOR_RED};
         Message.setTextColor(temp_color[type / 2]);
 
         new Handler().postDelayed(() -> {
-            Intent a = new Intent(Question.this, Question.class);
             if ((questionInt - 1) % qrnum == 0 && qr) // If QR is enabled & the next activity is a QR activity, go to the QR activity,
-                a = new Intent(Question.this, QRActivity.class);
+                startActivity(new Intent(Question.this, QRActivity.class));
             if (questionInt == qnum + 1) // If the question is the last Question GOTO the End screen
-                a = new Intent(Question.this, EndActivity.class);
-            startActivity(a);
+                startActivity(new Intent(Question.this, EndActivity.class));
+            else
+                startActivity(new Intent(Question.this, Question.class));
             finish();
         }, 1000);
     }
